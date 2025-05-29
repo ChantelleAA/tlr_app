@@ -20,9 +20,10 @@ from suggestor import views as v
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", v.query_view, name="query"),
     path("download/<int:pk>/", v.download_view, name="download"),
     path("ajax/strands/", v.load_strands, name="ajax_load_strands"),
     path("ajax/substrands/", v.load_substrands, name="ajax_load_substrands"),
-
+    path("", v.pick_route, name="pick_route"),
+    path("filters/", v.show_filters, name="show_filters"),
+    path("suggest/", v.suggest, name="suggest"),
 ]

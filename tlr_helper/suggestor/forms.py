@@ -1,102 +1,115 @@
 # suggestor/forms.py
 from django import forms
 from .models import (
-    ClassLevel, Strand, SubStrand, Material,
+    # curriculum hierarchy
+    ClassLevel, Subject, Strand, SubStrand,
+    # optional tags
+    Theme, KeyLearningArea, CoreCompetency, ResourceType, GoalTag,
+    # supporting tables
+    Material,
+    # constants
     INTENDED_CHOICES, TIME_CHOICES,
     CLASS_SIZE_BANDS, BLOOM_LEVELS, BUDGET_BANDS,
 )
 
+# ────────────────────────────────────────────────
+#  ROUTE-PICKER   (first screen)
+# ────────────────────────────────────────────────
+ROUTES = [
+    ("curriculum", "By Strand / Sub-strand"),
+    ("key_area",   "By Key Learning Area"),
+    ("competency", "By Core Competency"),
+    ("theme",      "By Theme"),
+    ("resource",   "By Resource Type"),
+    ("goal",       "By Quick Goal"),
+]
 
-class TLRQueryForm(forms.Form):
-    # ------------------ cascade section ------------------
-    class_level = forms.ModelChoiceField(
-        queryset=ClassLevel.objects.all(),
-        label="Class level",
-    )
-    strand = forms.ModelChoiceField(
-        queryset=Strand.objects.none(),
-        label="Strand",
-    )
-    sub_strand = forms.ModelChoiceField(
-        queryset=SubStrand.objects.none(),
-        label="Sub-strand / topic",
-        required=False,
-    )
 
-    # ------------------ basic specifics ------------------
-    intended_use = forms.ChoiceField(
-        choices=INTENDED_CHOICES,
-        label="Purpose in lesson",
-    )
-    time_available = forms.ChoiceField(
-        choices=TIME_CHOICES,
-        required=False,
-        label="Time in lesson",
+class RouteSelectForm(forms.Form):
+    route = forms.ChoiceField(
+        choices=ROUTES,
+        widget=forms.RadioSelect,
+        label="How would you like to search?",
     )
 
-    # ------------------ advanced section -----------------
-    class_size = forms.ChoiceField(
-        choices=CLASS_SIZE_BANDS,
+
+# ────────────────────────────────────────────────
+#  FILTER FORM   (second screen — all routes)
+# ────────────────────────────────────────────────
+class FilterForm(forms.Form):
+    # always visible
+    class_level = forms.ModelChoiceField(ClassLevel.objects.all(), label="Class")
+
+    # curriculum route
+    subject    = forms.ModelChoiceField(Subject.objects.none(),  required=False, label="Subject")
+    term = forms.ChoiceField(
+        choices=[(1, "Term 1"), (2, "Term 2"), (3, "Term 3")],
         required=False,
-        label="Class size",
+        label="Term",
     )
-    bloom_level = forms.ChoiceField(
-        choices=BLOOM_LEVELS,
-        required=False,
-        label="Bloom’s focus",
-    )
-    budget_band = forms.ChoiceField(
-        choices=BUDGET_BANDS,
-        required=False,
-        label="Budget per lesson (GHS)",
-    )
+    strand     = forms.ModelChoiceField(Strand.objects.none(),   required=False, label="Strand")
+    substrand  = forms.ModelChoiceField(SubStrand.objects.none(), required=False, label="Sub-strand")
+
+    # key-area route
+    key_area   = forms.ModelChoiceField(KeyLearningArea.objects.all(), required=False, label="Key area")
+
+    # competency route
+    competency = forms.ModelChoiceField(CoreCompetency.objects.all(), required=False, label="Competency")
+
+    # theme route
+    theme      = forms.ModelChoiceField(Theme.objects.all(), required=False, label="Theme")
+
+    # resource-type route
+    resource_type = forms.ModelChoiceField(ResourceType.objects.all(),
+                                           required=False, label="Resource type")
+
+    # quick-goal route
+    goal       = forms.ModelChoiceField(GoalTag.objects.all(), required=False, label="Lesson goal")
+
+    # --------------- optional generic filters (appear in any route) ---------------
+    intended_use = forms.ChoiceField(choices=INTENDED_CHOICES, required=False, label="Purpose in lesson")
+    time_available = forms.ChoiceField(choices=TIME_CHOICES, required=False, label="Time in lesson")
+    class_size  = forms.ChoiceField(choices=CLASS_SIZE_BANDS, required=False, label="Class size")
+    bloom_level = forms.ChoiceField(choices=BLOOM_LEVELS, required=False, label="Bloom focus")
+    budget_band = forms.ChoiceField(choices=BUDGET_BANDS, required=False, label="Budget band")
     materials_available = forms.ModelMultipleChoiceField(
         queryset=Material.objects.all(),
         required=False,
         widget=forms.CheckboxSelectMultiple,
         label="Materials on hand",
     )
-    learner_type = forms.CharField(
-        required=False,
-        label="Special-needs notes",
-        help_text="e.g. early readers, low vision",
-    )
-    preferred_format = forms.CharField(
-        required=False,
-        label="Preferred TLR format",
-        help_text="poster, puzzle, slider …",
-    )
-    classroom_setup = forms.CharField(
-        required=False,
-        label="Classroom setup",
-        help_text="no wall space, outdoor, group tables …",
-    )
-    outcome = forms.CharField(
-        required=False,
-        widget=forms.Textarea,
-        label="Learning outcome / indicator",
-    )
+    learner_type = forms.CharField(required=False, label="Special-needs notes")
+    preferred_format = forms.CharField(required=False, label="Preferred TLR format")
+    classroom_setup  = forms.CharField(required=False, label="Classroom setup")
+    outcome          = forms.CharField(required=False, widget=forms.Textarea,
+                                       label="Learning outcome / indicator")
 
-    # ---------- dynamic dropdown logic ----------
+    # ───────────────────────────────────────────
+    #  dynamic dropdown logic
+    # ───────────────────────────────────────────
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # populate strand list once class is chosen
+        # limit Subject list after class_level picked
         if "class_level" in self.data:
             try:
                 cls_id = int(self.data["class_level"])
-                self.fields["strand"].queryset = Strand.objects.filter(
-                    class_level_id=cls_id
-                )
-            except (ValueError, TypeError):
+                self.fields["subject"].queryset = Subject.objects.filter(class_level_id=cls_id)
+            except (TypeError, ValueError):
                 pass
 
-        # populate sub-strand list once strand is chosen
+        # limit Strand list after subject picked
+        if "subject" in self.data:
+            try:
+                sub_id = int(self.data["subject"])
+                self.fields["strand"].queryset = Strand.objects.filter(subject_id=sub_id)
+            except (TypeError, ValueError):
+                pass
+
+        # limit Sub-strand list after strand picked
         if "strand" in self.data:
             try:
-                st_id = int(self.data["strand"])
-                self.fields["sub_strand"].queryset = SubStrand.objects.filter(
-                    strand_id=st_id
-                )
-            except (ValueError, TypeError):
+                strand_id = int(self.data["strand"])
+                self.fields["substrand"].queryset = SubStrand.objects.filter(strand_id=strand_id)
+            except (TypeError, ValueError):
                 pass

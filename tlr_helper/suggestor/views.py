@@ -1,24 +1,24 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .forms import TLRQueryForm
+from .forms import RouteSelectForm, FilterForm
 from .tlr_engine import find_matches
-from .models import Tlr
+from .models import Tlr, Strand, SubStrand
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
-def query_view(request):
-    if request.method == "POST":
-        form = TLRQueryForm(request.POST)
-        if form.is_valid():
-            suggestions = find_matches(form.cleaned_data)
-            return render(
-                request,
-                "results.html",
-                {"form": form, "suggestions": suggestions},
-            )
-    else:
-        form = TLRQueryForm()
-    return render(request, "query.html", {"form": form})
+# def query_view(request):
+#     if request.method == "POST":
+#         form = TLRQueryForm(request.POST)
+#         if form.is_valid():
+#             suggestions = find_matches(form.cleaned_data)
+#             return render(
+#                 request,
+#                 "results.html",
+#                 {"form": form, "suggestions": suggestions},
+#             )
+#     else:
+#         form = TLRQueryForm()
+#     return render(request, "query.html", {"form": form})
 
 
 def download_view(request, pk):
@@ -48,3 +48,25 @@ def load_substrands(request):
     subs = SubStrand.objects.filter(strand_id=strand_id)
     html = render_to_string("partials/substrand_options.html", {"subs": subs})
     return HttpResponse(html)
+
+
+def pick_route(request):
+    form = RouteSelectForm()
+    return render(request, "route_select.html", {"route_form": form})
+
+def show_filters(request):
+    route = request.POST.get("route")
+    filter_form = FilterForm()
+    return render(
+        request, "filter_form.html",
+        {"filter_form": filter_form, "route": route}
+    )
+
+def suggest(request):
+    form = FilterForm(request.POST)
+    route = request.POST.get("route")  # hidden input
+    if form.is_valid():
+        suggestions = find_matches(form.cleaned_data, route)
+        return render(request, "results.html", {"suggestions": suggestions})
+    # redisplay
+    return render(request, "filter_form.html", {"filter_form": form, "route": route})

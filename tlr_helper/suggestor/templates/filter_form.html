@@ -1,0 +1,95 @@
+{% load static %}
+<div class="container my-4">
+  <div class="card shadow-sm rounded-4 p-4" style="max-width: 720px; margin: auto;">
+    <h4 class="mb-3 text-nile">Refine Your Search</h4>
+    <form method="post" action="{% url 'suggest' %}" hx-post="{% url 'suggest' %}" hx-target="#results-panel" hx-swap="outerHTML">
+      {% csrf_token %}
+      <input type="hidden" name="route" value="{{ route }}">
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          {{ filter_form.class_level.label_tag }} {{ filter_form.class_level }}
+        </div>
+        <div class="col-md-6">
+          {{ filter_form.subject.label_tag }} {{ filter_form.subject }}
+        </div>
+        <div class="col-md-4">
+          {{ filter_form.term.label_tag }} {{ filter_form.term }}
+        </div>
+        {% if route == "curriculum" %}
+          <div class="col-md-6">
+            {{ filter_form.strand.label_tag }} {{ filter_form.strand }}
+          </div>
+          <div class="col-md-6">
+            {{ filter_form.substrand.label_tag }} {{ filter_form.substrand }}
+          </div>
+        {% elif route == "key_area" %}
+          <div class="col-md-6">
+            {{ filter_form.key_area.label_tag }} {{ filter_form.key_area }}
+          </div>
+        {% elif route == "competency" %}
+          <div class="col-md-6">
+            {{ filter_form.competency.label_tag }} {{ filter_form.competency }}
+          </div>
+        {% elif route == "theme" %}
+          <div class="col-md-6">
+            {{ filter_form.theme.label_tag }} {{ filter_form.theme }}
+          </div>
+        {% elif route == "resource" %}
+          <div class="col-md-6">
+            {{ filter_form.resource_type.label_tag }} {{ filter_form.resource_type }}
+          </div>
+        {% elif route == "goal" %}
+          <div class="col-md-6">
+            {{ filter_form.goal.label_tag }} {{ filter_form.goal }}
+          </div>
+        {% endif %}
+
+        <div class="col-md-6">
+          {{ filter_form.intended_use.label_tag }} {{ filter_form.intended_use }}
+        </div>
+        <div class="col-md-6">
+          {{ filter_form.time_available.label_tag }} {{ filter_form.time_available }}
+        </div>
+        <div class="col-md-6">
+          {{ filter_form.class_size.label_tag }} {{ filter_form.class_size }}
+        </div>
+        <div class="col-md-6">
+          {{ filter_form.bloom_level.label_tag }} {{ filter_form.bloom_level }}
+        </div>
+        <div class="col-md-6">
+          {{ filter_form.budget_band.label_tag }} {{ filter_form.budget_band }}
+        </div>
+        <div class="col-md-12">
+          {{ filter_form.materials_available.label_tag }} {{ filter_form.materials_available }}
+        </div>
+        <div class="col-md-6">
+          {{ filter_form.learner_type.label_tag }} {{ filter_form.learner_type }}
+        </div>
+        <div class="col-md-6">
+          {{ filter_form.preferred_format.label_tag }} {{ filter_form.preferred_format }}
+        </div>
+        <div class="col-md-12">
+          {{ filter_form.classroom_setup.label_tag }} {{ filter_form.classroom_setup }}
+        </div>
+        <div class="col-md-12">
+          {{ filter_form.outcome.label_tag }} {{ filter_form.outcome }}
+        </div>
+      </div>
+
+      <div class="d-grid d-md-flex justify-content-md-end mt-4">
+        <button type="submit" class="btn btn-nile w-100 w-md-auto" hx-indicator="#spinner">Find TLRs</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Spinner indicator -->
+<div id="spinner" class="text-center mt-3 htmx-indicator">
+  <div class="spinner-border text-nile" role="status">
+    <span class="visually-hidden">Finding...</span>
+  </div>
+</div>
+
+<!-- Results placeholder -->
+<div id="results-panel" class="my-5"></div>

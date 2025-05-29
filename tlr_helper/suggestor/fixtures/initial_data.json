@@ -1,0 +1,736 @@
+[
+  {
+    "model": "suggestor.theme",
+    "pk": 1,
+    "fields": {
+      "title": "Myself"
+    }
+  },
+  {
+    "model": "suggestor.theme",
+    "pk": 2,
+    "fields": {
+      "title": "My Family"
+    }
+  },
+  {
+    "model": "suggestor.theme",
+    "pk": 3,
+    "fields": {
+      "title": "My School"
+    }
+  },
+  {
+    "model": "suggestor.theme",
+    "pk": 4,
+    "fields": {
+      "title": "Our Environment"
+    }
+  },
+  {
+    "model": "suggestor.theme",
+    "pk": 5,
+    "fields": {
+      "title": "Our Nation Ghana"
+    }
+  },
+  {
+    "model": "suggestor.theme",
+    "pk": 6,
+    "fields": {
+      "title": "Our Global World"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 7,
+    "fields": {
+      "title": "Literacy"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 8,
+    "fields": {
+      "title": "Numeracy"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 9,
+    "fields": {
+      "title": "Science and Environment"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 10,
+    "fields": {
+      "title": "Creative Arts"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 11,
+    "fields": {
+      "title": "Physical Development"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 12,
+    "fields": {
+      "title": "Social Studies"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 13,
+    "fields": {
+      "title": "Computing"
+    }
+  },
+  {
+    "model": "suggestor.corecompetency",
+    "pk": 14,
+    "fields": {
+      "title": "Critical Thinking and Problem Solving"
+    }
+  },
+  {
+    "model": "suggestor.corecompetency",
+    "pk": 15,
+    "fields": {
+      "title": "Creativity and Innovation"
+    }
+  },
+  {
+    "model": "suggestor.corecompetency",
+    "pk": 16,
+    "fields": {
+      "title": "Communication and Collaboration"
+    }
+  },
+  {
+    "model": "suggestor.corecompetency",
+    "pk": 17,
+    "fields": {
+      "title": "Cultural Identity and Global Citizenship"
+    }
+  },
+  {
+    "model": "suggestor.corecompetency",
+    "pk": 18,
+    "fields": {
+      "title": "Personal Development and Leadership"
+    }
+  },
+  {
+    "model": "suggestor.corecompetency",
+    "pk": 19,
+    "fields": {
+      "title": "Digital Literacy"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 20,
+    "fields": {
+      "title": "Flashcards"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 21,
+    "fields": {
+      "title": "Manipulatives"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 22,
+    "fields": {
+      "title": "Posters"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 23,
+    "fields": {
+      "title": "Songs"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 24,
+    "fields": {
+      "title": "Storybooks"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 25,
+    "fields": {
+      "title": "Videos"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 26,
+    "fields": {
+      "title": "Charts"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 27,
+    "fields": {
+      "title": "Diagrams"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 28,
+    "fields": {
+      "title": "Games"
+    }
+  },
+  {
+    "model": "suggestor.goaltag",
+    "pk": 29,
+    "fields": {
+      "title": "Introduce"
+    }
+  },
+  {
+    "model": "suggestor.goaltag",
+    "pk": 30,
+    "fields": {
+      "title": "Reinforce"
+    }
+  },
+  {
+    "model": "suggestor.goaltag",
+    "pk": 31,
+    "fields": {
+      "title": "Assess"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 32,
+    "fields": {
+      "name": "Bottle tops"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 33,
+    "fields": {
+      "name": "Cardboard"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 34,
+    "fields": {
+      "name": "Markers"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 35,
+    "fields": {
+      "name": "Crayons"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 36,
+    "fields": {
+      "name": "Paper"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 37,
+    "fields": {
+      "name": "Glue"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 38,
+    "fields": {
+      "name": "String"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 39,
+    "fields": {
+      "name": "Stones"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 40,
+    "fields": {
+      "name": "Leaves"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 41,
+    "fields": {
+      "name": "Clay"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 42,
+    "fields": {
+      "name": "Fabric pieces"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 43,
+    "fields": {
+      "name": "Felt"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 44,
+    "fields": {
+      "name": "EVA foam sheets"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 45,
+    "fields": {
+      "name": "Crepe paper"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 46,
+    "fields": {
+      "name": "Craft punches"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 47,
+    "fields": {
+      "name": "Cricut machine"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 48,
+    "fields": {
+      "name": "Pipe cleaners"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 49,
+    "fields": {
+      "name": "Paint"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 50,
+    "fields": {
+      "name": "Dimensional tape"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 51,
+    "fields": {
+      "code": "CR",
+      "name": "Cr\u00e8che"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 52,
+    "fields": {
+      "code": "NU",
+      "name": "Nursery"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 53,
+    "fields": {
+      "code": "KG",
+      "name": "KG1"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 54,
+    "fields": {
+      "code": "KG",
+      "name": "KG2"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 55,
+    "fields": {
+      "code": "1",
+      "name": "Class 1"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 56,
+    "fields": {
+      "code": "2",
+      "name": "Class 2"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 57,
+    "fields": {
+      "code": "3",
+      "name": "Class 3"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 58,
+    "fields": {
+      "class_level": 51,
+      "title": "Early Sensory Development"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 59,
+    "fields": {
+      "class_level": 51,
+      "title": "Motor Skills"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 60,
+    "fields": {
+      "class_level": 51,
+      "title": "Social Interaction"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 61,
+    "fields": {
+      "class_level": 52,
+      "title": "Pre-Literacy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 62,
+    "fields": {
+      "class_level": 52,
+      "title": "Pre-Numeracy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 63,
+    "fields": {
+      "class_level": 52,
+      "title": "Creative Arts"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 64,
+    "fields": {
+      "class_level": 52,
+      "title": "Physical Development"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 65,
+    "fields": {
+      "class_level": 53,
+      "title": "Literacy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 66,
+    "fields": {
+      "class_level": 53,
+      "title": "Numeracy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 67,
+    "fields": {
+      "class_level": 53,
+      "title": "Our World Our People"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 68,
+    "fields": {
+      "class_level": 53,
+      "title": "Creative Arts"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 69,
+    "fields": {
+      "class_level": 53,
+      "title": "Physical Education"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 70,
+    "fields": {
+      "class_level": 54,
+      "title": "Literacy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 71,
+    "fields": {
+      "class_level": 54,
+      "title": "Numeracy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 72,
+    "fields": {
+      "class_level": 54,
+      "title": "Our World Our People"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 73,
+    "fields": {
+      "class_level": 54,
+      "title": "Creative Arts"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 74,
+    "fields": {
+      "class_level": 54,
+      "title": "Physical Education"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 75,
+    "fields": {
+      "class_level": 55,
+      "title": "English Language"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 76,
+    "fields": {
+      "class_level": 55,
+      "title": "Mathematics"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 77,
+    "fields": {
+      "class_level": 55,
+      "title": "Science"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 78,
+    "fields": {
+      "class_level": 55,
+      "title": "Our World Our People"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 79,
+    "fields": {
+      "class_level": 55,
+      "title": "Creative Arts"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 80,
+    "fields": {
+      "class_level": 55,
+      "title": "Physical Education"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 81,
+    "fields": {
+      "class_level": 55,
+      "title": "Computing"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 82,
+    "fields": {
+      "class_level": 55,
+      "title": "Ghanaian Language"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 83,
+    "fields": {
+      "class_level": 56,
+      "title": "English Language"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 84,
+    "fields": {
+      "class_level": 56,
+      "title": "Mathematics"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 85,
+    "fields": {
+      "class_level": 56,
+      "title": "Science"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 86,
+    "fields": {
+      "class_level": 56,
+      "title": "Our World Our People"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 87,
+    "fields": {
+      "class_level": 56,
+      "title": "Creative Arts"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 88,
+    "fields": {
+      "class_level": 56,
+      "title": "Physical Education"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 89,
+    "fields": {
+      "class_level": 56,
+      "title": "Computing"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 90,
+    "fields": {
+      "class_level": 56,
+      "title": "Ghanaian Language"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 91,
+    "fields": {
+      "class_level": 57,
+      "title": "English Language"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 92,
+    "fields": {
+      "class_level": 57,
+      "title": "Mathematics"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 93,
+    "fields": {
+      "class_level": 57,
+      "title": "Science"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 94,
+    "fields": {
+      "class_level": 57,
+      "title": "Our World Our People"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 95,
+    "fields": {
+      "class_level": 57,
+      "title": "Creative Arts"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 96,
+    "fields": {
+      "class_level": 57,
+      "title": "Physical Education"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 97,
+    "fields": {
+      "class_level": 57,
+      "title": "Computing"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 98,
+    "fields": {
+      "class_level": 57,
+      "title": "Ghanaian Language"
+    }
+  }
+]

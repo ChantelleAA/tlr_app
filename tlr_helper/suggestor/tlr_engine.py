@@ -1,33 +1,38 @@
 from .models import Tlr
 
-# suggestor/tlr_engine.py
-from .models import Tlr
+def find_matches(data, route):
+    qs = Tlr.objects.filter(class_level=data["class_level"])
 
+    if route == "curriculum":
+        if data.get("indicator"):
+            qs = qs.filter(indicator=data["indicator"])
+        elif data.get("substrand"):
+            qs = qs.filter(substrand=data["substrand"])
+        elif data.get("strand"):
+            qs = qs.filter(strand=data["strand"])
+        elif data.get("subject"):
+            qs = qs.filter(subject=data["subject"])
+        if data.get("term"):
+            qs = qs.filter(term=data["term"])
 
-def find_matches(data):
-    """
-    Return a ranked list of up to 10 TLR objects that match teacher inputs.
-    """
+    elif route == "key_area":
+        qs = qs.filter(key_learning_areas=data["key_area"])
 
-    # ---------- 1. mandatory filters ----------
-    qs = (
-        Tlr.objects
-        .filter(class_level=data["class_level"])
-        .filter(strand__icontains=data["strand"])
-        .filter(intended_use=data["intended_use"])
-        .distinct()
-    )
+    elif route == "competency":
+        qs = qs.filter(competencies=data["competency"])
 
-    # ---------- 2. materials filter ----------
-    materials = data.get("materials_available")
-    if materials:
-        qs = qs.filter(materials__in=materials).distinct()
+    elif route == "theme":
+        qs = qs.filter(themes=data["theme"])
 
-    # ---------- 3. budget & class-size constraints ----------
-    if data.get("budget_band") == "low":
-        qs = qs.exclude(costly=True)
-    if data.get("class_size") == "large":
-        qs = qs.exclude(tlr_type="small-group-only")
+    elif route == "resource":
+        qs = qs.filter(resource_types=data["resource_type"])
+
+    elif route == "goal":
+        qs = qs.filter(goals=data["goal"])
+
+    # … apply materials/time/budget scoring as before …
+    return qs[:10]
+
 
     # ---------- 4. scoring ----------
     def score(tlr):

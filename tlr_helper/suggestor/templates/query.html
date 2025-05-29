@@ -30,27 +30,25 @@
     {{ form.time_available }}
   </div>
 
-  <!-- 3 ─ Toggle for advanced fields -->
-  <button class="btn btn-link p-0 mb-3" type="button"
-          data-bs-toggle="collapse" data-bs-target="#advanced">
-    More options
-  </button>
+{# ---------------- Advanced options toggle ---------------- #}
+<button class="btn btn-link p-0 mb-3" type="button"
+        data-bs-toggle="collapse" data-bs-target="#advanced">
+  More options
+</button>
 
-  <div class="collapse" id="advanced">
-    {% for field in form %}
-      {% if field.name not in
-            "class_level strand sub_strand intended_use time_available".split %}
-        <div class="mb-3">
-          <label class="form-label">{{ field.label }}</label>
-          {{ field }}
-          {% if field.help_text %}
-            <div class="form-text">{{ field.help_text }}</div>
-          {% endif %}
-        </div>
-      {% endif %}
-    {% endfor %}
-  </div>
-
-  <button class="btn btn-nile">Get ideas</button>
-</form>
-{% endblock %}
+<div class="collapse" id="advanced">
+  {% for field in form %}
+    {% if field.name not in 'class_level strand sub_strand intended_use time_available' %}
+      <div class="mb-3">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}
+          <div class="form-text">{{ field.help_text }}</div>
+        {% endif %}
+        {% for err in field.errors %}
+          <div class="text-danger small">{{ err }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
