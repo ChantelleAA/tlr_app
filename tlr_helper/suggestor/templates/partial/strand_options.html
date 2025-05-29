@@ -1,0 +1,5 @@
+{# templates/partials/strand_options.html #}
+<option value="" selected>---------</option>
+{% for s in strands %}
+  <option value="{{ s.id }}">{{ s.title }}</option>
+{% endfor %}

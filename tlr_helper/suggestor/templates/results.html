@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Suggested TLRs</h2>
+{% if suggestions %}
+  {% for tlr in suggestions %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h4>{{ tlr.title }}</h4>
+        <p>{{ tlr.brief_description }}</p>
+        <p><strong>Materials:</strong>
+          {% for m in tlr.materials.all %}{{ m.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+        </p>
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'download' tlr.id %}">
+          Download details
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No exact match. Try broadening your search.</p>
+{% endif %}
+<hr>
+<a href="{% url 'query' %}">New search</a>
+{% endblock %}

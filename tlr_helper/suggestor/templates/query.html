@@ -1,0 +1,30 @@
+{
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+<select name="class_level"
+        hx-get="{% url 'ajax_load_strands' %}"
+        hx-target="#id_strand"
+        hx-trigger="change">
+  {{ form.class_level }}
+</select>
+
+<select name="strand"
+        id="id_strand"
+        hx-get="{% url 'ajax_load_substrands' %}"
+        hx-target="#id_sub_strand"
+        hx-trigger="change">
+  {{ form.strand }}
+</select>
+
+<select name="sub_strand" id="id_sub_strand">
+  {{ form.sub_strand }}
+</select>
+'% extends "base.html" %}
+{% block content %}
+<h2>Find a Teaching-Learning Resource</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary">Get ideas</button>
+</form>
+{% endblock %}
