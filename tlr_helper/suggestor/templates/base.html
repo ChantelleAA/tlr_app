@@ -1,14 +1,58 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>TLR Helper</title>
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <title>TLR Helper | NileEdge Innovations</title>
+
+  <!-- Bootstrap 5 (CSS-only) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+  <!-- HTMX (optional—needed only if you plan on dynamic dropdowns) -->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+  <style>
+    body {
+      background-color:#ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      color:#000;
+    }
+    .main-card{
+      max-width:720px;
+      margin:40px auto;
+      background-color:#f8f9fa;
+      padding:30px 40px;
+      border-radius:16px;
+      box-shadow:0 0 12px rgba(0,0,0,.06);
+    }
+    .btn-nile{
+      background-color:#2A50C8;
+      color:#fff;
+      font-weight:600;
+    }
+    .btn-nile:hover{
+      background-color:#1d3aa3;
+      color:#fff;
+    }
+    .form-label{
+      font-weight:500;
+    }
+  </style>
 </head>
-<body class="p-4">
+<body>
   <div class="container">
-    {% block content %}{% endblock %}
+    <div class="main-card">
+      <div class="text-center">
+        <img src="{% static 'suggestor/images/nile_logo.png' %}"
+             alt="NileEdge logo" width="100" class="mb-4">
+        <h3 class="mb-4">Find a Teaching-Learning Resource</h3>
+      </div>
+
+      {% block content %}{% endblock %}
+
+    </div>
   </div>
 </body>
 </html>

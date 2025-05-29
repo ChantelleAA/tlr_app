@@ -14,6 +14,29 @@ TIME_CHOICES = [
     ("reusable", "Reusable / multi-use"),
 ]
 
+# choose whatever labels make sense to you
+CLASS_SIZE_BANDS = [
+    ("small", "≤ 25"),
+    ("medium", "26 – 40"),
+    ("large", "41+"),
+]
+
+BLOOM_LEVELS = [
+    ("remember", "Remember"),
+    ("understand", "Understand"),
+    ("apply", "Apply"),
+    ("analyse", "Analyse"),
+    ("evaluate", "Evaluate"),
+    ("create", "Create"),
+]
+
+BUDGET_BANDS = [
+    ("low", "₵0 – 5"),
+    ("mid", "₵6 – 20"),
+    ("high", "₵21 +"),
+]
+
+
 class Material(models.Model):
     name = models.CharField(max_length=40, unique=True)
 

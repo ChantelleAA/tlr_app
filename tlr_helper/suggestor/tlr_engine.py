@@ -1,19 +1,51 @@
 from .models import Tlr
 
+# suggestor/tlr_engine.py
+from .models import Tlr
+
+
 def find_matches(data):
-    qs = Tlr.objects.filter(
-        strand__icontains=data["strand"],
-        class_level=data["class_level"],
-        intended_use=data["intended_use"],
+    """
+    Return a ranked list of up to 10 TLR objects that match teacher inputs.
+    """
+
+    # ---------- 1. mandatory filters ----------
+    qs = (
+        Tlr.objects
+        .filter(class_level=data["class_level"])
+        .filter(strand__icontains=data["strand"])
+        .filter(intended_use=data["intended_use"])
+        .distinct()
     )
-    if materials := data.get("materials_available"):
+
+    # ---------- 2. materials filter ----------
+    materials = data.get("materials_available")
+    if materials:
         qs = qs.filter(materials__in=materials).distinct()
-    if pf := data.get("preferred_format"):
-        qs = qs.filter(tlr_type__icontains=pf)
-    # simple ranking: quick activities first if teacher said time is quick
-    if data.get("time_available") == "quick":
-        qs = qs.order_by("time_needed")
-    return list(qs[:10])        # cap to 10 suggestions
+
+    # ---------- 3. budget & class-size constraints ----------
+    if data.get("budget_band") == "low":
+        qs = qs.exclude(costly=True)
+    if data.get("class_size") == "large":
+        qs = qs.exclude(tlr_type="small-group-only")
+
+    # ---------- 4. scoring ----------
+    def score(tlr):
+        s = 0
+        # match on time in lesson
+        if data.get("time_available") and tlr.time_needed == data["time_available"]:
+            s += 2
+        # match on Bloom level
+        if data.get("bloom_level") and getattr(tlr, "bloom", "") == data["bloom_level"]:
+            s += 2
+        # match on preferred format
+        if data.get("preferred_format") and data["preferred_format"].lower() in tlr.tlr_type.lower():
+            s += 1
+        return s
+
+    ranked = sorted(qs, key=score, reverse=True)
+    return ranked[:10]
+
 
 def score(tlr, data):
     score = 0
@@ -23,15 +55,3 @@ def score(tlr, data):
         score += 1
     return score
 
-def find_matches(data):
-    qs = Tlr.objects.filter(
-        strand__icontains=data["strand"],
-        class_level=data["class_level"],
-        intended_use=data["intended_use"],
-    ).distinct()
-
-    if mats := data.get("materials_available"):
-        qs = qs.filter(materials__in=mats).distinct()
-
-    ranked = sorted(qs, key=lambda t: score(t, data), reverse=True)
-    return ranked[:10]

@@ -1,30 +1,56 @@
-{
-  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-
-<select name="class_level"
-        hx-get="{% url 'ajax_load_strands' %}"
-        hx-target="#id_strand"
-        hx-trigger="change">
-  {{ form.class_level }}
-</select>
-
-<select name="strand"
-        id="id_strand"
-        hx-get="{% url 'ajax_load_substrands' %}"
-        hx-target="#id_sub_strand"
-        hx-trigger="change">
-  {{ form.strand }}
-</select>
-
-<select name="sub_strand" id="id_sub_strand">
-  {{ form.sub_strand }}
-</select>
-'% extends "base.html" %}
+{% extends "base.html" %}
 {% block content %}
-<h2>Find a Teaching-Learning Resource</h2>
-<form method="post">
+<form method="post" novalidate>
   {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary">Get ideas</button>
+
+  <!-- 1 ─ Class ➜ Strand ➜ Sub-strand -->
+  <div class="mb-3">
+    <label class="form-label">{{ form.class_level.label }}</label>
+    {{ form.class_level }}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">{{ form.strand.label }}</label>
+    {{ form.strand }}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">{{ form.sub_strand.label }}</label>
+    {{ form.sub_strand }}
+  </div>
+
+  <!-- 2 ─ BASIC specifics -->
+  <div class="mb-3">
+    <label class="form-label">{{ form.intended_use.label }}</label>
+    {{ form.intended_use }}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">{{ form.time_available.label }}</label>
+    {{ form.time_available }}
+  </div>
+
+  <!-- 3 ─ Toggle for advanced fields -->
+  <button class="btn btn-link p-0 mb-3" type="button"
+          data-bs-toggle="collapse" data-bs-target="#advanced">
+    More options
+  </button>
+
+  <div class="collapse" id="advanced">
+    {% for field in form %}
+      {% if field.name not in
+            "class_level strand sub_strand intended_use time_available".split %}
+        <div class="mb-3">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+            <div class="form-text">{{ field.help_text }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <button class="btn btn-nile">Get ideas</button>
 </form>
 {% endblock %}
