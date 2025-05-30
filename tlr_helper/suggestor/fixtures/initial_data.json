@@ -369,7 +369,7 @@
     "model": "suggestor.classlevel",
     "pk": 53,
     "fields": {
-      "code": "KG",
+      "code": "KG1",
       "name": "KG1"
     }
   },
@@ -377,7 +377,7 @@
     "model": "suggestor.classlevel",
     "pk": 54,
     "fields": {
-      "code": "KG",
+      "code": "KG2",
       "name": "KG2"
     }
   },
@@ -731,6 +731,38 @@
     "fields": {
       "class_level": 57,
       "title": "Ghanaian Language"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 100,
+    "fields": {
+      "class_level": 55,
+      "title": "Numbers"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 101,
+    "fields": {
+      "strand": 100,
+      "title": "Counting and Writing Numbers"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 102,
+    "fields": {
+      "substrand": 101,
+      "description": "Pupils will be able to count, read and write numbers up to 100."
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 103,
+    "fields": {
+      "standard": 102,
+      "description": "Pupils can count objects up to 100."
     }
   }
 ]

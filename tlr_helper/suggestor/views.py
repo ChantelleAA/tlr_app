@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .forms import RouteSelectForm, FilterForm
 from .tlr_engine import find_matches
-from .models import Tlr, Strand, SubStrand
+from .models import *
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
@@ -49,6 +49,15 @@ def load_substrands(request):
     html = render_to_string("partials/substrand_options.html", {"subs": subs})
     return HttpResponse(html)
 
+
+def load_subjects(request):
+    class_level_id = request.GET.get('class_level')
+    form = FilterForm()
+    if class_level_id:
+        form.fields['subject'].queryset = Subject.objects.filter(class_level_id=class_level_id)
+    else:
+        form.fields['subject'].queryset = Subject.objects.none()
+    return render(request, "partials/subject_options.html", {"filter_form": form})
 
 def pick_route(request):
     form = RouteSelectForm()

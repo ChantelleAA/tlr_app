@@ -8,10 +8,22 @@
 
       <div class="row g-3">
         <div class="col-md-6">
-          {{ filter_form.class_level.label_tag }} {{ filter_form.class_level }}
+        <label for="id_class_level">{{ filter_form.class_level.label }}</label>
+        <select name="class_level" id="id_class_level"
+                class="form-select"
+                hx-get="{% url 'load_subjects' %}"
+                hx-target="#subject-field"
+                hx-trigger="change"
+                >
+        {% for cl in filter_form.class_level.field.queryset %}
+            <option value="{{ cl.pk }}"
+            {% if filter_form.class_level.value == cl.pk|stringformat:"s" %}selected{% endif %}
+            >{{ cl.name }}</option>
+        {% endfor %}
+        </select>
         </div>
-        <div class="col-md-6">
-          {{ filter_form.subject.label_tag }} {{ filter_form.subject }}
+        <div class="col-md-6" id="subject-field">
+        {{ filter_form.subject.label_tag }} {{ filter_form.subject }}
         </div>
         <div class="col-md-4">
           {{ filter_form.term.label_tag }} {{ filter_form.term }}

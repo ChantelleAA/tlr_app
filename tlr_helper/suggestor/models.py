@@ -1,6 +1,8 @@
 from django.db import models
-
-
+from smart_selects.db_fields import ChainedForeignKey
+from django.apps import apps
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
 
 INTENDED_CHOICES = [
     ("intro", "Introduction"),
@@ -8,7 +10,77 @@ INTENDED_CHOICES = [
     ("assessment", "Assessment"),
 ]
 
-CLASS_CHOICES = [("KG", "KG")] + [(str(i), f"Class {i}") for i in range(1, 4)]
+SUBJECTS_BY_CLASS = {
+    "Crèche": [
+        "Language and Literacy",
+        "Numeracy",
+        "Creative Arts",
+        "Environmental Studies",
+        "Physical Development",
+        "Music and Movement"
+    ],
+    "Nursery": [
+        "Language and Literacy",
+        "Numeracy",
+        "Creative Arts",
+        "Environmental Studies",
+        "Physical Development",
+        "Music and Movement"
+    ],
+    "KG1": [
+        "Language and Literacy",
+        "Numeracy",
+        "Our World Our People",
+        "Creative Arts",
+        "Physical Development",
+        "Religious and Moral Education"
+    ],
+    "KG2": [
+        "Language and Literacy",
+        "Numeracy",
+        "Our World Our People",
+        "Creative Arts",
+        "Physical Development",
+        "Religious and Moral Education"
+    ],
+    "Class 1": [
+        "English Language",
+        "Ghanaian Language",
+        "Mathematics",
+        "Science",
+        "Our World Our People",
+        "Creative Arts",
+        "Physical Education",
+        "Religious and Moral Education",
+        "Computing"
+    ],
+    "Class 2": [
+        "English Language",
+        "Ghanaian Language",
+        "Mathematics",
+        "Science",
+        "Our World Our People",
+        "Creative Arts",
+        "Physical Education",
+        "Religious and Moral Education",
+        "Computing"
+    ],
+    "Class 3": [
+        "English Language",
+        "Ghanaian Language",
+        "Mathematics",
+        "Science",
+        "Our World Our People",
+        "Creative Arts",
+        "Physical Education",
+        "Religious and Moral Education",
+        "Computing"
+    ],
+}
+
+
+classes = ["Crèche", "Nursery", "KG1", "KG2", "Class 1", "Class 2", "Class 3"]
+CLASS_CHOICES = [(i, i) if " " not in i else (i, i[-1]) for i in classes]
 
 TIME_CHOICES = [
     ("quick", "5-10 min"),
@@ -16,7 +88,6 @@ TIME_CHOICES = [
     ("reusable", "Reusable / multi-use"),
 ]
 
-# choose whatever labels make sense to you
 CLASS_SIZE_BANDS = [
     ("small", "≤ 25"),
     ("medium", "26 – 40"),
@@ -33,11 +104,20 @@ BLOOM_LEVELS = [
 ]
 
 BUDGET_BANDS = [
-    ("low", "₵0 – 5"),
-    ("mid", "₵6 – 20"),
-    ("high", "₵21 +"),
+    ("low", "₵0 – 50"),
+    ("lower-mid", "₵50 – 100"),
+    ("high", "₵100 +"),
 ]
 
+LEARNING_DIFFICULTY_CHOICES = [
+    ("none", "None"),
+    ("dyslexia", "Dyslexia"),
+    ("adhd", "ADHD"),
+    ("visual", "Visual Impairment"),
+    ("hearing", "Hearing Impairment"),
+    ("autism", "Autism Spectrum"),
+    ("other", "Other"),
+]
 
 class Material(models.Model):
     name = models.CharField(max_length=40, unique=True)
@@ -46,11 +126,15 @@ class Material(models.Model):
         return self.name
 
 class ClassLevel(models.Model):
-    code = models.CharField(max_length=5, unique=True)   # KG, 1, 2, 3
-    name = models.CharField(max_length=20)               # “KG”, “Class 1”
-
+    code = models.CharField(max_length=5, unique=True) 
+    name = models.CharField(max_length=20)               
     def __str__(self):
         return self.name
+
+class Theme(models.Model):
+    title = models.CharField(max_length=120, unique=True)
+    def __str__(self):
+        return self.title
 
 class Strand(models.Model):
     class_level = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
@@ -58,7 +142,6 @@ class Strand(models.Model):
 
     def __str__(self):
         return f"{self.class_level} – {self.title}"
-
 
 class SubStrand(models.Model):
     strand = models.ForeignKey(Strand, on_delete=models.CASCADE)
@@ -130,7 +213,6 @@ class ContentStandard(models.Model):
     def __str__(self):
         return self.code
 
-
 class Indicator(models.Model):
     standard = models.ForeignKey(ContentStandard, on_delete=models.CASCADE)
     code = models.CharField(max_length=20)
@@ -143,22 +225,29 @@ class Indicator(models.Model):
         return self.code
 
 class Tlr(models.Model):
-    # --- curriculum tags ---
     class_level   = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
-    subject       = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)
-    term          = models.PositiveSmallIntegerField(null=True, blank=True)  # 1-3
+    # subject       = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)
+    subject = ChainedForeignKey(
+    Subject,
+    chained_field="class_level",
+    chained_model_field="class_level",
+    show_all=False,
+    auto_choose=True,
+    sort=True,
+    null=True,
+    blank=True,
+    on_delete=models.CASCADE)
+    term          = models.PositiveSmallIntegerField(null=True, blank=True)
     strand        = models.ForeignKey(Strand, on_delete=models.CASCADE, null=True, blank=True)
     substrand     = models.ForeignKey(SubStrand, on_delete=models.CASCADE, null=True, blank=True)
     indicator     = models.ForeignKey(Indicator, on_delete=models.CASCADE, null=True, blank=True)
 
-    # --- alternate tags ---
     themes            = models.ManyToManyField(Theme, blank=True)
     key_learning_areas = models.ManyToManyField(KeyLearningArea, blank=True)
     competencies      = models.ManyToManyField(CoreCompetency, blank=True)
     resource_types    = models.ManyToManyField(ResourceType, blank=True)
     goals             = models.ManyToManyField(GoalTag, blank=True)
 
-    # --- existing fields ---
     title = models.CharField(max_length=120)
     brief_description = models.TextField()
     materials         = models.ManyToManyField(Material, blank=True)
@@ -167,8 +256,37 @@ class Tlr(models.Model):
     tips_for_use    = models.TextField(blank=True) 
     intended_use = models.CharField(max_length=20, choices=INTENDED_CHOICES, blank=True, null=True)
     tlr_type = models.CharField(max_length=20, blank=True, null=True) 
-
+    learning_difficulty = models.CharField(
+        max_length=20,
+        choices=LEARNING_DIFFICULTY_CHOICES,
+        default="none",
+        blank=True,
+        null=True,
+    )
 
 
     def __str__(self):
         return self.title
+
+
+@receiver(post_migrate)
+def _populate_subjects(sender, **kwargs):
+    """
+    After every migrate, be sure each Subject in SUBJECTS_BY_CLASS
+    exists for its ClassLevel (just like ClassLevels were pre-loaded
+    from the `classes` list).
+    """
+    if sender.label != "suggestor":          # ← your app label
+        return
+
+    ClassLevel = apps.get_model("suggestor", "ClassLevel")
+    Subject     = apps.get_model("suggestor", "Subject")
+
+    for cls_name, subj_titles in SUBJECTS_BY_CLASS.items():
+        try:
+            cl = ClassLevel.objects.get(name=cls_name)
+        except ClassLevel.DoesNotExist:
+            continue                         # class not in DB yet
+
+        for title in subj_titles:
+            Subject.objects.get_or_create(class_level=cl, title=title)

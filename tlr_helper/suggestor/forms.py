@@ -12,9 +12,8 @@ from .models import (
     CLASS_SIZE_BANDS, BLOOM_LEVELS, BUDGET_BANDS,
 )
 
-# ────────────────────────────────────────────────
-#  ROUTE-PICKER   (first screen)
-# ────────────────────────────────────────────────
+
+
 ROUTES = [
     ("curriculum", "By Strand / Sub-strand"),
     ("key_area",   "By Key Learning Area"),
@@ -33,15 +32,14 @@ class RouteSelectForm(forms.Form):
     )
 
 
-# ────────────────────────────────────────────────
-#  FILTER FORM   (second screen — all routes)
-# ────────────────────────────────────────────────
+
 class FilterForm(forms.Form):
     # always visible
     class_level = forms.ModelChoiceField(ClassLevel.objects.all(), label="Class")
 
     # curriculum route
-    subject    = forms.ModelChoiceField(Subject.objects.none(),  required=False, label="Subject")
+    subject = forms.ModelChoiceField(Subject.objects.none(), required=False, label="Subject")
+
     term = forms.ChoiceField(
         choices=[(1, "Term 1"), (2, "Term 2"), (3, "Term 3")],
         required=False,
@@ -66,7 +64,6 @@ class FilterForm(forms.Form):
     # quick-goal route
     goal       = forms.ModelChoiceField(GoalTag.objects.all(), required=False, label="Lesson goal")
 
-    # --------------- optional generic filters (appear in any route) ---------------
     intended_use = forms.ChoiceField(choices=INTENDED_CHOICES, required=False, label="Purpose in lesson")
     time_available = forms.ChoiceField(choices=TIME_CHOICES, required=False, label="Time in lesson")
     class_size  = forms.ChoiceField(choices=CLASS_SIZE_BANDS, required=False, label="Class size")
@@ -75,7 +72,7 @@ class FilterForm(forms.Form):
     materials_available = forms.ModelMultipleChoiceField(
         queryset=Material.objects.all(),
         required=False,
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={'class': 'select2'}),
         label="Materials on hand",
     )
     learner_type = forms.CharField(required=False, label="Special-needs notes")
@@ -89,6 +86,18 @@ class FilterForm(forms.Form):
     # ───────────────────────────────────────────
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            if isinstance(field.widget, forms.Select):
+                field.widget.attrs.update({'class': 'form-select'})
+            elif isinstance(field.widget, forms.TextInput):
+                field.widget.attrs.update({'class': 'form-control'})
+            elif isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({'class': 'form-control'})
+            elif isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs.update({'class': 'form-check-input'})
+            elif isinstance(field.widget, forms.CheckboxSelectMultiple):
+                field.widget.attrs.update({'class': 'form-check-input'})
 
         # limit Subject list after class_level picked
         if "class_level" in self.data:

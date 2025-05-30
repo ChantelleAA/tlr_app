@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from suggestor import views as v
 
 urlpatterns = [
@@ -26,4 +26,6 @@ urlpatterns = [
     path("", v.pick_route, name="pick_route"),
     path("filters/", v.show_filters, name="show_filters"),
     path("suggest/", v.suggest, name="suggest"),
+    path('chaining/', include('smart_selects.urls')),
+    path("load-subjects/", v.load_subjects, name="load_subjects"),
 ]
