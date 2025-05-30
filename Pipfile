@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 pandas = "*"
 django-smart-selects = "*"
+django-select2 = "*"
 
 [dev-packages]
 

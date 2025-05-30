@@ -129,6 +129,13 @@
       allowClear: true
     });
   });
+  document.body.addEventListener('htmx:afterSwap', function(evt) {
+    $('.select2').select2({
+      width: '100%',
+      placeholder: "Select materials",
+      allowClear: true
+    });
+  });
 </script>
 </body>
 </html>
