@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RouteSelectForm, FilterForm
 from .tlr_engine import find_matches
 from .models import *
@@ -23,27 +23,52 @@ def download_view(request, pk):
     response["Content-Disposition"] = f'attachment; filename="{tlr.title}.txt"'
     return response
 
+
+def load_subjects(request):
+    cls_id = request.GET.get("class_level")
+    ctx = {
+        "subjects": Subject.objects.filter(class_level_id=cls_id) if cls_id else [],
+    }
+    html = render_to_string("partials/subject_options.html", ctx)
+    return HttpResponse(html)
+
 def load_strands(request):
-    class_id = request.GET.get("subject")
-    strands = Strand.objects.filter(class_level_id=class_id)
-    html = render_to_string("partials/strand_options.html", {"strands": strands})
+    subj_id = request.GET.get("subject")
+    ctx = {
+        "strands": Strand.objects.filter(subject_id=subj_id) if subj_id else [],
+    }
+    html = render_to_string("partials/strand_options.html", ctx)
     return HttpResponse(html)
 
 def load_substrands(request):
     strand_id = request.GET.get("strand")
-    subs = SubStrand.objects.filter(strand_id=strand_id)
-    html = render_to_string("partials/substrand_options.html", {"subs": subs})
+    ctx = {
+        "subs": SubStrand.objects.filter(strand_id=strand_id) if strand_id else [],
+    }
+    html = render_to_string("partials/substrand_options.html", ctx)
     return HttpResponse(html)
 
+# def load_strands(request):
+#     class_id = request.GET.get("subject")
+#     strands = Strand.objects.filter(class_level_id=class_id)
+#     html = render_to_string("partials/strand_options.html", {"strands": strands})
+#     return HttpResponse(html)
 
-def load_subjects(request):
-    class_level_id = request.GET.get('class_level')
-    form = FilterForm()
-    if class_level_id:
-        form.fields['subject'].queryset = Subject.objects.filter(class_level_id=class_level_id)
-    else:
-        form.fields['subject'].queryset = Subject.objects.none()
-    return render(request, "partials/subject_options.html", {"filter_form": form})
+# def load_substrands(request):
+#     strand_id = request.GET.get("strand")
+#     subs = SubStrand.objects.filter(strand_id=strand_id)
+#     html = render_to_string("partials/substrand_options.html", {"subs": subs})
+#     return HttpResponse(html)
+
+
+# def load_subjects(request):
+#     class_level_id = request.GET.get('class_level')
+#     form = FilterForm()
+#     if class_level_id:
+#         form.fields['subject'].queryset = Subject.objects.filter(class_level_id=class_level_id)
+#     else:
+#         form.fields['subject'].queryset = Subject.objects.none()
+#     return render(request, "partials/subject_options.html", {"filter_form": form})
 
 def pick_route(request):
     form = RouteSelectForm()
@@ -80,3 +105,56 @@ def suggest(request):
         return HttpResponseBadRequest("Form invalid")
     return render(request, "filter_form.html",
                   {"filter_form": form, "route": route})
+
+def route_select(request):
+    if request.method == "POST":
+        form = RouteSelectForm(request.POST)
+        if form.is_valid():
+            route = form.cleaned_data["route"]
+            return redirect(f"/filters/?route={route}")
+    else:
+        form = RouteSelectForm()
+
+    return render(request, "route_select.html", {"form": form})
+
+
+
+def serialize_filters(data):
+    safe = {}
+    for key, value in data.items():
+        if isinstance(value, models.Model):
+            safe[key] = value.pk
+        elif hasattr(value, "__iter__") and not isinstance(value, str):
+            safe[key] = [obj.pk if isinstance(obj, models.Model) else obj for obj in value]
+        else:
+            safe[key] = value
+    return safe
+
+
+def filter_page(request):
+    route = request.GET.get("route")
+    if not route:
+        return redirect("route_select")  
+
+    if request.method == "POST":
+        form = FilterForm(request.POST)
+        if form.is_valid():
+            request.session["filters"] = serialize_filters(form.cleaned_data)   # stash in session
+            request.session["route"]   = route
+            return redirect("results_page")
+    else:
+        form = FilterForm()
+
+    return render(request, "filter_form.html",
+                  {"form": form, "route": route})
+
+
+def results_page(request):
+    filters = request.session.get("filters")
+    route   = request.session.get("route")
+    if not filters or not route:
+        return redirect("route_select")
+
+    suggestions = find_matches(filters, route)
+    return render(request, "results.html", {"suggestions": suggestions})
+
