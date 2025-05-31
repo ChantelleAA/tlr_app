@@ -10,6 +10,7 @@ from .models import (
     # constants
     INTENDED_CHOICES, TIME_CHOICES,
     CLASS_SIZE_BANDS, BLOOM_LEVELS, BUDGET_BANDS,
+    LEARNING_DIFFICULTY_CHOICES,
 )
 
 
@@ -95,7 +96,13 @@ class FilterForm(forms.Form):
         widget=forms.SelectMultiple(attrs={'class': 'select2'}),
         label="Materials on hand",
     )
-    learner_type = forms.CharField(required=False, label="Special-needs notes")
+    learner_type = forms.ChoiceField(
+    choices=LEARNING_DIFFICULTY_CHOICES,
+    required=False,
+    label="Learning difficulty",
+    widget=forms.Select(attrs={"class": "form-select"})
+    )
+
     preferred_format = forms.CharField(required=False, label="Preferred TLR format")
     classroom_setup  = forms.CharField(required=False, label="Classroom setup")
     outcome          = forms.CharField(required=False, widget=forms.Textarea,
