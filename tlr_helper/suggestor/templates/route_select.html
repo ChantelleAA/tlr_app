@@ -7,9 +7,9 @@
     <h3 class="mb-3 text-center text-nile">Choose a Search Path</h3>
 
     {# ── fire GET as soon as any radio changes ── #}
-    <form hx-get="{% url 'show_filters' %}"
+    <form hx-get="/filters/"
           hx-target="#filter-panel"
-          hx-swap="outerHTML"
+          hx-swap="innerHTML"
           hx-trigger="change">
 
       <div class="mb-3">
@@ -22,11 +22,11 @@
         {% endfor %}
       </div>
 
-      {# No “Next” button needed any more #}
     </form>
   </div>
 
   <!-- HTMX drops the filter form in here -->
-  <div id="filter-panel" class="mt-4"></div>
+<div id="filter-panel" class="mt-4">
+</div>
 </div>
 {% endblock %}

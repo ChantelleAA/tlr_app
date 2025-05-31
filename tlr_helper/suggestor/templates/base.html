@@ -93,36 +93,36 @@
   </main>
 
   <footer>
-    © {{ current_year }} NileEdge Innovations – All rights reserved
+    © {{ current_year }} TEDD Ghana – All rights reserved
   </footer>
 
-  <script src="{% static 'smart-selects/admin/js/chainedfk.js' %}"></script>
+<!-- ⬇ Bootstrap spinner-toggle (doesn’t need jQuery) -->
+<!-- <script>
+  document.addEventListener("htmx:configRequest", evt => {
+    const btn = evt.detail.elt.closest("form")?.querySelector("[type='submit']");
+    if (btn) {
+      btn.innerHTML = 'Finding… <span class="spinner-border spinner-border-sm"></span>';
+      btn.disabled = true;
+    }
+  });
+  document.addEventListener("htmx:afterRequest", evt => {
+    const btn = evt.detail.elt.closest("form")?.querySelector("[type='submit']");
+    if (btn) {
+      btn.innerHTML = 'Find TLRs';
+      btn.disabled = false;
+    }
+  });
+</script> -->
 
-
-  <!-- Optional spinner toggle -->
-  <script>
-    document.addEventListener("htmx:configRequest", function(evt) {
-      const btn = evt.detail.elt.closest("form")?.querySelector("button[type='submit']");
-      if (btn) {
-        btn.innerHTML = 'Finding... <span class="spinner-border spinner-border-sm"></span>';
-        btn.disabled = true;
-      }
-    });
-    document.addEventListener("htmx:afterRequest", function(evt) {
-      const btn = evt.detail.elt.closest("form")?.querySelector("button[type='submit']");
-      if (btn) {
-        btn.innerHTML = 'Find TLRs';
-        btn.disabled = false;
-      }
-    });
-  </script>
-
-<!-- jQuery (required by Select2) -->
+<!-- ⬇ jQuery first -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Select2 JS -->
+<!-- ⬇ Select2 (needs jQuery) -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
+<!-- ⬇ django-smart-selects helper (needs jQuery) -->
+<script src="{% static 'smart-selects/admin/js/chainedfk.js' %}"></script>
 
+<!-- ⬇ your Select2 re-initialiser -->
+<script>
   function enableSelect2() {
     $('.select2').select2({
       width: '100%',
@@ -130,14 +130,9 @@
       allowClear: true
     });
   }
-  $(document).ready(enableSelect2);
-  document.body.addEventListener('htmx:afterSwap', function(evt) {
-    $('.select2').select2({
-      width: '100%',
-      placeholder: "Select materials",
-      allowClear: true
-    });
-  });
+  $(document).ready(enableSelect2);                 // first page load
+  document.body.addEventListener('htmx:afterSwap', enableSelect2); // after every HTMX swap
 </script>
+
 </body>
 </html>
