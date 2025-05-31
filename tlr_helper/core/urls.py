@@ -40,6 +40,8 @@ from suggestor import views as v
 
 urlpatterns = [
     path("admin/",      admin.site.urls),
+    path("chained-filter/", v.chained_filter, name="chained_filter"),
+    # path("", include("suggestor.urls")), 
 
     # 3-step flow
     path("",            v.route_select, name="route_select"),       # step-1

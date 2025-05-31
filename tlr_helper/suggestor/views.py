@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RouteSelectForm, FilterForm
 from .tlr_engine import find_matches
 from .models import *
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 
@@ -149,3 +149,8 @@ def results_page(request):
     suggestions = find_matches(filters, route)
     return render(request, "results.html", {"suggestions": suggestions})
 
+
+def chained_filter(request):
+    class_level_id = request.GET.get("class_level")
+    subjects = Subject.objects.filter(class_level_id=class_level_id).values("id", "name")
+    return JsonResponse(list(subjects), safe=False)
