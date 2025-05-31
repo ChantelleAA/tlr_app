@@ -1,24 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
 from .forms import RouteSelectForm, FilterForm
 from .tlr_engine import find_matches
 from .models import *
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.template.loader import render_to_string
-
-# def query_view(request):
-#     if request.method == "POST":
-#         form = TLRQueryForm(request.POST)
-#         if form.is_valid():
-#             suggestions = find_matches(form.cleaned_data)
-#             return render(
-#                 request,
-#                 "results.html",
-#                 {"form": form, "suggestions": suggestions},
-#             )
-#     else:
-#         form = TLRQueryForm()
-#     return render(request, "query.html", {"form": form})
+from django.views.decorators.http import require_POST
 
 
 def download_view(request, pk):
@@ -38,7 +24,7 @@ def download_view(request, pk):
     return response
 
 def load_strands(request):
-    class_id = request.GET.get("class_level")
+    class_id = request.GET.get("subject")
     strands = Strand.objects.filter(class_level_id=class_id)
     html = render_to_string("partials/strand_options.html", {"strands": strands})
     return HttpResponse(html)
@@ -64,18 +50,33 @@ def pick_route(request):
     return render(request, "route_select.html", {"route_form": form})
 
 def show_filters(request):
-    route = request.POST.get("route")
+    route = request.GET.get("route")
     filter_form = FilterForm()
     return render(
         request, "filter_form.html",
         {"filter_form": filter_form, "route": route}
     )
 
+@require_POST
 def suggest(request):
-    form = FilterForm(request.POST)
-    route = request.POST.get("route")  # hidden input
+    form  = FilterForm(request.POST)
+    route = request.POST.get("route")
+
     if form.is_valid():
         suggestions = find_matches(form.cleaned_data, route)
+
+        # HTMX? -> return only the snippet
+        if request.headers.get("HX-Request") == "true":
+            html = render_to_string("partials/results_list.html",
+                                    {"suggestions": suggestions},
+                                    request=request)
+            return HttpResponse(html)
+
+        # non-JS fallback
         return render(request, "results.html", {"suggestions": suggestions})
-    # redisplay
-    return render(request, "filter_form.html", {"filter_form": form, "route": route})
+
+    # invalid form
+    if request.headers.get("HX-Request") == "true":
+        return HttpResponseBadRequest("Form invalid")
+    return render(request, "filter_form.html",
+                  {"filter_form": form, "route": route})

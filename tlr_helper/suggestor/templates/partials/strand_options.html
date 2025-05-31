@@ -1,4 +1,1 @@
-<option value="" selected>---------</option>
-{% for s in strands %}
-  <option value="{{ s.id }}">{{ s.title }}</option>
-{% endfor %}
+{{ form.strand.label_tag }} {{ form.strand }}

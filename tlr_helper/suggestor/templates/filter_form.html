@@ -23,16 +23,45 @@
         </select>
         </div>
         <div class="col-md-6" id="subject-field">
-        {{ filter_form.subject.label_tag }} {{ filter_form.subject }}
+          <label for="id_subject">{{ filter_form.subject.label }}</label>
+          <select name="subject" id="id_subject"
+                  class="form-select"
+                  hx-get="{% url 'ajax_load_strands' %}"
+                  hx-target="#strand-field"
+                  hx-trigger="change">
+              {% for subj in filter_form.subject.field.queryset %}
+                <option value="{{ subj.pk }}"
+                  {% if filter_form.subject.value == subj.pk|stringformat:"s" %}selected{% endif %}>
+                  {{ subj.title }}
+                </option>
+              {% endfor %}
+          </select>
         </div>
+
         <div class="col-md-4">
           {{ filter_form.term.label_tag }} {{ filter_form.term }}
         </div>
         {% if route == "curriculum" %}
-          <div class="col-md-6">
+          <!-- <div class="col-md-6" id="strand-field">
             {{ filter_form.strand.label_tag }} {{ filter_form.strand }}
+          </div> -->
+
+          <div class="col-md-6" id="strand-field">
+            <label for="id_strand">{{ filter_form.strand.label }}</label>
+            <select name="strand" id="id_strand"
+                    class="form-select"
+                    hx-get="{% url 'ajax_load_substrands' %}"
+                    hx-target="#substrand-field"
+                    hx-trigger="change">
+                {% for st in filter_form.strand.field.queryset %}
+                  <option value="{{ st.pk }}"
+                    {% if filter_form.strand.value == st.pk|stringformat:"s" %}selected{% endif %}>
+                    {{ st.title }}
+                  </option>
+                {% endfor %}
+            </select>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" id="substrand-field">
             {{ filter_form.substrand.label_tag }} {{ filter_form.substrand }}
           </div>
         {% elif route == "key_area" %}

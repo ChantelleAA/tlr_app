@@ -5,22 +5,28 @@
 <div class="container my-5">
   <div class="card shadow-sm rounded-4 mx-auto p-4" style="max-width: 600px;">
     <h3 class="mb-3 text-center text-nile">Choose a Search Path</h3>
-    <form method="post" action="{% url 'show_filters' %}" hx-post="{% url 'show_filters' %}" hx-target="#filter-panel" hx-swap="outerHTML">
-      {% csrf_token %}
+
+    {# ── fire GET as soon as any radio changes ── #}
+    <form hx-get="{% url 'show_filters' %}"
+          hx-target="#filter-panel"
+          hx-swap="outerHTML"
+          hx-trigger="change">
+
       <div class="mb-3">
         {{ route_form.route.label_tag }}
         {% for radio in route_form.route %}
           <div class="form-check">
-            {{ radio.tag }}
+            {{ radio.tag }}             <!-- already includes value="curriculum" etc. -->
             <label class="form-check-label">{{ radio.choice_label }}</label>
           </div>
         {% endfor %}
       </div>
-      <button type="submit" class="btn btn-nile w-100">Next</button>
+
+      {# No “Next” button needed any more #}
     </form>
   </div>
 
-  <!-- Empty panel to be filled by HTMX with filter form -->
+  <!-- HTMX drops the filter form in here -->
   <div id="filter-panel" class="mt-4"></div>
 </div>
 {% endblock %}

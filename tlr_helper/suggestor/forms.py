@@ -34,19 +34,39 @@ class RouteSelectForm(forms.Form):
 
 
 class FilterForm(forms.Form):
-    # always visible
-    class_level = forms.ModelChoiceField(ClassLevel.objects.all(), label="Class")
+    class_level = forms.ModelChoiceField(
+        queryset=ClassLevel.objects.all(),
+        label="Class",
+        widget=forms.Select(attrs={'class': 'form-select'})   # ← no “select2”
+    )
 
-    # curriculum route
-    subject = forms.ModelChoiceField(Subject.objects.none(), required=False, label="Subject")
+    # single-choice fields: keep Bootstrap look
+    subject = forms.ModelChoiceField(
+        queryset=Subject.objects.none(),
+        required=False,
+        label="Subject",
+        widget=forms.Select(attrs={'class': 'form-select'})   # ← no “select2”
+    )
+    strand = forms.ModelChoiceField(
+        queryset=Strand.objects.none(),
+        required=False,
+        label="Strand",
+        widget=forms.Select(attrs={'class': 'form-select'})   # ← no “select2”
+    )
+    substrand = forms.ModelChoiceField(
+        queryset=SubStrand.objects.none(),
+        required=False,
+        label="Sub-strand",
+        widget=forms.Select(attrs={'class': 'form-select'})   # ← no “select2”
+    )
 
     term = forms.ChoiceField(
         choices=[(1, "Term 1"), (2, "Term 2"), (3, "Term 3")],
         required=False,
         label="Term",
     )
-    strand     = forms.ModelChoiceField(Strand.objects.none(),   required=False, label="Strand")
-    substrand  = forms.ModelChoiceField(SubStrand.objects.none(), required=False, label="Sub-strand")
+    # strand     = forms.ModelChoiceField(Strand.objects.none(),   required=False, label="Strand")
+    # substrand  = forms.ModelChoiceField(SubStrand.objects.none(), required=False, label="Sub-strand")
 
     # key-area route
     key_area   = forms.ModelChoiceField(KeyLearningArea.objects.all(), required=False, label="Key area")
@@ -81,23 +101,23 @@ class FilterForm(forms.Form):
     outcome          = forms.CharField(required=False, widget=forms.Textarea,
                                        label="Learning outcome / indicator")
 
-    # ───────────────────────────────────────────
-    #  dynamic dropdown logic
-    # ───────────────────────────────────────────
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
-            if isinstance(field.widget, forms.Select):
-                field.widget.attrs.update({'class': 'form-select'})
-            elif isinstance(field.widget, forms.TextInput):
-                field.widget.attrs.update({'class': 'form-control'})
-            elif isinstance(field.widget, forms.Textarea):
-                field.widget.attrs.update({'class': 'form-control'})
-            elif isinstance(field.widget, forms.CheckboxInput):
-                field.widget.attrs.update({'class': 'form-check-input'})
-            elif isinstance(field.widget, forms.CheckboxSelectMultiple):
-                field.widget.attrs.update({'class': 'form-check-input'})
+            widget = field.widget
+            base = widget.attrs.get('class', '')
+            if isinstance(widget, forms.Select):
+                widget.attrs['class'] = f'{base} form-select'.strip()
+            elif isinstance(widget, forms.TextInput):
+                widget.attrs['class'] = f'{base} form-control'.strip()
+            elif isinstance(widget, forms.Textarea):
+                widget.attrs['class'] = f'{base} form-control'.strip()
+            elif isinstance(widget, forms.CheckboxInput):
+                widget.attrs['class'] = f'{base} form-check-input'.strip()
+            elif isinstance(widget, forms.CheckboxSelectMultiple):
+                widget.attrs['class'] = f'{base} form-check-input'.strip()
+
 
         # limit Subject list after class_level picked
         if "class_level" in self.data:
