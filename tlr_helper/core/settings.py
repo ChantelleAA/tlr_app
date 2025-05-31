@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-^25q*ivx#nbn)vcr6x63qvu!73-6th1iz&k=9pq7wk)#pgjdsz
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '.onrender.com'
+    '.onrender.com',
+    '127.0.0.1',
 ]
-
 
 # Application definition
 
@@ -129,5 +129,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if os.getenv("RENDER"):
-    import dj_database_url
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+else:
+    # Default local sqlite fallback for dev
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+
+import django
+django.setup()
+
+from django.core.management import call_command
+try:
+    call_command('loaddata', 'intial_data.json')
+except Exception as e:
+    print(f"Fixture load failed or already loaded: {e}")
