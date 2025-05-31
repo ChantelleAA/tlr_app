@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import django
+from django.core.management import call_command
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -128,20 +130,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if os.getenv("RENDER"):
+DATABASES = {}
+
+if os.getenv("RENDER") or os.getenv("DATABASE_URL"):
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 else:
-    # Default local sqlite fallback for dev
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / "db.sqlite3",
     }
 
-import django
+
 django.setup()
 
-from django.core.management import call_command
 try:
-    call_command('loaddata', 'intial_data.json')
+    call_command('loaddata', 'suggestor/fixtures/initial_data.json')
 except Exception as e:
     print(f"Fixture load failed or already loaded: {e}")

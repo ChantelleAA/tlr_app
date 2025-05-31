@@ -9,8 +9,8 @@ pandas = "*"
 django-smart-selects = "*"
 django-select2 = "*"
 gunicorn = "*"
-dj-database-url = "*"
 whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
