@@ -24,51 +24,42 @@ def download_view(request, pk):
     return response
 
 
-def load_subjects(request):
-    cls_id = request.GET.get("class_level")
-    ctx = {
-        "subjects": Subject.objects.filter(class_level_id=cls_id) if cls_id else [],
-    }
-    html = render_to_string("partials/subject_options.html", ctx)
-    return HttpResponse(html)
-
 def load_strands(request):
-    subj_id = request.GET.get("subject")
-    ctx = {
-        "strands": Strand.objects.filter(subject_id=subj_id) if subj_id else [],
-    }
-    html = render_to_string("partials/strand_options.html", ctx)
-    return HttpResponse(html)
+    class_id = request.GET.get("class_level")
+    subject_id = request.GET.get("subject")
+    term = request.GET.get("term")
+    form = FilterForm()
+
+    if class_id and subject_id and term:
+        form.fields["strand"].queryset = Strand.objects.filter(
+            class_level_id=class_id,
+            subject_id=subject_id,
+            term=term
+        )
+    else:
+        form.fields["strand"].queryset = Strand.objects.none()
+
+    return render(request, "partials/strand_options.html", {"form": form})
+
 
 def load_substrands(request):
     strand_id = request.GET.get("strand")
-    ctx = {
-        "subs": SubStrand.objects.filter(strand_id=strand_id) if strand_id else [],
-    }
-    html = render_to_string("partials/substrand_options.html", ctx)
+    subs = SubStrand.objects.filter(strand_id=strand_id)
+    html = render_to_string("partials/substrand_options.html", {"subs": subs})
     return HttpResponse(html)
 
-# def load_strands(request):
-#     class_id = request.GET.get("subject")
-#     strands = Strand.objects.filter(class_level_id=class_id)
-#     html = render_to_string("partials/strand_options.html", {"strands": strands})
-#     return HttpResponse(html)
 
-# def load_substrands(request):
-#     strand_id = request.GET.get("strand")
-#     subs = SubStrand.objects.filter(strand_id=strand_id)
-#     html = render_to_string("partials/substrand_options.html", {"subs": subs})
-#     return HttpResponse(html)
+def load_subjects(request):
+    class_id = request.GET.get("class_level")
+    form = FilterForm()
 
+    if class_id:
+        form.fields["subject"].queryset = Subject.objects.filter(class_level_id=class_id)
+    else:
+        form.fields["subject"].queryset = Subject.objects.none()
 
-# def load_subjects(request):
-#     class_level_id = request.GET.get('class_level')
-#     form = FilterForm()
-#     if class_level_id:
-#         form.fields['subject'].queryset = Subject.objects.filter(class_level_id=class_level_id)
-#     else:
-#         form.fields['subject'].queryset = Subject.objects.none()
-#     return render(request, "partials/subject_options.html", {"filter_form": form})
+    return render(request, "partials/subject_options.html", {"form": form})
+
 
 def pick_route(request):
     form = RouteSelectForm()

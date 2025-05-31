@@ -138,6 +138,7 @@ class Theme(models.Model):
 
 class Strand(models.Model):
     class_level = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
+    term = models.PositiveSmallIntegerField(choices=[(1, "Term 1"), (2, "Term 2"), (3, "Term 3")])
     title = models.CharField(max_length=120)
 
     def __str__(self):

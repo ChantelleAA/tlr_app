@@ -14,18 +14,50 @@
 
       <!-- Common fields -->
       <div class="mb-3">
-        {{ form.class_level.label_tag }} {{ form.class_level }}
-      </div>
-      <div class="mb-3">
-        {{ form.subject.label_tag }} {{ form.subject }}
-      </div>
-      <div class="mb-3">
-        {{ form.term.label_tag }} {{ form.term }}
+        <label for="id_class_level">{{ form.class_level.label }}</label>
+        <select name="class_level" id="id_class_level"
+                class="form-select"
+                hx-get="{% url 'ajax_load_subjects' %}"
+                hx-target="#subject-field"
+                hx-trigger="change">
+          {% for cl in form.class_level.field.queryset %}
+            <option value="{{ cl.pk }}"
+            {% if form.class_level.value == cl.pk|stringformat:"s" %}selected{% endif %}>
+              {{ cl.name }}
+            </option>
+          {% endfor %}
+        </select>
       </div>
 
-      <!-- Conditionally rendered fields -->
+      <!-- Subject: this will be replaced by AJAX -->
+      <div class="mb-3" id="subject-field">
+        {{ form.subject.label_tag }} {{ form.subject }}
+      </div>
+
+      <!-- Term -->
+      <div class="mb-3">
+        <label for="id_term">{{ form.term.label }}</label>
+        <select name="term" id="id_term"
+                class="form-select"
+                hx-get="{% url 'ajax_load_strands' %}"
+                hx-target="#strand-field"
+                hx-trigger="change from:closest form">
+          {% for value, label in form.term.field.choices %}
+            <option value="{{ value }}"
+            {% if form.term.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+              {{ label }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Conditionally render strand for curriculum route -->
       {% if route == "curriculum" %}
-        <div class="mb-3">{{ form.strand.label_tag }} {{ form.strand }}</div>
+        <div class="mb-3" id="strand-field">
+          {{ form.strand.label_tag }} {{ form.strand }}
+        </div>
+      
+
         <div class="mb-3">{{ form.substrand.label_tag }} {{ form.substrand }}</div>
       {% elif route == "key_area" %}
         <div class="mb-3">{{ form.key_area.label_tag }} {{ form.key_area }}</div>
