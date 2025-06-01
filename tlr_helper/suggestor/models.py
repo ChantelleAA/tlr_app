@@ -173,6 +173,17 @@ class Indicator(models.Model):
         unique_together = ("standard", "code")
     def __str__(self):
         return self.code
+    
+class TlrImage(models.Model):
+    tlr = models.ForeignKey("Tlr", related_name="images", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="tlr_images/")
+    caption = models.CharField(max_length=200, blank=True)
+
+class TlrVideo(models.Model):
+    tlr = models.ForeignKey("Tlr", related_name="videos", on_delete=models.CASCADE)
+    url = models.URLField()
+    caption = models.CharField(max_length=200, blank=True)
+
 
 # ----- Main TLR -----
 class Tlr(models.Model):
@@ -214,6 +225,8 @@ class Tlr(models.Model):
     bloom_level = models.CharField(max_length=20, choices=BLOOM_LEVELS, blank=True, null=True)
     budget_band = models.CharField(max_length=20, choices=BUDGET_BANDS, blank=True, null=True)
     learning_outcome = models.TextField(blank=True)
+    # image = models.ImageField(upload_to="tlr_images/", null=True, blank=True)
+    # video_url = models.URLField(null=True, blank=True)
 
     search_keywords = models.TextField(blank=True)
     slug = models.SlugField(blank=True, unique=True)

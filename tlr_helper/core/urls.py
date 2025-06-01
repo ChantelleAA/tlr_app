@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from suggestor import views as v
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Authentication
@@ -44,3 +46,4 @@ urlpatterns = [
     path("about/", v.about_page, name="about"),
     path("print/<int:pk>/", v.print_view, name="print_tlr"),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
