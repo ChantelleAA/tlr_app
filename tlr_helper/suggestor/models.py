@@ -131,11 +131,6 @@ class ClassLevel(models.Model):
     def __str__(self):
         return self.name
 
-class Theme(models.Model):
-    title = models.CharField(max_length=120, unique=True)
-    def __str__(self):
-        return self.title
-
 class Strand(models.Model):
     class_level = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
     term = models.PositiveSmallIntegerField(choices=[(1, "Term 1"), (2, "Term 2"), (3, "Term 3")])

@@ -738,7 +738,8 @@
     "pk": 100,
     "fields": {
       "class_level": 55,
-      "title": "Numbers"
+      "title": "Numbers",
+      "term": 1
     }
   },
   {
@@ -754,6 +755,7 @@
     "pk": 102,
     "fields": {
       "substrand": 101,
+      "code": "B1.1.1.1.1",
       "description": "Pupils will be able to count, read and write numbers up to 100."
     }
   },
@@ -762,6 +764,7 @@
     "pk": 103,
     "fields": {
       "standard": 102,
+      "code": "B1.1.1.1.1",
       "description": "Pupils can count objects up to 100."
     }
   }
