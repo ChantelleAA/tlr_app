@@ -144,15 +144,18 @@ class Subject(models.Model):
 
 class Strand(models.Model):
     class_level = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True) 
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True, related_name='strands') 
     term = models.PositiveSmallIntegerField(choices=[(1, "Term 1"), (2, "Term 2"), (3, "Term 3")])
     title = models.CharField(max_length=120)
+    themes = models.ManyToManyField(Theme, blank=True)
+    key_learning_areas = models.ManyToManyField(KeyLearningArea, blank=True)
+    competencies = models.ManyToManyField(CoreCompetency, blank=True)
 
     def __str__(self):
         return f"{self.class_level} – {self.title}"
 
 class SubStrand(models.Model):
-    strand = models.ForeignKey(Strand, on_delete=models.CASCADE)
+    strand = models.ForeignKey(Strand, on_delete=models.CASCADE, related_name='substrands')
     title = models.CharField(max_length=120)
 
     def __str__(self):
@@ -197,14 +200,13 @@ class GoalTag(models.Model):
     def __str__(self):
         return self.title
 
-
-
-
 class ContentStandard(models.Model):
     """Optional: if you want to keep the full SBC hierarchy."""
-    substrand = models.ForeignKey(SubStrand, on_delete=models.CASCADE)
+    substrand = models.ForeignKey(SubStrand, on_delete=models.CASCADE, related_name='standards')
     code = models.CharField(max_length=20)
     description = models.TextField()
+    competencies = models.ManyToManyField(CoreCompetency, blank=True)
+    goals = models.ManyToManyField(GoalTag, blank=True)
 
     class Meta:
         unique_together = ("substrand", "code")
@@ -213,9 +215,11 @@ class ContentStandard(models.Model):
         return self.code
 
 class Indicator(models.Model):
-    standard = models.ForeignKey(ContentStandard, on_delete=models.CASCADE)
+    standard = models.ForeignKey(ContentStandard, on_delete=models.CASCADE, related_name='indicators')
     code = models.CharField(max_length=20)
     description = models.TextField()
+    competencies = models.ManyToManyField(CoreCompetency, blank=True)
+    goals = models.ManyToManyField(GoalTag, blank=True)
 
     class Meta:
         unique_together = ("standard", "code")
@@ -263,6 +267,13 @@ class Tlr(models.Model):
         null=True,
     )
 
+    def save(self, *args, **kwargs):
+        if self.indicator:
+            self.substrand = self.indicator.standard.substrand
+            self.strand = self.substrand.strand
+            self.subject = self.strand.subject
+            self.class_level = self.strand.class_level
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
