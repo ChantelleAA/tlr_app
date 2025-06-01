@@ -143,11 +143,3 @@ else:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / "db.sqlite3",
     }
-
-
-django.setup()
-
-try:
-    call_command('loaddata', 'suggestor/fixtures/initial_data.json')
-except Exception as e:
-    print(f"Fixture load failed or already loaded: {e}")
