@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow rounded-4 mx-auto p-5" style="max-width: 500px;">
+    <h4 class="mb-4 text-center text-primary">🔐 Log In to Continue</h4>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="alert alert-danger">Invalid credentials. Please try again.</div>
+      {% endif %}
+
+      <div class="mb-3">
+        <label for="id_username" class="form-label">Username</label>
+        {{ form.username|add_class:"form-control" }}
+      </div>
+
+      <div class="mb-3">
+        <label for="id_password" class="form-label">Password</label>
+        {{ form.password|add_class:"form-control" }}
+      </div>
+
+      <button type="submit" class="btn btn-nile w-100">Log In</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

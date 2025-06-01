@@ -17,31 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from suggestor import views as v
-
-# urlpatterns = [
-#     path("admin/", admin.site.urls),
-
-#     path("download/<int:pk>/", v.download_view, name="download"),
-
-#     path("ajax/strands/", v.load_strands, name="ajax_load_strands"),
-
-#     path("ajax/substrands/", v.load_substrands, name="ajax_load_substrands"),
-
-#     path("", v.pick_route, name="pick_route"),
-
-#     path("filters/", v.show_filters, name="show_filters"),
-
-#     path("suggest/", v.suggest, name="suggest"),
-
-#     path('chaining/', include('smart_selects.urls')),
-
-#     path("load-subjects/", v.load_subjects, name="load_subjects"),
-# ]
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    # Authentication
+    path("login/", auth_views.LoginView.as_view(template_name="login.html"), name="login"),
+    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+
     path("admin/",      admin.site.urls),
     path("chained-filter/", v.chained_filter, name="chained_filter"),
-    # path("", include("suggestor.urls")), 
 
     # 3-step flow
     path("",            v.route_select, name="route_select"),       # step-1
@@ -55,4 +39,8 @@ urlpatterns = [
     path("ajax/subjects/",     v.load_subjects,     name="ajax_load_subjects"),
     path("ajax/strands/",      v.load_strands,      name="ajax_load_strands"),
     path("ajax/substrands/",   v.load_substrands,   name="ajax_load_substrands"),
+
+    # Extras
+    path("about/", v.about_page, name="about"),
+    path("print/<int:pk>/", v.print_view, name="print_tlr"),
 ]

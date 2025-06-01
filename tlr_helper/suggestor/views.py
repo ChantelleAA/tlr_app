@@ -5,8 +5,10 @@ from .models import Tlr, Strand, SubStrand, Subject
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 import re
 
+@login_required
 def download_view(request, pk):
     tlr = get_object_or_404(Tlr, pk=pk)
     content = (
@@ -115,6 +117,14 @@ def route_select(request):
     return render(request, "route_select.html", {"form": form})
 
 
+def about_page(request):
+    return render(request, "about.html")
+
+@login_required
+def print_view(request, pk):
+    tlr = get_object_or_404(Tlr, pk=pk)
+    return render(request, "print_tlr.html", {"tlr": tlr})
+
 
 def serialize_filters(data):
     safe = {}
@@ -127,7 +137,7 @@ def serialize_filters(data):
             safe[key] = value
     return safe
 
-
+@login_required
 def filter_page(request):
     route = request.GET.get("route")
     if not route:
@@ -145,7 +155,7 @@ def filter_page(request):
     return render(request, "filter_form.html",
                   {"form": form, "route": route})
 
-
+@login_required
 def results_page(request):
     filters = request.session.get("filters")
     route   = request.session.get("route")
@@ -155,7 +165,7 @@ def results_page(request):
     suggestions = find_matches(filters, route)
     return render(request, "results.html", {"suggestions": suggestions})
 
-
+@login_required
 def chained_filter(request):
     class_level_id = request.GET.get("class_level")
     subjects = Subject.objects.filter(class_level_id=class_level_id).values("id", "title")
