@@ -767,5 +767,2119 @@
       "code": "B1.1.1.1.1",
       "description": "Pupils can count objects up to 100."
     }
+  },  {
+    "model": "suggestor.strand",
+    "pk": 101,
+    "fields": {
+      "class_level": 1,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 1
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 102,
+    "fields": {
+      "strand": 101,
+      "title": "Parts of the Human Body"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 103,
+    "fields": {
+      "substrand": 102,
+      "code": "K1.1.1.1",
+      "description": "Identify the major parts of the human body"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 104,
+    "fields": {
+      "content_standard": 103,
+      "code": "K1.1.1.1.1",
+      "description": "Identify and name the head, arms, legs and feet."
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 105,
+    "fields": {
+      "content_standard": 103,
+      "code": "K1.1.1.1.2",
+      "description": "Mention functions of the various body parts."
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 102,
+    "fields": {
+      "class_level": 53,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 103,
+    "fields": {
+      "strand": 102,
+      "title": "Caring for the parts of my body"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 104,
+    "fields": {
+      "substrand": 103,
+      "code": "K1.1.3.1",
+      "description": "Demonstrate ways to care for body parts"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 106,
+    "fields": {
+      "content_standard": 104,
+      "code": "K1.1.3.1.1",
+      "description": "Brush teeth and comb hair correctly."
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 107,
+    "fields": {
+      "content_standard": 104,
+      "code": "K1.1.3.1.2",
+      "description": "Demonstrate hand and body washing routines."
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 103,
+    "fields": {
+      "class_level": 53,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 104,
+    "fields": {
+      "strand": 103,
+      "title": "Caring for the parts of my body"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 105,
+    "fields": {
+      "substrand": 104,
+      "code": "K1.1.3.1",
+      "description": "Demonstrate ways to care for body parts"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 108,
+    "fields": {
+      "content_standard": 105,
+      "code": "K1.1.3.1.1",
+      "description": "Brush teeth and comb hair correctly."
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 109,
+    "fields": {
+      "content_standard": 105,
+      "code": "K1.1.3.1.2",
+      "description": "Demonstrate hand and body washing routines."
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 104,
+    "fields": {
+      "class_level": 53,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 105,
+    "fields": {
+      "strand": 104,
+      "title": "Keeping my body healthy"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 106,
+    "fields": {
+      "substrand": 105,
+      "code": "K1.1.4.1",
+      "description": "Understand the importance of good food and vaccination"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 110,
+    "fields": {
+      "content_standard": 106,
+      "code": "K1.1.4.1.1",
+      "description": "Name foods that make the body strong."
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 111,
+    "fields": {
+      "content_standard": 106,
+      "code": "K1.1.4.1.2",
+      "description": "Talk about vaccinations."
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 105,
+    "fields": {
+      "class_level": 53,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 106,
+    "fields": {
+      "strand": 105,
+      "title": "Keeping my body healthy"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 107,
+    "fields": {
+      "substrand": 106,
+      "code": "K1.1.4.1",
+      "description": "Understand the importance of good food and vaccination"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 112,
+    "fields": {
+      "content_standard": 107,
+      "code": "K1.1.4.1.1",
+      "description": "Name foods that make the body strong."
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 113,
+    "fields": {
+      "content_standard": 107,
+      "code": "K1.1.4.1.2",
+      "description": "Talk about vaccinations."
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 106,
+    "fields": {
+      "class_level": 53,
+      "title": "My Family",
+      "term": 1,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 107,
+    "fields": {
+      "strand": 106,
+      "title": "Members of the family"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 108,
+    "fields": {
+      "substrand": 107,
+      "code": "K1.2.1.1",
+      "description": "Identify members of the nuclear and extended family"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 114,
+    "fields": {
+      "content_standard": 108,
+      "code": "K1.2.1.1.1",
+      "description": "Name father, mother, siblings."
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 115,
+    "fields": {
+      "content_standard": 108,
+      "code": "K1.2.1.1.2",
+      "description": "Mention roles of extended family members."
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 107,
+    "fields": {
+      "class_level": 53,
+      "title": "My Family",
+      "term": 1,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 108,
+    "fields": {
+      "strand": 107,
+      "title": "Members of the family"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 109,
+    "fields": {
+      "substrand": 108,
+      "code": "K1.2.1.1",
+      "description": "Identify members of the nuclear and extended family"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 116,
+    "fields": {
+      "content_standard": 109,
+      "code": "K1.2.1.1.1",
+      "description": "Name father, mother, siblings."
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 117,
+    "fields": {
+      "content_standard": 109,
+      "code": "K1.2.1.1.2",
+      "description": "Mention roles of extended family members."
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 108,
+    "fields": {
+      "class_level": 53,
+      "title": "Values and Beliefs",
+      "term": 2,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 109,
+    "fields": {
+      "strand": 108,
+      "title": "Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 110,
+    "fields": {
+      "substrand": 109,
+      "code": "K1.2.8.1",
+      "description": "Understanding of respecting others"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 118,
+    "fields": {
+      "content_standard": 110,
+      "code": "K1.2.8.1.1",
+      "description": "Indicator 1 for Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 119,
+    "fields": {
+      "content_standard": 110,
+      "code": "K1.2.8.1.2",
+      "description": "Indicator 2 for Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 109,
+    "fields": {
+      "class_level": 53,
+      "title": "Values and Beliefs",
+      "term": 2,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 110,
+    "fields": {
+      "strand": 109,
+      "title": "Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 111,
+    "fields": {
+      "substrand": 110,
+      "code": "K1.2.9.1",
+      "description": "Understanding of respecting others"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 120,
+    "fields": {
+      "content_standard": 111,
+      "code": "K1.2.9.1.1",
+      "description": "Indicator 1 for Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 121,
+    "fields": {
+      "content_standard": 111,
+      "code": "K1.2.9.1.2",
+      "description": "Indicator 2 for Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 110,
+    "fields": {
+      "class_level": 53,
+      "title": "Values and Beliefs",
+      "term": 2,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 111,
+    "fields": {
+      "strand": 110,
+      "title": "Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 112,
+    "fields": {
+      "substrand": 111,
+      "code": "K1.2.0.1",
+      "description": "Understanding of respecting others"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 122,
+    "fields": {
+      "content_standard": 112,
+      "code": "K1.2.0.1.1",
+      "description": "Indicator 1 for Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 123,
+    "fields": {
+      "content_standard": 112,
+      "code": "K1.2.0.1.2",
+      "description": "Indicator 2 for Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 111,
+    "fields": {
+      "class_level": 53,
+      "title": "Values and Beliefs",
+      "term": 2,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 112,
+    "fields": {
+      "strand": 111,
+      "title": "Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 113,
+    "fields": {
+      "substrand": 112,
+      "code": "K1.2.1.1",
+      "description": "Understanding of respecting others"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 124,
+    "fields": {
+      "content_standard": 113,
+      "code": "K1.2.1.1.1",
+      "description": "Indicator 1 for Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 125,
+    "fields": {
+      "content_standard": 113,
+      "code": "K1.2.1.1.2",
+      "description": "Indicator 2 for Respecting others"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 112,
+    "fields": {
+      "class_level": 53,
+      "title": "My Local Community",
+      "term": 2,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 113,
+    "fields": {
+      "strand": 112,
+      "title": "Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 114,
+    "fields": {
+      "substrand": 113,
+      "code": "K1.2.2.1",
+      "description": "Understanding of places in my community"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 126,
+    "fields": {
+      "content_standard": 114,
+      "code": "K1.2.2.1.1",
+      "description": "Indicator 1 for Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 127,
+    "fields": {
+      "content_standard": 114,
+      "code": "K1.2.2.1.2",
+      "description": "Indicator 2 for Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 113,
+    "fields": {
+      "class_level": 53,
+      "title": "My Local Community",
+      "term": 2,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 114,
+    "fields": {
+      "strand": 113,
+      "title": "Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 115,
+    "fields": {
+      "substrand": 114,
+      "code": "K1.2.3.1",
+      "description": "Understanding of places in my community"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 128,
+    "fields": {
+      "content_standard": 115,
+      "code": "K1.2.3.1.1",
+      "description": "Indicator 1 for Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 129,
+    "fields": {
+      "content_standard": 115,
+      "code": "K1.2.3.1.2",
+      "description": "Indicator 2 for Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 114,
+    "fields": {
+      "class_level": 53,
+      "title": "My Local Community",
+      "term": 2,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 115,
+    "fields": {
+      "strand": 114,
+      "title": "Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 116,
+    "fields": {
+      "substrand": 115,
+      "code": "K1.2.4.1",
+      "description": "Understanding of places in my community"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 130,
+    "fields": {
+      "content_standard": 116,
+      "code": "K1.2.4.1.1",
+      "description": "Indicator 1 for Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 131,
+    "fields": {
+      "content_standard": 116,
+      "code": "K1.2.4.1.2",
+      "description": "Indicator 2 for Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 115,
+    "fields": {
+      "class_level": 53,
+      "title": "My Local Community",
+      "term": 2,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 116,
+    "fields": {
+      "strand": 115,
+      "title": "Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 117,
+    "fields": {
+      "substrand": 116,
+      "code": "K1.2.5.1",
+      "description": "Understanding of places in my community"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 132,
+    "fields": {
+      "content_standard": 117,
+      "code": "K1.2.5.1.1",
+      "description": "Indicator 1 for Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 133,
+    "fields": {
+      "content_standard": 117,
+      "code": "K1.2.5.1.2",
+      "description": "Indicator 2 for Places in my community"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 116,
+    "fields": {
+      "class_level": 53,
+      "title": "All Around Us",
+      "term": 3,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 117,
+    "fields": {
+      "strand": 116,
+      "title": "Things around us"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 118,
+    "fields": {
+      "substrand": 117,
+      "code": "K1.3.6.1",
+      "description": "Understanding of things around us"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 134,
+    "fields": {
+      "content_standard": 118,
+      "code": "K1.3.6.1.1",
+      "description": "Indicator 1 for Things around us"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 135,
+    "fields": {
+      "content_standard": 118,
+      "code": "K1.3.6.1.2",
+      "description": "Indicator 2 for Things around us"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 117,
+    "fields": {
+      "class_level": 53,
+      "title": "All Around Us",
+      "term": 3,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 118,
+    "fields": {
+      "strand": 117,
+      "title": "Things around us"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 119,
+    "fields": {
+      "substrand": 118,
+      "code": "K1.3.7.1",
+      "description": "Understanding of things around us"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 136,
+    "fields": {
+      "content_standard": 119,
+      "code": "K1.3.7.1.1",
+      "description": "Indicator 1 for Things around us"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 137,
+    "fields": {
+      "content_standard": 119,
+      "code": "K1.3.7.1.2",
+      "description": "Indicator 2 for Things around us"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 118,
+    "fields": {
+      "class_level": 53,
+      "title": "All Around Us",
+      "term": 3,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 119,
+    "fields": {
+      "strand": 118,
+      "title": "Things around us"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 120,
+    "fields": {
+      "substrand": 119,
+      "code": "K1.3.8.1",
+      "description": "Understanding of things around us"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 138,
+    "fields": {
+      "content_standard": 120,
+      "code": "K1.3.8.1.1",
+      "description": "Indicator 1 for Things around us"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 139,
+    "fields": {
+      "content_standard": 120,
+      "code": "K1.3.8.1.2",
+      "description": "Indicator 2 for Things around us"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 119,
+    "fields": {
+      "class_level": 53,
+      "title": "All Around Us",
+      "term": 3,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 120,
+    "fields": {
+      "strand": 119,
+      "title": "Things around us"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 121,
+    "fields": {
+      "substrand": 120,
+      "code": "K1.3.9.1",
+      "description": "Understanding of things around us"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 140,
+    "fields": {
+      "content_standard": 121,
+      "code": "K1.3.9.1.1",
+      "description": "Indicator 1 for Things around us"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 141,
+    "fields": {
+      "content_standard": 121,
+      "code": "K1.3.9.1.2",
+      "description": "Indicator 2 for Things around us"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 120,
+    "fields": {
+      "class_level": 53,
+      "title": "My Global Community",
+      "term": 3,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 121,
+    "fields": {
+      "strand": 120,
+      "title": "Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 122,
+    "fields": {
+      "substrand": 121,
+      "code": "K1.3.0.1",
+      "description": "Understanding of children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 142,
+    "fields": {
+      "content_standard": 122,
+      "code": "K1.3.0.1.1",
+      "description": "Indicator 1 for Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 143,
+    "fields": {
+      "content_standard": 122,
+      "code": "K1.3.0.1.2",
+      "description": "Indicator 2 for Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 121,
+    "fields": {
+      "class_level": 53,
+      "title": "My Global Community",
+      "term": 3,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 122,
+    "fields": {
+      "strand": 121,
+      "title": "Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 123,
+    "fields": {
+      "substrand": 122,
+      "code": "K1.3.1.1",
+      "description": "Understanding of children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 144,
+    "fields": {
+      "content_standard": 123,
+      "code": "K1.3.1.1.1",
+      "description": "Indicator 1 for Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 145,
+    "fields": {
+      "content_standard": 123,
+      "code": "K1.3.1.1.2",
+      "description": "Indicator 2 for Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 122,
+    "fields": {
+      "class_level": 53,
+      "title": "My Global Community",
+      "term": 3,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 123,
+    "fields": {
+      "strand": 122,
+      "title": "Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 124,
+    "fields": {
+      "substrand": 123,
+      "code": "K1.3.2.1",
+      "description": "Understanding of children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 146,
+    "fields": {
+      "content_standard": 124,
+      "code": "K1.3.2.1.1",
+      "description": "Indicator 1 for Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 147,
+    "fields": {
+      "content_standard": 124,
+      "code": "K1.3.2.1.2",
+      "description": "Indicator 2 for Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 123,
+    "fields": {
+      "class_level": 53,
+      "title": "My Global Community",
+      "term": 3,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 124,
+    "fields": {
+      "strand": 123,
+      "title": "Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 125,
+    "fields": {
+      "substrand": 124,
+      "code": "K1.3.3.1",
+      "description": "Understanding of children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 148,
+    "fields": {
+      "content_standard": 125,
+      "code": "K1.3.3.1.1",
+      "description": "Indicator 1 for Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 149,
+    "fields": {
+      "content_standard": 125,
+      "code": "K1.3.3.1.2",
+      "description": "Indicator 2 for Children in other countries"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 124,
+    "fields": {
+      "class_level": 54,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 125,
+    "fields": {
+      "strand": 124,
+      "title": "Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 126,
+    "fields": {
+      "substrand": 125,
+      "code": "K2.1.4.1",
+      "description": "Understanding of personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 150,
+    "fields": {
+      "content_standard": 126,
+      "code": "K2.1.4.1.1",
+      "description": "Indicator 1 for Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 151,
+    "fields": {
+      "content_standard": 126,
+      "code": "K2.1.4.1.2",
+      "description": "Indicator 2 for Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 125,
+    "fields": {
+      "class_level": 54,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 126,
+    "fields": {
+      "strand": 125,
+      "title": "Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 127,
+    "fields": {
+      "substrand": 126,
+      "code": "K2.1.5.1",
+      "description": "Understanding of personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 152,
+    "fields": {
+      "content_standard": 127,
+      "code": "K2.1.5.1.1",
+      "description": "Indicator 1 for Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 153,
+    "fields": {
+      "content_standard": 127,
+      "code": "K2.1.5.1.2",
+      "description": "Indicator 2 for Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 126,
+    "fields": {
+      "class_level": 54,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 127,
+    "fields": {
+      "strand": 126,
+      "title": "Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 128,
+    "fields": {
+      "substrand": 127,
+      "code": "K2.1.6.1",
+      "description": "Understanding of personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 154,
+    "fields": {
+      "content_standard": 128,
+      "code": "K2.1.6.1.1",
+      "description": "Indicator 1 for Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 155,
+    "fields": {
+      "content_standard": 128,
+      "code": "K2.1.6.1.2",
+      "description": "Indicator 2 for Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 127,
+    "fields": {
+      "class_level": 54,
+      "title": "All About Me",
+      "term": 1,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 128,
+    "fields": {
+      "strand": 127,
+      "title": "Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 129,
+    "fields": {
+      "substrand": 128,
+      "code": "K2.1.7.1",
+      "description": "Understanding of personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 156,
+    "fields": {
+      "content_standard": 129,
+      "code": "K2.1.7.1.1",
+      "description": "Indicator 1 for Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 157,
+    "fields": {
+      "content_standard": 129,
+      "code": "K2.1.7.1.2",
+      "description": "Indicator 2 for Personal hygiene"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 128,
+    "fields": {
+      "class_level": 54,
+      "title": "My Family",
+      "term": 1,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 129,
+    "fields": {
+      "strand": 128,
+      "title": "Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 130,
+    "fields": {
+      "substrand": 129,
+      "code": "K2.1.8.1",
+      "description": "Understanding of extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 158,
+    "fields": {
+      "content_standard": 130,
+      "code": "K2.1.8.1.1",
+      "description": "Indicator 1 for Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 159,
+    "fields": {
+      "content_standard": 130,
+      "code": "K2.1.8.1.2",
+      "description": "Indicator 2 for Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 129,
+    "fields": {
+      "class_level": 54,
+      "title": "My Family",
+      "term": 1,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 130,
+    "fields": {
+      "strand": 129,
+      "title": "Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 131,
+    "fields": {
+      "substrand": 130,
+      "code": "K2.1.9.1",
+      "description": "Understanding of extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 160,
+    "fields": {
+      "content_standard": 131,
+      "code": "K2.1.9.1.1",
+      "description": "Indicator 1 for Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 161,
+    "fields": {
+      "content_standard": 131,
+      "code": "K2.1.9.1.2",
+      "description": "Indicator 2 for Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 130,
+    "fields": {
+      "class_level": 54,
+      "title": "My Family",
+      "term": 1,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 131,
+    "fields": {
+      "strand": 130,
+      "title": "Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 132,
+    "fields": {
+      "substrand": 131,
+      "code": "K2.1.0.1",
+      "description": "Understanding of extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 162,
+    "fields": {
+      "content_standard": 132,
+      "code": "K2.1.0.1.1",
+      "description": "Indicator 1 for Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 163,
+    "fields": {
+      "content_standard": 132,
+      "code": "K2.1.0.1.2",
+      "description": "Indicator 2 for Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 131,
+    "fields": {
+      "class_level": 54,
+      "title": "My Family",
+      "term": 1,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 132,
+    "fields": {
+      "strand": 131,
+      "title": "Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 133,
+    "fields": {
+      "substrand": 132,
+      "code": "K2.1.1.1",
+      "description": "Understanding of extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 164,
+    "fields": {
+      "content_standard": 133,
+      "code": "K2.1.1.1.1",
+      "description": "Indicator 1 for Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 165,
+    "fields": {
+      "content_standard": 133,
+      "code": "K2.1.1.1.2",
+      "description": "Indicator 2 for Extended family roles"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 132,
+    "fields": {
+      "class_level": 54,
+      "title": "Values and Beliefs",
+      "term": 2,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 133,
+    "fields": {
+      "strand": 132,
+      "title": "Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 134,
+    "fields": {
+      "substrand": 133,
+      "code": "K2.2.2.1",
+      "description": "Understanding of religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 166,
+    "fields": {
+      "content_standard": 134,
+      "code": "K2.2.2.1.1",
+      "description": "Indicator 1 for Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 167,
+    "fields": {
+      "content_standard": 134,
+      "code": "K2.2.2.1.2",
+      "description": "Indicator 2 for Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 133,
+    "fields": {
+      "class_level": 54,
+      "title": "Values and Beliefs",
+      "term": 2,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 134,
+    "fields": {
+      "strand": 133,
+      "title": "Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 135,
+    "fields": {
+      "substrand": 134,
+      "code": "K2.2.3.1",
+      "description": "Understanding of religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 168,
+    "fields": {
+      "content_standard": 135,
+      "code": "K2.2.3.1.1",
+      "description": "Indicator 1 for Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 169,
+    "fields": {
+      "content_standard": 135,
+      "code": "K2.2.3.1.2",
+      "description": "Indicator 2 for Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 134,
+    "fields": {
+      "class_level": 54,
+      "title": "Values and Beliefs",
+      "term": 2,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 135,
+    "fields": {
+      "strand": 134,
+      "title": "Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 136,
+    "fields": {
+      "substrand": 135,
+      "code": "K2.2.4.1",
+      "description": "Understanding of religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 170,
+    "fields": {
+      "content_standard": 136,
+      "code": "K2.2.4.1.1",
+      "description": "Indicator 1 for Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 171,
+    "fields": {
+      "content_standard": 136,
+      "code": "K2.2.4.1.2",
+      "description": "Indicator 2 for Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 135,
+    "fields": {
+      "class_level": 54,
+      "title": "Values and Beliefs",
+      "term": 2,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 136,
+    "fields": {
+      "strand": 135,
+      "title": "Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 137,
+    "fields": {
+      "substrand": 136,
+      "code": "K2.2.5.1",
+      "description": "Understanding of religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 172,
+    "fields": {
+      "content_standard": 137,
+      "code": "K2.2.5.1.1",
+      "description": "Indicator 1 for Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 173,
+    "fields": {
+      "content_standard": 137,
+      "code": "K2.2.5.1.2",
+      "description": "Indicator 2 for Religious festivals"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 136,
+    "fields": {
+      "class_level": 54,
+      "title": "My Local Community",
+      "term": 2,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 137,
+    "fields": {
+      "strand": 136,
+      "title": "Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 138,
+    "fields": {
+      "substrand": 137,
+      "code": "K2.2.6.1",
+      "description": "Understanding of community helpers"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 174,
+    "fields": {
+      "content_standard": 138,
+      "code": "K2.2.6.1.1",
+      "description": "Indicator 1 for Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 175,
+    "fields": {
+      "content_standard": 138,
+      "code": "K2.2.6.1.2",
+      "description": "Indicator 2 for Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 137,
+    "fields": {
+      "class_level": 54,
+      "title": "My Local Community",
+      "term": 2,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 138,
+    "fields": {
+      "strand": 137,
+      "title": "Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 139,
+    "fields": {
+      "substrand": 138,
+      "code": "K2.2.7.1",
+      "description": "Understanding of community helpers"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 176,
+    "fields": {
+      "content_standard": 139,
+      "code": "K2.2.7.1.1",
+      "description": "Indicator 1 for Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 177,
+    "fields": {
+      "content_standard": 139,
+      "code": "K2.2.7.1.2",
+      "description": "Indicator 2 for Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 138,
+    "fields": {
+      "class_level": 54,
+      "title": "My Local Community",
+      "term": 2,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 139,
+    "fields": {
+      "strand": 138,
+      "title": "Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 140,
+    "fields": {
+      "substrand": 139,
+      "code": "K2.2.8.1",
+      "description": "Understanding of community helpers"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 178,
+    "fields": {
+      "content_standard": 140,
+      "code": "K2.2.8.1.1",
+      "description": "Indicator 1 for Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 179,
+    "fields": {
+      "content_standard": 140,
+      "code": "K2.2.8.1.2",
+      "description": "Indicator 2 for Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 139,
+    "fields": {
+      "class_level": 54,
+      "title": "My Local Community",
+      "term": 2,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 140,
+    "fields": {
+      "strand": 139,
+      "title": "Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 141,
+    "fields": {
+      "substrand": 140,
+      "code": "K2.2.9.1",
+      "description": "Understanding of community helpers"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 180,
+    "fields": {
+      "content_standard": 141,
+      "code": "K2.2.9.1.1",
+      "description": "Indicator 1 for Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 181,
+    "fields": {
+      "content_standard": 141,
+      "code": "K2.2.9.1.2",
+      "description": "Indicator 2 for Community helpers"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 140,
+    "fields": {
+      "class_level": 54,
+      "title": "All Around Us",
+      "term": 3,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 141,
+    "fields": {
+      "strand": 140,
+      "title": "Natural features"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 142,
+    "fields": {
+      "substrand": 141,
+      "code": "K2.3.0.1",
+      "description": "Understanding of natural features"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 182,
+    "fields": {
+      "content_standard": 142,
+      "code": "K2.3.0.1.1",
+      "description": "Indicator 1 for Natural features"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 183,
+    "fields": {
+      "content_standard": 142,
+      "code": "K2.3.0.1.2",
+      "description": "Indicator 2 for Natural features"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 141,
+    "fields": {
+      "class_level": 54,
+      "title": "All Around Us",
+      "term": 3,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 142,
+    "fields": {
+      "strand": 141,
+      "title": "Natural features"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 143,
+    "fields": {
+      "substrand": 142,
+      "code": "K2.3.1.1",
+      "description": "Understanding of natural features"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 184,
+    "fields": {
+      "content_standard": 143,
+      "code": "K2.3.1.1.1",
+      "description": "Indicator 1 for Natural features"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 185,
+    "fields": {
+      "content_standard": 143,
+      "code": "K2.3.1.1.2",
+      "description": "Indicator 2 for Natural features"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 142,
+    "fields": {
+      "class_level": 54,
+      "title": "All Around Us",
+      "term": 3,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 143,
+    "fields": {
+      "strand": 142,
+      "title": "Natural features"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 144,
+    "fields": {
+      "substrand": 143,
+      "code": "K2.3.2.1",
+      "description": "Understanding of natural features"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 186,
+    "fields": {
+      "content_standard": 144,
+      "code": "K2.3.2.1.1",
+      "description": "Indicator 1 for Natural features"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 187,
+    "fields": {
+      "content_standard": 144,
+      "code": "K2.3.2.1.2",
+      "description": "Indicator 2 for Natural features"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 143,
+    "fields": {
+      "class_level": 54,
+      "title": "All Around Us",
+      "term": 3,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 144,
+    "fields": {
+      "strand": 143,
+      "title": "Natural features"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 145,
+    "fields": {
+      "substrand": 144,
+      "code": "K2.3.3.1",
+      "description": "Understanding of natural features"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 188,
+    "fields": {
+      "content_standard": 145,
+      "code": "K2.3.3.1.1",
+      "description": "Indicator 1 for Natural features"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 189,
+    "fields": {
+      "content_standard": 145,
+      "code": "K2.3.3.1.2",
+      "description": "Indicator 2 for Natural features"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 144,
+    "fields": {
+      "class_level": 54,
+      "title": "My Global Community",
+      "term": 3,
+      "subject": 65
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 145,
+    "fields": {
+      "strand": 144,
+      "title": "Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 146,
+    "fields": {
+      "substrand": 145,
+      "code": "K2.3.4.1",
+      "description": "Understanding of weather and people"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 190,
+    "fields": {
+      "content_standard": 146,
+      "code": "K2.3.4.1.1",
+      "description": "Indicator 1 for Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 191,
+    "fields": {
+      "content_standard": 146,
+      "code": "K2.3.4.1.2",
+      "description": "Indicator 2 for Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 145,
+    "fields": {
+      "class_level": 54,
+      "title": "My Global Community",
+      "term": 3,
+      "subject": 66
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 146,
+    "fields": {
+      "strand": 145,
+      "title": "Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 147,
+    "fields": {
+      "substrand": 146,
+      "code": "K2.3.5.1",
+      "description": "Understanding of weather and people"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 192,
+    "fields": {
+      "content_standard": 147,
+      "code": "K2.3.5.1.1",
+      "description": "Indicator 1 for Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 193,
+    "fields": {
+      "content_standard": 147,
+      "code": "K2.3.5.1.2",
+      "description": "Indicator 2 for Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 146,
+    "fields": {
+      "class_level": 54,
+      "title": "My Global Community",
+      "term": 3,
+      "subject": 67
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 147,
+    "fields": {
+      "strand": 146,
+      "title": "Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 148,
+    "fields": {
+      "substrand": 147,
+      "code": "K2.3.6.1",
+      "description": "Understanding of weather and people"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 194,
+    "fields": {
+      "content_standard": 148,
+      "code": "K2.3.6.1.1",
+      "description": "Indicator 1 for Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 195,
+    "fields": {
+      "content_standard": 148,
+      "code": "K2.3.6.1.2",
+      "description": "Indicator 2 for Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 147,
+    "fields": {
+      "class_level": 54,
+      "title": "My Global Community",
+      "term": 3,
+      "subject": 68
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 148,
+    "fields": {
+      "strand": 147,
+      "title": "Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 149,
+    "fields": {
+      "substrand": 148,
+      "code": "K2.3.7.1",
+      "description": "Understanding of weather and people"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 196,
+    "fields": {
+      "content_standard": 149,
+      "code": "K2.3.7.1.1",
+      "description": "Indicator 1 for Weather and people"
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 197,
+    "fields": {
+      "content_standard": 149,
+      "code": "K2.3.7.1.2",
+      "description": "Indicator 2 for Weather and people"
+    }
   }
 ]
