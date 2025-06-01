@@ -1,94 +1,124 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container my-4">
-  <div class="card shadow-sm rounded-4 p-4" style="max-width: 720px;margin:auto;">
+<div class="container my-5">
+  <div class="card shadow-lg rounded-4 p-5" style="max-width: 860px; margin: auto; background: #ffffff;">
 
-    <a href="{% url 'route_select' %}" class="btn btn-link mb-3">
-      &larr; Choose a different path
-    </a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="mb-0 text-primary">🎯 Refine Your Search</h4>
+      <a href="{% url 'route_select' %}" class="btn btn-outline-secondary btn-sm">
+        &larr; Change Route
+      </a>
+    </div>
 
-    <h4 class="mb-3">Refine Your Search</h4>
-
-    <form method="post">
+    <form method="post" class="needs-validation" novalidate>
       {% csrf_token %}
 
-      <!-- Common fields -->
-      <div class="mb-3">
-        <label for="id_class_level">{{ form.class_level.label }}</label>
-        <select name="class_level" id="id_class_level"
-                class="form-select"
-                hx-get="{% url 'ajax_load_subjects' %}"
-                hx-target="#subject-field"
-                hx-trigger="change">
-          {% for cl in form.class_level.field.queryset %}
-            <option value="{{ cl.pk }}"
-            {% if form.class_level.value == cl.pk|stringformat:"s" %}selected{% endif %}>
-              {{ cl.name }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <!-- Subject: this will be replaced by AJAX -->
-      <div class="mb-3" id="subject-field">
-        {{ form.subject.label_tag }} {{ form.subject }}
-      </div>
-
-      <!-- Term -->
-      <div class="mb-3">
-        <label for="id_term">{{ form.term.label }}</label>
-        <select name="term" id="id_term"
-                class="form-select"
-                hx-get="{% url 'ajax_load_strands' %}"
-                hx-target="#strand-field"
-                hx-trigger="change from:closest form">
-          {% for value, label in form.term.field.choices %}
-            <option value="{{ value }}"
-            {% if form.term.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
-              {{ label }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <!-- Conditionally render strand for curriculum route -->
-      {% if route == "curriculum" %}
-        <div class="mb-3" id="strand-field">
-          {{ form.strand.label_tag }} {{ form.strand }}
+      <div class="row g-4">
+        <!-- Class Level -->
+        <div class="col-md-6">
+          <label for="id_class_level" class="form-label fw-semibold">{{ form.class_level.label }}</label>
+          <select name="class_level" id="id_class_level"
+                  class="form-select"
+                  hx-get="{% url 'ajax_load_subjects' %}"
+                  hx-target="#subject-field"
+                  hx-trigger="change">
+            {% for cl in form.class_level.field.queryset %}
+              <option value="{{ cl.pk }}"
+              {% if form.class_level.value == cl.pk|stringformat:"s" %}selected{% endif %}>
+                {{ cl.name }}
+              </option>
+            {% endfor %}
+          </select>
         </div>
-      
 
-        <div class="mb-3">{{ form.substrand.label_tag }} {{ form.substrand }}</div>
-      {% elif route == "key_area" %}
-        <div class="mb-3">{{ form.key_area.label_tag }} {{ form.key_area }}</div>
-      {% elif route == "competency" %}
-        <div class="mb-3">{{ form.competency.label_tag }} {{ form.competency }}</div>
-      {% elif route == "theme" %}
-        <div class="mb-3">{{ form.theme.label_tag }} {{ form.theme }}</div>
-      {% elif route == "goal" %}
-        <div class="mb-3">{{ form.goal.label_tag }} {{ form.goal }}</div>
-      {% elif route == "resource" %}
-        <div class="mb-3">{{ form.resource_type.label_tag }} {{ form.resource_type }}</div>
-      {% endif %}
+        <!-- Subject (AJAX loaded) -->
+        <div class="col-md-6" id="subject-field">
+          <label class="form-label fw-semibold">{{ form.subject.label }}</label>
+          {{ form.subject }}
+        </div>
 
-      <!-- General filters -->
-      <div class="mb-3">{{ form.intended_use.label_tag }} {{ form.intended_use }}</div>
-      <div class="mb-3">{{ form.time_available.label_tag }} {{ form.time_available }}</div>
-      <div class="mb-3">{{ form.class_size.label_tag }} {{ form.class_size }}</div>
-      <div class="mb-3">{{ form.bloom_level.label_tag }} {{ form.bloom_level }}</div>
-      <div class="mb-3">{{ form.budget_band.label_tag }} {{ form.budget_band }}</div>
-      <div class="mb-3">{{ form.materials_available.label_tag }} {{ form.materials_available }}</div>
+        <!-- Term -->
+        <div class="col-md-6">
+          <label for="id_term" class="form-label fw-semibold">{{ form.term.label }}</label>
+          <select name="term" id="id_term"
+                  class="form-select"
+                  hx-get="{% url 'ajax_load_strands' %}"
+                  hx-target="#strand-field"
+                  hx-trigger="change from:closest form">
+            {% for value, label in form.term.field.choices %}
+              <option value="{{ value }}"
+              {% if form.term.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                {{ label }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
 
-      <!-- Special needs: now a selectable field -->
-      <div class="mb-3">{{ form.learner_type.label_tag }} {{ form.learner_type }}</div>
-      <div class="mb-3">{{ form.preferred_format.label_tag }} {{ form.preferred_format }}</div>
-      <div class="mb-3">{{ form.classroom_setup.label_tag }} {{ form.classroom_setup }}</div>
-      <div class="mb-3">{{ form.outcome.label_tag }} {{ form.outcome }}</div>
+        <!-- Route-specific field inputs -->
+        {% if route == "curriculum" %}
+          <div class="col-md-6" id="strand-field">
+            <label class="form-label fw-semibold">{{ form.strand.label }}</label>
+            {{ form.strand }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">{{ form.substrand.label }}</label>
+            {{ form.substrand }}
+          </div>
+        {% elif route == "key_area" %}
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">{{ form.key_area.label }}</label>
+            {{ form.key_area }}
+          </div>
+        {% elif route == "competency" %}
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">{{ form.competency.label }}</label>
+            {{ form.competency }}
+          </div>
+        {% elif route == "theme" %}
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">{{ form.theme.label }}</label>
+            {{ form.theme }}
+          </div>
+        {% elif route == "goal" %}
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">{{ form.goal.label }}</label>
+            {{ form.goal }}
+          </div>
+        {% elif route == "resource" %}
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">{{ form.resource_type.label }}</label>
+            {{ form.resource_type }}
+          </div>
+        {% endif %}
+      </div>
 
-      <button class="btn btn-nile btn-lg w-100 mt-3">
-        <i class="bi bi-search"></i> Find&nbsp;TLRs
+      <hr class="my-5">
+
+      <!-- General Filters -->
+      <button class="btn btn-link mb-3 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#extraFilters">
+        ⚙️ Advanced Filters
+      </button>
+
+      <div class="collapse show" id="extraFilters">
+        <div class="row g-4">
+          <div class="col-md-6">{{ form.intended_use.label_tag }} {{ form.intended_use }}</div>
+          <div class="col-md-6">{{ form.time_available.label_tag }} {{ form.time_available }}</div>
+          <div class="col-md-6">{{ form.class_size.label_tag }} {{ form.class_size }}</div>
+          <div class="col-md-6">{{ form.bloom_level.label_tag }} {{ form.bloom_level }}</div>
+          <div class="col-md-6">{{ form.budget_band.label_tag }} {{ form.budget_band }}</div>
+          <div class="col-md-6">{{ form.learner_type.label_tag }} {{ form.learner_type }}</div>
+          <div class="col-md-12">{{ form.materials_available.label_tag }} {{ form.materials_available }}</div>
+          <div class="col-md-12">{{ form.preferred_format.label_tag }} {{ form.preferred_format }}</div>
+          <div class="col-md-12">{{ form.classroom_setup.label_tag }} {{ form.classroom_setup }}</div>
+          <div class="col-md-12">{{ form.outcome.label_tag }} {{ form.outcome }}</div>
+        </div>
+      </div>
+
+      <button class="btn btn-nile btn-lg w-100 mt-5">
+        <i class="bi bi-search"></i> Search for TLRs
       </button>
     </form>
+
   </div>
 </div>
 {% endblock %}

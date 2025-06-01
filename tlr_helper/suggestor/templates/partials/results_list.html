@@ -1,43 +1,86 @@
 {% load static %}
-{% if suggestions %}
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    {% for tlr in suggestions %}
-      <div class="col">
-        <div class="card h-100 shadow-sm rounded-4">
-          {% if tlr.thumbnail %}
-            <img src="{{ tlr.thumbnail.url }}" class="card-img-top"
-                 style="height: 100px; object-fit: cover;" alt="{{ tlr.title }}">
-          {% else %}
-            <div class="d-flex justify-content-center align-items-center bg-light"
-                 style="height: 100px;">
-              <span class="text-muted">No Image</span>
-            </div>
-          {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ tlr.title }}</h5>
-            <p class="card-text">{{ tlr.brief_description|truncatewords:20 }}</p>
-            <div class="mb-2">
-              {% for tag in tlr.resource_types.all %}
-                <span class="badge bg-secondary">{{ tag }}</span>
-              {% endfor %}
-              {% for tag in tlr.competencies.all %}
-                <span class="badge bg-info text-dark">{{ tag }}</span>
-              {% endfor %}
-            </div>
-            <a href="{% url 'download_tlr' tlr.pk %}" class="btn btn-sm btn-outline-nile">
-              View details
-            </a>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
+{% for tlr in suggestions %}
+  <div class="card mb-4 shadow-sm rounded-4 p-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="text-primary">{{ tlr.title }}</h5>
+      <small class="text-muted">{{ tlr.subject }} | {{ tlr.class_level }}</small>
+    </div>
+
+    <p class="mt-2">{{ tlr.brief_description|truncatewords:30 }}</p>
+
+    {% if tlr.steps_to_make %}
+      <details class="mt-3">
+        <summary class="fw-semibold">🛠️ Steps to Make</summary>
+        <p class="mt-2">{{ tlr.steps_to_make|linebreaks }}</p>
+      </details>
+    {% endif %}
+
+    {% if tlr.tips_for_use %}
+      <details class="mt-2">
+        <summary class="fw-semibold">🎓 Tips for Classroom Use</summary>
+        <p class="mt-2">{{ tlr.tips_for_use|linebreaks }}</p>
+      </details>
+    {% endif %}
+
+    {% if tlr.outcome %}
+      <p class="mt-3"><strong>🌟 Outcome:</strong> {{ tlr.outcome }}</p>
+    {% endif %}
+
+    {% if tlr.content_standard or tlr.indicators.all %}
+      <details class="mt-3">
+        <summary class="fw-semibold">📘 Curriculum Links</summary>
+        {% if tlr.content_standard %}
+          <p class="mt-2"><strong>Standard:</strong> {{ tlr.content_standard }}</p>
+        {% endif %}
+        {% if tlr.indicators.all %}
+          <p><strong>Indicators:</strong><br>
+            {{ tlr.indicators.all|join:", " }}</p>
+        {% endif %}
+      </details>
+    {% endif %}
+
+    <div class="row row-cols-2 row-cols-md-3 g-2 mt-3">
+      <div><span class="badge bg-light border">⌛ {{ tlr.get_time_needed_display }}</span></div>
+      <div><span class="badge bg-light border">💰 {{ tlr.get_budget_band_display }}</span></div>
+      <div><span class="badge bg-light border">🌟 {{ tlr.get_bloom_level_display }}</span></div>
+      <div><span class="badge bg-light border">📈 {{ tlr.download_count|default:"0" }} downloads</span></div>
+      {% if tlr.intended_use %}
+        <div><span class="badge bg-info-subtle border">🗂️ {{ tlr.get_intended_use_display }}</span></div>
+      {% endif %}
+    </div>
+
+    {% if tlr.materials.all %}
+      <p class="mt-3"><strong>📌 Materials:</strong>
+        {{ tlr.materials.all|join:", " }}</p>
+    {% endif %}
+
+    <div class="d-flex flex-wrap gap-1 mt-3">
+      {% for tag in tlr.themes.all %}
+        <span class="badge bg-success-subtle text-success border">🌱 {{ tag }}</span>
+      {% endfor %}
+      {% for tag in tlr.key_learning_areas.all %}
+        <span class="badge bg-primary-subtle text-primary border">📚 {{ tag }}</span>
+      {% endfor %}
+      {% for tag in tlr.competencies.all %}
+        <span class="badge bg-warning-subtle text-dark border">🧠 {{ tag }}</span>
+      {% endfor %}
+      {% for tag in tlr.resource_types.all %}
+        <span class="badge bg-secondary-subtle text-dark border">🧩️ {{ tag }}</span>
+      {% endfor %}
+      {% for tag in tlr.special_needs.all %}
+        <span class="badge bg-danger-subtle text-danger border">♿ {{ tag }}</span>
+      {% endfor %}
+      {% for tag in tlr.learning_styles.all %}
+        <span class="badge bg-info-subtle text-info border">🎨 {{ tag }}</span>
+      {% endfor %}
+    </div>
+
+    <div class="text-end mt-4">
+      <a href="{% url 'download' tlr.pk %}" class="btn btn-nile">
+        <i class="bi bi-download"></i> Download TLR
+      </a>
+    </div>
   </div>
-{% else %}
-  <div class="text-center mt-5">
-    <img src="{% static 'suggestor/images/empty_state.svg' %}" alt="No results"
-         style="max-width: 240px;">
-    <p class="mt-3 fs-5 text-muted">
-      No matching TLRs found. Try adjusting your filters.
-    </p>
-  </div>
-{% endif %}
+{% empty %}
+  <div class="alert alert-info text-center">No TLRs matched your search. Try adjusting your filters.</div>
+{% endfor %}

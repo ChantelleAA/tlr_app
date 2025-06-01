@@ -20,6 +20,12 @@
     body {
       background-color: #ffffff;
       font-family: "Segoe UI", sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .dark-mode body {
+      background-color: #121212;
+      color: #e0e0e0;
     }
 
     .header-logo {
@@ -75,44 +81,42 @@
 
     footer {
       text-align: center;
-      margin-top: 60px;
+      margin-top: 80px;
+      padding: 20px 0;
       font-size: 0.85rem;
       color: #888;
     }
   </style>
 </head>
-<body>
-  <header class="text-center my-4">
-    <img src="{% static 'suggestor/images/nile_logo.png' %}" alt="NileEdge Logo" class="header-logo mb-2">
-    <h1 class="h4 mt-2">Find a Teaching-Learning Resource</h1>
-  </header>
+<body class="d-flex flex-column min-vh-100">
 
-  <main>
-    {% block content %}
-    {% endblock %}
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold text-primary" href="#">TLR Helper</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'route_select' %}">Start Over</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        </ul>
+        <button class="btn btn-sm btn-outline-secondary" onclick="document.body.classList.toggle('dark-mode')">
+          🌓 Toggle Theme
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow-1">
+    {% block content %}{% endblock %}
   </main>
 
   <footer>
-    © {{ current_year }} TEDD Ghana – All rights reserved
+    © <span id="footer-year"></span> TEDD Ghana – All rights reserved
   </footer>
-
-<!-- ⬇ Bootstrap spinner-toggle (doesn’t need jQuery) -->
-<!-- <script>
-  document.addEventListener("htmx:configRequest", evt => {
-    const btn = evt.detail.elt.closest("form")?.querySelector("[type='submit']");
-    if (btn) {
-      btn.innerHTML = 'Finding… <span class="spinner-border spinner-border-sm"></span>';
-      btn.disabled = true;
-    }
-  });
-  document.addEventListener("htmx:afterRequest", evt => {
-    const btn = evt.detail.elt.closest("form")?.querySelector("[type='submit']");
-    if (btn) {
-      btn.innerHTML = 'Find TLRs';
-      btn.disabled = false;
-    }
-  });
-</script> -->
 
 <!-- ⬇ jQuery first -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -130,9 +134,16 @@
       allowClear: true
     });
   }
-  $(document).ready(enableSelect2);                 // first page load
-  document.body.addEventListener('htmx:afterSwap', enableSelect2); // after every HTMX swap
+  $(document).ready(enableSelect2);
+  document.body.addEventListener('htmx:afterSwap', enableSelect2);
 </script>
 
+<!-- Auto-set footer year -->
+<script>
+  document.getElementById("footer-year").textContent = new Date().getFullYear();
+</script>
+
+<!-- Bootstrap JS (for navbar toggle) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

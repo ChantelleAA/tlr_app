@@ -4,13 +4,13 @@ from .models import (
     # curriculum hierarchy
     ClassLevel, Subject, Strand, SubStrand,
     # optional tags
-    Theme, KeyLearningArea, CoreCompetency, ResourceType, GoalTag,
+    Theme, KeyLearningArea, CoreCompetency, ResourceType, GoalTag, ContentStandard, Indicator, SpecialNeed, LearningStyle,
     # supporting tables
     Material,
     # constants
-    INTENDED_CHOICES, TIME_CHOICES,
+    INTENDED_CHOICES, TIME_NEEDED_CHOICES,
     CLASS_SIZE_BANDS, BLOOM_LEVELS, BUDGET_BANDS,
-    LEARNING_DIFFICULTY_CHOICES,
+    SPECIAL_NEEDS_CHOICES,
 )
 
 
@@ -66,8 +66,6 @@ class FilterForm(forms.Form):
         required=False,
         label="Term",
     )
-    # strand     = forms.ModelChoiceField(Strand.objects.none(),   required=False, label="Strand")
-    # substrand  = forms.ModelChoiceField(SubStrand.objects.none(), required=False, label="Sub-strand")
 
     # key-area route
     key_area   = forms.ModelChoiceField(KeyLearningArea.objects.all(), required=False, label="Key area")
@@ -85,11 +83,37 @@ class FilterForm(forms.Form):
     # quick-goal route
     goal       = forms.ModelChoiceField(GoalTag.objects.all(), required=False, label="Lesson goal")
 
+    standard = forms.ModelChoiceField(
+        queryset=ContentStandard.objects.none(),
+        required=False,
+        label="Content Standard",
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+
+    indicator = forms.ModelChoiceField(
+        queryset=Indicator.objects.none(),
+        required=False,
+        label="Indicator",
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+
     intended_use = forms.ChoiceField(choices=INTENDED_CHOICES, required=False, label="Purpose in lesson")
-    time_available = forms.ChoiceField(choices=TIME_CHOICES, required=False, label="Time in lesson")
+    time_needed = forms.ChoiceField(choices=TIME_NEEDED_CHOICES, required=False, label="Time in lesson")
     class_size  = forms.ChoiceField(choices=CLASS_SIZE_BANDS, required=False, label="Class size")
     bloom_level = forms.ChoiceField(choices=BLOOM_LEVELS, required=False, label="Bloom focus")
     budget_band = forms.ChoiceField(choices=BUDGET_BANDS, required=False, label="Budget band")
+    learning_styles = forms.ModelMultipleChoiceField(
+        queryset=LearningStyle.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        label="Learning Styles",
+    )
+    special_needs = forms.ModelMultipleChoiceField(
+        queryset=SpecialNeed.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        label="Special Needs",
+    )
     materials_available = forms.ModelMultipleChoiceField(
         queryset=Material.objects.all(),
         required=False,
@@ -97,7 +121,7 @@ class FilterForm(forms.Form):
         label="Materials on hand",
     )
     learner_type = forms.ChoiceField(
-    choices=LEARNING_DIFFICULTY_CHOICES,
+    choices=SPECIAL_NEEDS_CHOICES,
     required=False,
     label="Learning difficulty",
     widget=forms.Select(attrs={"class": "form-select"})
@@ -147,5 +171,20 @@ class FilterForm(forms.Form):
             try:
                 strand_id = int(self.data["strand"])
                 self.fields["substrand"].queryset = SubStrand.objects.filter(strand_id=strand_id)
+            except (TypeError, ValueError):
+                pass
+
+        if "substrand" in self.data:
+            try:
+                substrand_id = int(self.data["substrand"])
+                self.fields["standard"].queryset = ContentStandard.objects.filter(substrand_id=substrand_id)
+            except (TypeError, ValueError):
+                pass
+
+        # limit Indicator list after standard picked
+        if "standard" in self.data:
+            try:
+                std_id = int(self.data["standard"])
+                self.fields["indicator"].queryset = Indicator.objects.filter(standard_id=std_id)
             except (TypeError, ValueError):
                 pass

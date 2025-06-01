@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RouteSelectForm, FilterForm
 from .tlr_engine import find_matches
-from .models import *
+from .models import Tlr, Strand, SubStrand, Subject
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
-
+import re
 
 def download_view(request, pk):
     tlr = get_object_or_404(Tlr, pk=pk)
@@ -13,14 +13,19 @@ def download_view(request, pk):
         f"{tlr.title}\n\n"
         f"Purpose: {tlr.brief_description}\n"
         f"Materials: {', '.join(m.name for m in tlr.materials.all())}\n"
-        f"Time Needed: {tlr.get_time_needed_display()}\n\n"
+        f"Time Required: {tlr.get_time_needed_display() if tlr.time_needed else 'N/A'}\n"
+        f"Budget Range: {tlr.get_budget_band_display() if tlr.budget_band else 'N/A'}\n"
+        f"Bloom Level: {tlr.get_bloom_level_display() if tlr.bloom_level else 'N/A'}\n"
+        f"Special Needs: {', '.join(n.name for n in tlr.special_needs.all())}\n"
+        f"Learning Styles: {', '.join(l.name for l in tlr.learning_styles.all())}\n\n"
         "Steps to make:\n"
         f"{tlr.steps_to_make}\n\n"
         "Classroom tips:\n"
         f"{tlr.tips_for_use}"
     )
     response = HttpResponse(content, content_type="text/plain")
-    response["Content-Disposition"] = f'attachment; filename="{tlr.title}.txt"'
+    safe_title = re.sub(r'[^\w\s-]', '', tlr.title).strip().replace(' ', '_')
+    response["Content-Disposition"] = f'attachment; filename="{safe_title}.txt"'
     return response
 
 
@@ -32,7 +37,7 @@ def load_strands(request):
 
     if class_id and subject_id and term:
         form.fields["strand"].queryset = Strand.objects.filter(
-            class_level_id=class_id,
+            subject__class_level_id=class_id,
             subject_id=subject_id,
             term=term
         )
@@ -40,6 +45,7 @@ def load_strands(request):
         form.fields["strand"].queryset = Strand.objects.none()
 
     return render(request, "partials/strand_options.html", {"form": form})
+
 
 
 def load_substrands(request):
@@ -152,5 +158,5 @@ def results_page(request):
 
 def chained_filter(request):
     class_level_id = request.GET.get("class_level")
-    subjects = Subject.objects.filter(class_level_id=class_level_id).values("id", "name")
+    subjects = Subject.objects.filter(class_level_id=class_level_id).values("id", "title")
     return JsonResponse(list(subjects), safe=False)
