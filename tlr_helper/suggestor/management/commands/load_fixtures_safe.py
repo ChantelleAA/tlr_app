@@ -1,11 +1,11 @@
 from django.core.management.base import BaseCommand
-from django.core import serializers
-from django.db import connection
 from django.conf import settings
+from django.db import connection
+from django.core import serializers
 import json
 
 class Command(BaseCommand):
-    help = 'Load fixtures safely without foreign key constraint checks (for SQLite only)'
+    help = 'Safely loads initial_data.json using update_or_create to avoid duplicates'
 
     def handle(self, *args, **options):
         cursor = connection.cursor()
@@ -21,10 +21,18 @@ class Command(BaseCommand):
             with open('suggestor/fixtures/initial_data.json', 'r') as f:
                 fixture_data = json.load(f)
 
+            loaded = 0
             for obj in serializers.deserialize("json", json.dumps(fixture_data)):
-                obj.save()
+                model = obj.object.__class__
+                fields = obj.object.__dict__.copy()
+                fields.pop('_state', None)
+                if hasattr(obj.object, 'code'):  # for ClassLevel and similar
+                    model.objects.update_or_create(code=fields['code'], defaults=fields)
+                else:
+                    model.objects.update_or_create(pk=obj.object.pk, defaults=fields)
+                loaded += 1
 
-            self.stdout.write(self.style.SUCCESS(f'Successfully loaded {len(fixture_data)} objects!'))
+            self.stdout.write(self.style.SUCCESS(f'Successfully loaded or updated {loaded} objects!'))
 
         except Exception as e:
             self.stderr.write(self.style.ERROR(f'Error: {str(e)}'))
