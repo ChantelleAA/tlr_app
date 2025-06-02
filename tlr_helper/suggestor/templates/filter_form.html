@@ -1,8 +1,31 @@
 {% extends "base.html" %}
-{% block content %}
-<div class="container my-5">
-  <div class="card shadow-lg rounded-4 p-5" style="max-width: 860px; margin: auto; background: #ffffff;">
 
+{% block extra_css %}
+<style>
+.card-theme-adaptive {
+    background-color: var(--bs-card-bg, #ffffff) !important;
+    border-color: var(--bs-card-border-color, rgba(0,0,0,.125)) !important;
+}
+
+[data-bs-theme="dark"] .card-theme-adaptive * {
+    color: #f8f9fa !important;
+}
+
+[data-bs-theme="dark"] .card-theme-adaptive input,
+[data-bs-theme="dark"] .card-theme-adaptive select,
+[data-bs-theme="dark"] .card-theme-adaptive textarea,
+[data-bs-theme="dark"] .card-theme-adaptive [class*="form-"] {
+    background-color: #495057 !important;
+    border-color: #d1dbe3 !important;
+    color: #f8f9fa !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+  <div class="card shadow-lg rounded-4 p-5 card-theme-adaptive" style="max-width: 860px; margin: auto;">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4 class="mb-0 text-primary">🎯 Refine Your Search</h4>
       <a href="{% url 'route_select' %}" class="btn btn-outline-secondary btn-sm">
