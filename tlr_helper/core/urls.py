@@ -45,5 +45,7 @@ urlpatterns = [
     # Extras
     path("about/", v.about_page, name="about"),
     path("print/<int:pk>/", v.print_view, name="print_tlr"),
+    path("signup/", v.signup_view, name="signup"),
+    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

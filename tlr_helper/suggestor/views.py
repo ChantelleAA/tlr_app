@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RouteSelectForm, FilterForm
+from .forms import RouteSelectForm, FilterForm, SignUpForm
 from .tlr_engine import find_matches
 from .models import Tlr, Strand, SubStrand, Subject
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -8,6 +8,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.db.models import Model
 import re
+from django.contrib.auth import login
 
 @login_required
 def download_view(request, pk):
@@ -68,6 +69,7 @@ def load_subjects(request):
         form.fields["subject"].queryset = Subject.objects.none()
 
     return render(request, "partials/subject_options.html", {"form": form})
+
 
 
 def pick_route(request):
@@ -171,3 +173,14 @@ def chained_filter(request):
     class_level_id = request.GET.get("class_level")
     subjects = Subject.objects.filter(class_level_id=class_level_id).values("id", "title")
     return JsonResponse(list(subjects), safe=False)
+
+def signup_view(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('route_select')
+    else:
+        form = SignUpForm()
+    return render(request, "signup.html", {"form": form})

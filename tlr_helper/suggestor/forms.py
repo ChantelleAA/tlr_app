@@ -12,7 +12,8 @@ from .models import (
     CLASS_SIZE_BANDS, BLOOM_LEVELS, BUDGET_BANDS,
     SPECIAL_NEEDS_CHOICES,
 )
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
 ROUTES = [
@@ -188,3 +189,11 @@ class FilterForm(forms.Form):
                 self.fields["indicator"].queryset = Indicator.objects.filter(standard_id=std_id)
             except (TypeError, ValueError):
                 pass
+
+
+class SignUpForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
