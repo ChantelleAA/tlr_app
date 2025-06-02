@@ -23,6 +23,16 @@ print('ClassLevel columns:', [row[0] for row in cursor.fetchall()])
 # Skip fixture loading for now - let the post_migrate signal handle it
 echo "Skipping fixture loading - using post_migrate signal instead"
 
+echo "Creating superuser..."
+python manage.py shell -c "
+from django.contrib.auth.models import User
+if not User.objects.filter(username='chantelle').exists():
+    User.objects.create_superuser('chantelle', 'chantelle@example.com', '2241')
+    print('Superuser chantelle created successfully')
+else:
+    print('Superuser chantelle already exists')
+"
+
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
