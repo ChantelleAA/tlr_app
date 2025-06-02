@@ -265,19 +265,13 @@ def populate_initial_data(sender, **kwargs):
     SpecialNeed = apps.get_model("suggestor", "SpecialNeed")
     LearningStyle = apps.get_model("suggestor", "LearningStyle")
 
-    fixture_loaded = ClassLevel.objects.filter(code__in=['1', '2', '3', '4', '5', '6', '7']).count() == 7
-    
-    if fixture_loaded:
-        print("Fixtures detected, only creating supplementary data...")
-        
-        additional_materials = [
-            "Chalkboard", "Whiteboard", "Markers", "Chalk", "Notebooks", 
-            "Pencils", "Erasers", "Rulers", "Scissors", "Glue"
-        ]
-        for material_name in additional_materials:
-            Material.objects.get_or_create(name=material_name)
-            
+    if ClassLevel.objects.exists():
+        print("Initial data already exists. Skipping post_migrate data creation.")
         return
+
+    print("Creating initial data via post_migrate signal...")
+
+
 
     # Subjects by Class
     SUBJECTS_BY_CLASS = {
