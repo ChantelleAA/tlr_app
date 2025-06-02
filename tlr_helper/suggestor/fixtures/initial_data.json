@@ -2383,6 +2383,935 @@
     "fields": {
       "title": "Food and Nutrition"
     }
+  }, 
+  {
+    "model": "suggestor.indicator",
+    "pk": 41,
+    "fields": {
+      "standard": 25,
+      "code": "K1.6.7.1.1",
+      "description": "Talk about different types of soil and which one is best used for gardening.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 42,
+    "fields": {
+      "standard": 31,
+      "code": "K1.6.8.1.1",
+      "description": "Recite rhymes/poems and talk about the different sources of light.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 43,
+    "fields": {
+      "standard": 32,
+      "code": "K1.6.9.1.1",
+      "description": "Sing and talk about the weather condition in Ghana.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 44,
+    "fields": {
+      "standard": 33,
+      "code": "K1.7.1.1.1",
+      "description": "Using pictures, talk about the various means by which we connect with the international community-Transportation.",
+      "competencies": [3, 4, 6],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 45,
+    "fields": {
+      "standard": 21,
+      "code": "K1.6.3.1.2",
+      "description": "Listen and interact with teacher and peers as they listen to a read aloud text on the uses of water.",
+      "competencies": [3, 5, 1],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 46,
+    "fields": {
+      "standard": 22,
+      "code": "K1.6.4.1.2",
+      "description": "Use visual information to help them understand the text they read about air.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 47,
+    "fields": {
+      "standard": 23,
+      "code": "K1.6.5.1.2",
+      "description": "Talk about the cover page of the book and point to individual words while listening to the teacher read aloud.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 48,
+    "fields": {
+      "standard": 24,
+      "code": "K1.6.6.1.2",
+      "description": "Talk about the cover page and identify how plants grow in a read aloud story",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 49,
+    "fields": {
+      "standard": 25,
+      "code": "K1.6.7.1.2",
+      "description": "Point to individual words to track reading.",
+      "competencies": [3, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 50,
+    "fields": {
+      "standard": 31,
+      "code": "K1.6.8.1.2",
+      "description": "Use pictures and other text features to aid understanding as they listen to a read aloud informational text on sources light.",
+      "competencies": [3, 1, 2],
+      "goals": [1, 2]
+    }
+  }, 
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 34,
+    "fields": {
+      "substrand": 11,
+      "code": "K1.3.1.2",
+      "description": "Demonstrate understanding of the virtues, good manners and behaviour patterns our families value.",
+      "competencies": [3, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 35,
+    "fields": {
+      "substrand": 12,
+      "code": "K1.3.2.2",
+      "description": "Demonstrate understanding of how to show respect and politeness in cultural contexts.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 36,
+    "fields": {
+      "substrand": 13,
+      "code": "K1.3.3.2",
+      "description": "Demonstrate appreciation for different religious practices and beliefs.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 37,
+    "fields": {
+      "substrand": 14,
+      "code": "K1.3.4.2",
+      "description": "Show understanding of tolerance and respect for people with different beliefs.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 38,
+    "fields": {
+      "substrand": 15,
+      "code": "K1.4.1.2",
+      "description": "Explain the importance of special places in the community.",
+      "competencies": [3, 4, 1],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 39,
+    "fields": {
+      "substrand": 16,
+      "code": "K1.4.2.2",
+      "description": "Appreciate the contributions of different occupations to community life.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 40,
+    "fields": {
+      "substrand": 17,
+      "code": "K1.4.3.2",
+      "description": "Show respect for traditional and religious leaders in the community.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  }, 
+  {
+    "model": "suggestor.substrand",
+    "pk": 39,
+    "fields": {
+      "strand": 10,
+      "title": "My personal values",
+      "slug": "kg2-my-personal-values"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 40,
+    "fields": {
+      "strand": 10,
+      "title": "My cultural values",
+      "slug": "kg2-my-cultural-values"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 41,
+    "fields": {
+      "strand": 10,
+      "title": "My national and civic values",
+      "slug": "kg2-my-national-civic-values"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 42,
+    "fields": {
+      "strand": 10,
+      "title": "Our Beliefs - Relating well with people with different beliefs",
+      "slug": "kg2-our-beliefs-relating-different-beliefs"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 43,
+    "fields": {
+      "strand": 11,
+      "title": "Knowing the special places in every community",
+      "slug": "kg2-knowing-special-places-every-community"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 44,
+    "fields": {
+      "strand": 11,
+      "title": "Knowing the important people/occupation in our community",
+      "slug": "kg2-knowing-important-people-occupation-community"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 45,
+    "fields": {
+      "strand": 11,
+      "title": "Knowing the special leaders in our community and country",
+      "slug": "kg2-knowing-special-leaders-community-country"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 46,
+    "fields": {
+      "strand": 12,
+      "title": "History and celebrations of Ghana",
+      "slug": "kg2-history-celebrations-ghana"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 47,
+    "fields": {
+      "strand": 13,
+      "title": "Living and non-living things",
+      "slug": "kg2-living-non-living-things"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 48,
+    "fields": {
+      "strand": 13,
+      "title": "Living things - Domestic and wild animals",
+      "slug": "kg2-living-things-domestic-wild-animals"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 49,
+    "fields": {
+      "strand": 13,
+      "title": "Water",
+      "slug": "kg2-water"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 50,
+    "fields": {
+      "strand": 13,
+      "title": "Air",
+      "slug": "kg2-air"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 51,
+    "fields": {
+      "strand": 13,
+      "title": "Plants 1",
+      "slug": "kg2-plants-1"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 52,
+    "fields": {
+      "strand": 13,
+      "title": "Plants 2",
+      "slug": "kg2-plants-2"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 53,
+    "fields": {
+      "strand": 13,
+      "title": "Types of soil and gardening",
+      "slug": "kg2-types-soil-gardening"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 54,
+    "fields": {
+      "strand": 13,
+      "title": "Natural and Man-made sources of light",
+      "slug": "kg2-natural-man-made-sources-light"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 55,
+    "fields": {
+      "strand": 13,
+      "title": "Changing weather conditions - Positive and negative effects",
+      "slug": "kg2-changing-weather-conditions-effects"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 56,
+    "fields": {
+      "strand": 14,
+      "title": "Connecting and communicating with the global community",
+      "slug": "kg2-connecting-communicating-global-community"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 57,
+    "fields": {
+      "strand": 14,
+      "title": "Financial literacy: Buying and Selling",
+      "slug": "kg2-financial-literacy-buying-selling"
+    }
+  }, 
+  {
+    "model": "suggestor.tlr",
+    "pk": 11,
+    "fields": {
+      "class_level": 3,
+      "subject": 2,
+      "term": 1,
+      "strand": 1,
+      "substrand": 1,
+      "indicator": 9,
+      "standard": 1,
+      "themes": [1],
+      "key_learning_areas": [7],
+      "competencies": [1],
+      "resource_types": [3],
+      "goals": [1, 2],
+      "title": "Body Parts Counting Mat",
+      "brief_description": "Interactive counting mat using body parts to teach numbers 1-5 with hands-on manipulatives",
+      "materials": [1, 6, 8, 20],
+      "time_needed": "core",
+      "steps_to_make": "1. Create large floor mat with body outline\n2. Prepare sets of bottle tops for counting\n3. Make number cards 1-5\n4. Create instruction cards for each body part\n5. Laminate all materials for durability",
+      "tips_for_use": "Start with learners' own bodies. Use one-to-one correspondence. Count aloud together. Progress from concrete to abstract.",
+      "intended_use": "aid",
+      "tlr_type": "manipulative",
+      "special_needs": [1, 2, 3],
+      "learning_styles": [1, 3],
+      "class_size": "small",
+      "bloom_level": "apply",
+      "budget_band": "low",
+      "learning_outcome": "Learners will count body parts accurately and match with correct numerals 1-5",
+      "search_keywords": "counting, numbers, body parts, manipulatives, one-to-one correspondence, KG1",
+      "slug": "body-parts-counting-mat",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 12,
+    "fields": {
+      "class_level": 3,
+      "subject": 2,
+      "term": 2,
+      "strand": 4,
+      "substrand": 16,
+      "indicator": 27,
+      "standard": 16,
+      "themes": [4],
+      "key_learning_areas": [7, 9],
+      "competencies": [1, 3],
+      "resource_types": [3, 6],
+      "goals": [1, 2],
+      "title": "Community Workers Counting and Sorting Game",
+      "brief_description": "Mathematical activity combining community helpers with counting, sorting, and basic addition/subtraction",
+      "materials": [3, 20, 6, 18],
+      "time_needed": "core",
+      "steps_to_make": "1. Create picture cards of different community workers\n2. Make number cards 1-10\n3. Prepare sorting circles\n4. Create simple word problems\n5. Design recording sheet",
+      "tips_for_use": "Sort by different attributes (indoor/outdoor jobs, tools used). Create story problems. Use 'more than/less than' language.",
+      "intended_use": "aid",
+      "tlr_type": "game",
+      "special_needs": [1, 2],
+      "learning_styles": [1, 3, 5],
+      "class_size": "medium",
+      "bloom_level": "analyze",
+      "budget_band": "low",
+      "learning_outcome": "Learners will count, sort, and compare groups of community workers using mathematical language",
+      "search_keywords": "counting, sorting, community workers, comparison, mathematics, KG1",
+      "slug": "community-workers-counting-sorting-game",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 13,
+    "fields": {
+      "class_level": 3,
+      "subject": 2,
+      "term": 3,
+      "strand": 6,
+      "substrand": 20,
+      "indicator": 31,
+      "standard": 20,
+      "themes": [6],
+      "key_learning_areas": [7, 8],
+      "competencies": [1, 2],
+      "resource_types": [3, 6],
+      "goals": [1, 2],
+      "title": "Animal Pattern and Number Game",
+      "brief_description": "Pattern recognition and counting activity using domestic and wild animals to teach sequences and numbers up to 10",
+      "materials": [3, 20, 18, 1],
+      "time_needed": "short",
+      "steps_to_make": "1. Create animal picture cards (domestic and wild)\n2. Design pattern sequence cards\n3. Make number cards 1-10\n4. Create pattern completion worksheets\n5. Prepare extension activities",
+      "tips_for_use": "Start with simple AB patterns. Progress to ABC patterns. Connect to animal sounds and movements. Count animals in each pattern.",
+      "intended_use": "aid",
+      "tlr_type": "game",
+      "special_needs": [1, 5],
+      "learning_styles": [1, 3],
+      "class_size": "small",
+      "bloom_level": "create",
+      "budget_band": "low",
+      "learning_outcome": "Learners will create and extend patterns using animals and count objects in patterns accurately",
+      "search_keywords": "patterns, animals, counting, sequences, mathematics, domestic, wild, KG1",
+      "slug": "animal-pattern-number-game",
+      "is_published": true,
+      "download_count": 0
+    }
+  }, 
+  {
+    "model": "suggestor.tlr",
+    "pk": 14,
+    "fields": {
+      "class_level": 3,
+      "subject": 4,
+      "term": 1,
+      "strand": 1,
+      "substrand": 2,
+      "indicator": 4,
+      "standard": 2,
+      "themes": [1],
+      "key_learning_areas": [11, 12],
+      "competencies": [2, 5],
+      "resource_types": [1, 10],
+      "goals": [1],
+      "title": "Body Functions Drama and Art Station",
+      "brief_description": "Creative arts station combining drama, visual arts, and movement to explore body parts and their functions",
+      "materials": [1, 2, 9, 22],
+      "time_needed": "core",
+      "steps_to_make": "1. Set up drama area with simple costumes\n2. Prepare art materials for body drawings\n3. Create action cards for body functions\n4. Design simple props for different body parts\n5. Set up display area for artwork",
+      "tips_for_use": "Encourage creative expression. Let learners choose how to represent body functions. Display all artwork positively. Connect movement to learning.",
+      "intended_use": "aid",
+      "tlr_type": "manipulative",
+      "special_needs": [2, 5],
+      "learning_styles": [1, 3, 5],
+      "class_size": "medium",
+      "bloom_level": "create",
+      "budget_band": "medium",
+      "learning_outcome": "Learners will creatively express understanding of body functions through drama, art, and movement",
+      "search_keywords": "creative arts, drama, body functions, visual arts, movement, expression, KG1",
+      "slug": "body-functions-drama-art-station",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 15,
+    "fields": {
+      "class_level": 3,
+      "subject": 4,
+      "term": 2,
+      "strand": 5,
+      "substrand": 18,
+      "indicator": 29,
+      "standard": 18,
+      "themes": [5],
+      "key_learning_areas": [11, 12],
+      "competencies": [2, 4, 5],
+      "resource_types": [1, 11],
+      "goals": [1],
+      "title": "Ghana Independence Day Art and Music Celebration",
+      "brief_description": "Multi-arts celebration combining visual arts, music, and dance to commemorate Ghana's independence",
+      "materials": [1, 2, 21, 22, 24],
+      "time_needed": "core",
+      "steps_to_make": "1. Prepare Ghana flag coloring materials\n2. Create simple musical instruments\n3. Learn traditional Ghanaian songs\n4. Design costume accessories\n5. Plan mini-parade route",
+      "tips_for_use": "Connect arts to national pride. Teach simple traditional dance moves. Encourage creativity in flag designs. Include drumming and singing.",
+      "intended_use": "aid",
+      "tlr_type": "manipulative",
+      "special_needs": [4, 5],
+      "learning_styles": [1, 2, 3, 5],
+      "class_size": "large",
+      "bloom_level": "create",
+      "budget_band": "medium",
+      "learning_outcome": "Learners will express national pride through creative arts activities and understand Ghana's independence",
+      "search_keywords": "Ghana, independence, creative arts, music, dance, flag, celebration, KG1",
+      "slug": "ghana-independence-art-music-celebration",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 16,
+    "fields": {
+      "class_level": 3,
+      "subject": 4,
+      "term": 3,
+      "strand": 6,
+      "substrand": 25,
+      "indicator": 41,
+      "standard": 25,
+      "themes": [6, 9],
+      "key_learning_areas": [11],
+      "competencies": [2, 1],
+      "resource_types": [10, 1],
+      "goals": [1],
+      "title": "Soil Types Art and Texture Exploration",
+      "brief_description": "Hands-on art activity using different soil types to create textured artwork and understand soil properties",
+      "materials": [9, 1, 2, 29, 30],
+      "time_needed": "core",
+      "steps_to_make": "1. Collect different soil types (sandy, clay, loamy)\n2. Prepare art paper and brushes\n3. Set up exploration stations\n4. Create texture comparison charts\n5. Prepare cleanup materials",
+      "tips_for_use": "Let learners feel different soil textures. Connect to plant growth. Create soil texture paintings. Discuss soil uses in art and building.",
+      "intended_use": "aid",
+      "tlr_type": "manipulative",
+      "special_needs": [1, 3],
+      "learning_styles": [1, 3],
+      "class_size": "small",
+      "bloom_level": "apply",
+      "budget_band": "low",
+      "learning_outcome": "Learners will identify different soil types through sensory exploration and create textured artwork",
+      "search_keywords": "soil, textures, art, exploration, gardening, sensory, creative arts, KG1",
+      "slug": "soil-types-art-texture-exploration",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 17,
+    "fields": {
+      "class_level": 3,
+      "subject": 1,
+      "term": 1,
+      "strand": 1,
+      "substrand": 1,
+      "indicator": 1,
+      "standard": 1,
+      "themes": [1],
+      "key_learning_areas": [1, 2],
+      "competencies": [5, 3],
+      "resource_types": [12],
+      "goals": [3, 4],
+      "title": "Body Parts Vocabulary Assessment Checklist",
+      "brief_description": "Comprehensive assessment tool to evaluate learners' knowledge of body parts vocabulary and self-description skills",
+      "materials": [14, 1],
+      "time_needed": "short",
+      "steps_to_make": "1. Create assessment checklist with clear criteria\n2. Design observation recording sheet\n3. Prepare picture prompts for assessment\n4. Create rubric for vocabulary use\n5. Design portfolio collection system",
+      "tips_for_use": "Observe during natural play. Use multiple assessment opportunities. Record specific examples. Focus on progress, not perfection.",
+      "intended_use": "assessment",
+      "tlr_type": "flashcard",
+      "special_needs": [1, 2, 3, 4, 5, 6],
+      "learning_styles": [1, 2, 3, 4, 5],
+      "class_size": "small",
+      "bloom_level": "evaluate",
+      "budget_band": "none",
+      "learning_outcome": "Teachers will accurately assess learners' body parts vocabulary and self-description abilities",
+      "search_keywords": "assessment, vocabulary, body parts, checklist, observation, evaluation, KG1",
+      "slug": "body-parts-vocabulary-assessment-checklist",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 18,
+    "fields": {
+      "class_level": 3,
+      "subject": 2,
+      "term": 2,
+      "strand": 4,
+      "substrand": 15,
+      "indicator": 26,
+      "standard": 15,
+      "themes": [4],
+      "key_learning_areas": [7],
+      "competencies": [1, 3],
+      "resource_types": [12],
+      "goals": [3, 5],
+      "title": "Community Places Counting Assessment Portfolio",
+      "brief_description": "Portfolio-based assessment system to track learners' counting and mathematical thinking about community places",
+      "materials": [1, 14, 20],
+      "time_needed": "reusable",
+      "steps_to_make": "1. Create individual portfolio folders\n2. Design assessment tasks for different counting levels\n3. Prepare photo documentation system\n4. Create progress tracking sheets\n5. Design parent communication forms",
+      "tips_for_use": "Collect work samples regularly. Include learner self-reflection. Document growth over time. Share progress with families.",
+      "intended_use": "assessment",
+      "tlr_type": "manipulative",
+      "special_needs": [1, 2, 3, 4, 5, 6],
+      "learning_styles": [1, 2, 3, 4, 5],
+      "class_size": "medium",
+      "bloom_level": "evaluate",
+      "budget_band": "low",
+      "learning_outcome": "Teachers will track and document learners' mathematical thinking and counting progress over time",
+      "search_keywords": "assessment, portfolio, counting, community, documentation, progress, mathematics, KG1",
+      "slug": "community-places-counting-assessment-portfolio",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 41,
+    "fields": {
+      "substrand": 34,
+      "code": "K2.1.6.1",
+      "description": "Demonstrate understanding of how to be safe and identify strangers.",
+      "competencies": [3, 5],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 42,
+    "fields": {
+      "substrand": 35,
+      "code": "K2.2.1.1",
+      "description": "Demonstrate understanding of the rights, roles and responsibilities of family members",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 43,
+    "fields": {
+      "substrand": 36,
+      "code": "K2.2.2.1",
+      "description": "Demonstrate understanding of the origin and history of our families and the languages spoken.",
+      "competencies": [3, 4, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 44,
+    "fields": {
+      "substrand": 37,
+      "code": "K2.2.3.1",
+      "description": "Demonstrate understanding of importance of the activities that we engage in during festivals and family celebrations.",
+      "competencies": [3, 4, 5, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 45,
+    "fields": {
+      "substrand": 38,
+      "code": "K2.2.4.1",
+      "description": "Demonstrate understanding of the rules and regulations for learners and teachers at school.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.tlrimage",
+    "pk": 1,
+    "fields": {
+      "tlr": 1,
+      "image": "tlr_images/body_parts_game_setup.jpg",
+      "caption": "Circle setup for body parts identification game"
+    }
+  },
+  {
+    "model": "suggestor.tlrimage",
+    "pk": 2,
+    "fields": {
+      "tlr": 2,
+      "image": "tlr_images/body_functions_poster.jpg", 
+      "caption": "Interactive poster showing body parts and their functions"
+    }
+  },
+  {
+    "model": "suggestor.tlrimage",
+    "pk": 3,
+    "fields": {
+      "tlr": 3,
+      "image": "tlr_images/hygiene_song_activity.jpg",
+      "caption": "Children performing hygiene song with actions"
+    }
+  },
+  {
+    "model": "suggestor.tlrimage",
+    "pk": 4,
+    "fields": {
+      "tlr": 11,
+      "image": "tlr_images/counting_mat_body_parts.jpg",
+      "caption": "Floor mat with body outline for counting activities"
+   }
+ },
+ {
+   "model": "suggestor.tlrimage",
+   "pk": 5,
+   "fields": {
+     "tlr": 14,
+     "image": "tlr_images/drama_station_body_functions.jpg",
+     "caption": "Drama station with costumes and props for body functions"
+   }
+ }, 
+  {
+    "model": "suggestor.tlrvideo",
+    "pk": 1,
+    "fields": {
+      "tlr": 6,
+      "url": "https://example.com/videos/body_care_demonstration.mp4",
+      "caption": "Demonstration video showing proper body care techniques"
+    }
+  },
+  {
+    "model": "suggestor.tlrvideo",
+    "pk": 2,
+    "fields": {
+      "tlr": 15,
+      "url": "https://example.com/videos/ghana_independence_songs.mp4",
+      "caption": "Traditional Ghanaian songs for independence celebration"
+    }
+  }, 
+  {
+    "model": "suggestor.indicator",
+    "pk": 51,
+    "fields": {
+      "standard": 41,
+      "code": "K2.1.6.1.1",
+      "description": "Role-play, sing songs and discuss some of the safety measures to protect ourselves in the environment.",
+      "competencies": [3, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 52,
+    "fields": {
+      "standard": 42,
+      "code": "K2.2.1.1.1",
+      "description": "Say a poem about the family, talk about and discuss the rights and roles of the members.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 53,
+    "fields": {
+      "standard": 43,
+      "code": "K2.2.2.1.1",
+      "description": "Sing indigenous songs, talk about and discuss the origin and history of the learners' family.",
+      "competencies": [3, 4, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 54,
+    "fields": {
+      "standard": 44,
+      "code": "K2.2.3.1.1",
+      "description": "discuss importance of activities we engage in during festivals and family celebrations and sing folk tunes and religious songs.",
+      "competencies": [3, 4, 5, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 55,
+    "fields": {
+      "standard": 45,
+      "code": "K2.2.4.1.1",
+      "description": "Talk about and discuss the rules and regulations that guide us to live as good friends in the school family",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  }, 
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 46,
+    "fields": {
+      "substrand": 47,
+      "code": "K2.6.1.1",
+      "description": "Demonstrate understanding of why some things are referred to as living and non- living things.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 47,
+    "fields": {
+      "substrand": 48,
+      "code": "K2.6.2.1",
+      "description": "Demonstrate understanding of the importance of domestic and wild animals.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 48,
+    "fields": {
+      "substrand": 49,
+      "code": "K2.6.3.1",
+      "description": "Demonstrate understanding that water is an important natural resource that helps all living things, human, plants and animals",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 49,
+    "fields": {
+      "substrand": 50,
+      "code": "K2.6.4.1",
+      "description": "Demonstrate understanding that air is all around us and it is an important and beneficial natural resource for all living things.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 50,
+    "fields": {
+      "substrand": 51,
+      "code": "K2.6.5.1",
+      "description": "Demonstrate understanding of the knowledge that there are different parts of plants and are important sources of food and medicine for other living things",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 51,
+    "fields": {
+      "substrand": 52,
+      "code": "K2.6.6.1",
+      "description": "Demonstrate understanding of how plants grow and how they prepare their food.",
+      "competencies": [3, 5, 1, 2, 6],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 52,
+    "fields": {
+      "substrand": 53,
+      "code": "K2.6.7.1",
+      "description": "Demonstrate understanding of types of soil we find around us and which one helps plant to grow well.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 53,
+    "fields": {
+      "substrand": 54,
+      "code": "K2.6.8.1",
+      "description": "Demonstrate understanding of the knowledge that the different types of lights we use during the day or in the night can be classifies as of l into natural and manmade and its usefulness.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 54,
+    "fields": {
+      "substrand": 55,
+      "code": "K2.6.9.1",
+      "description": "Demonstrate understanding of positive and negative effects of weather conditions.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 55,
+    "fields": {
+      "substrand": 56,
+      "code": "K2.7.1.1",
+      "description": "Demonstrate understanding of the various ways we connect with the global community.",
+      "competencies": [3, 4, 6],
+      "goals": [1]
+    }
   }]
-
+ 
 
