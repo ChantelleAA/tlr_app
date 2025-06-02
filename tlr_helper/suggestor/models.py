@@ -249,94 +249,6 @@ class Tlr(models.Model):
     def __str__(self):
         return self.title
 
-# Auto populate
-
-# @receiver(post_migrate)
-# def populate_initial_data(sender, **kwargs):
-#     if sender.label != "suggestor":
-#         return
-
-#     # Import models dynamically
-#     ClassLevel = apps.get_model("suggestor", "ClassLevel")
-#     Subject = apps.get_model("suggestor", "Subject")
-#     Theme = apps.get_model("suggestor", "Theme")
-#     KeyLearningArea = apps.get_model("suggestor", "KeyLearningArea")
-#     CoreCompetency = apps.get_model("suggestor", "CoreCompetency")
-#     GoalTag = apps.get_model("suggestor", "GoalTag")
-#     ResourceType = apps.get_model("suggestor", "ResourceType")
-#     SpecialNeed = apps.get_model("suggestor", "SpecialNeed")
-#     LearningStyle = apps.get_model("suggestor", "LearningStyle")
-
-#     # Subjects by Class
-#     SUBJECTS_BY_CLASS = {
-#         "Crèche": ["Language and Literacy", "Numeracy", "Creative Arts", "Environmental Studies", "Physical Development", "Music and Movement"],
-#         "Nursery": ["Language and Literacy", "Numeracy", "Creative Arts", "Environmental Studies", "Physical Development", "Music and Movement"],
-#         "KG1": ["Language and Literacy", "Numeracy", "Our World Our People", "Creative Arts", "Physical Development", "Religious and Moral Education"],
-#         "KG2": ["Language and Literacy", "Numeracy", "Our World Our People", "Creative Arts", "Physical Development", "Religious and Moral Education"],
-#         "Class 1": ["English Language", "Ghanaian Language", "Mathematics", "Science", "Our World Our People", "Creative Arts", "Physical Education", "Religious and Moral Education", "Computing"],
-#         "Class 2": ["English Language", "Ghanaian Language", "Mathematics", "Science", "Our World Our People", "Creative Arts", "Physical Education", "Religious and Moral Education", "Computing"],
-#         "Class 3": ["English Language", "Ghanaian Language", "Mathematics", "Science", "Our World Our People", "Creative Arts", "Physical Education", "Religious and Moral Education", "Computing"]
-#     }
-
-#     # Class levels
-#     for i, name in enumerate(SUBJECTS_BY_CLASS.keys(), start=1):
-#         ClassLevel.objects.get_or_create(code=str(i), name=name)
-
-#     # Subjects per class level
-#     for cl_name, subj_list in SUBJECTS_BY_CLASS.items():
-#         try:
-#             cl = ClassLevel.objects.get(name=cl_name)
-#         except ClassLevel.DoesNotExist:
-#             continue
-#         for title in subj_list:
-#             Subject.objects.get_or_create(class_level=cl, title=title)
-
-#     # Themes
-#     themes = ["Myself", "My Environment", "My Community", "My Nation", "Our Values"]
-#     for t in themes:
-#         Theme.objects.get_or_create(title=t)
-
-#     # Key Learning Areas
-#     kla = ["Literacy", "Numeracy", "PSED", "Science and Environment", "Creative Arts", "Religious and Moral", "Computing"]
-#     for k in kla:
-#         KeyLearningArea.objects.get_or_create(title=k)
-
-#     # Core Competencies
-#     comps = ["Critical Thinking", "Creativity", "Communication", "Collaboration", "Personal Development", "Digital Literacy"]
-#     for c in comps:
-#         CoreCompetency.objects.get_or_create(title=c)
-
-#     # Goal Tags
-#     for g in ["Introduce", "Reinforce", "Assess"]:
-#         GoalTag.objects.get_or_create(title=g)
-
-#     # Resource Types
-#     for r in ["Poster", "Flashcards", "Manipulatives", "Charts", "Storybooks", "Games"]:
-#         ResourceType.objects.get_or_create(title=r)
-
-#     # Special Needs
-#     needs = [
-#         ("Dyslexia", "Difficulty reading and decoding words"),
-#         ("ADHD", "Attention deficit, trouble focusing"),
-#         ("Visual Impairment", "Low vision or blindness"),
-#         ("Hearing Impairment", "Partial or full hearing loss"),
-#         ("Autism Spectrum", "Neurodiverse needs related to interaction and focus"),
-#         ("Other", "Any other learning need not listed")
-#     ]
-#     for name, desc in needs:
-#         SpecialNeed.objects.get_or_create(name=name, defaults={"description": desc})
-
-#     # Learning Styles
-#     styles = [
-#         ("Visual", "Prefers diagrams, images, charts"),
-#         ("Auditory", "Learns better through listening"),
-#         ("Kinesthetic", "Prefers hands-on activities"),
-#         ("Read/Write", "Learns best through reading and writing"),
-#         ("Multimodal", "Uses a combination of learning styles")
-#     ]
-#     for name, desc in styles:
-#         LearningStyle.objects.get_or_create(name=name, defaults={"description": desc})
-
 @receiver(post_migrate)
 def populate_initial_data(sender, **kwargs):
     if sender.label != "suggestor":
@@ -360,7 +272,7 @@ def populate_initial_data(sender, **kwargs):
 
     # Subjects by Class
     SUBJECTS_BY_CLASS = {
-        "Crèche": ["Language and Literacy", "Numeracy", "Creative Arts", "Environmental Studies", "Physical Development", "Music and Movement"],
+        "Creche": ["Language and Literacy", "Numeracy", "Creative Arts", "Environmental Studies", "Physical Development", "Music and Movement"],
         "Nursery": ["Language and Literacy", "Numeracy", "Creative Arts", "Environmental Studies", "Physical Development", "Music and Movement"],
         "KG1": ["Language and Literacy", "Numeracy", "Our World Our People", "Creative Arts", "Physical Development", "Religious and Moral Education"],
         "KG2": ["Language and Literacy", "Numeracy", "Our World Our People", "Creative Arts", "Physical Development", "Religious and Moral Education"],

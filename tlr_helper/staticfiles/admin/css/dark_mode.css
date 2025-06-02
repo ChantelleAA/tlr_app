@@ -128,3 +128,8 @@ html[data-theme="dark"] .theme-toggle svg.theme-icon-when-dark {
 html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
     display: block;
 }
+
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}

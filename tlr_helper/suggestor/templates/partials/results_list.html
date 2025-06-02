@@ -40,12 +40,12 @@
     {% endif %}
 
     <div class="row row-cols-2 row-cols-md-3 g-2 mt-3">
-      <div><span class="badge bg-light border">⌛ {{ tlr.get_time_needed_display }}</span></div>
-      <div><span class="badge bg-light border">💰 {{ tlr.get_budget_band_display }}</span></div>
-      <div><span class="badge bg-light border">🌟 {{ tlr.get_bloom_level_display }}</span></div>
-      <div><span class="badge bg-light border">📈 {{ tlr.download_count|default:"0" }} downloads</span></div>
+      <div><span class="badge bg-dark border">⌛ {{ tlr.get_time_needed_display }}</span></div>
+      <div><span class="badge bg-dark border">💰 {{ tlr.get_budget_band_display }}</span></div>
+      <div><span class="badge bg-dark border">🌟 {{ tlr.get_bloom_level_display }}</span></div>
+      <div><span class="badge bg-dark border">📈 {{ tlr.download_count|default:"0" }} downloads</span></div>
       {% if tlr.intended_use %}
-        <div><span class="badge bg-info-subtle border">🗂️ {{ tlr.get_intended_use_display }}</span></div>
+        <div><span class="badge bg-dark border">🗂️ {{ tlr.get_intended_use_display }}</span></div>
       {% endif %}
     </div>
 
