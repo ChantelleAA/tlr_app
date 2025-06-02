@@ -12,6 +12,8 @@ gunicorn = "*"
 whitenoise = "*"
 dj-database-url = "*"
 psycopg2 = "*"
+pillow = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
 

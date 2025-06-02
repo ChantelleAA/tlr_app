@@ -1,9 +1,129 @@
 [
   {
+    "model": "suggestor.classlevel",
+    "pk": 1,
+    "fields": {
+      "code": "1",
+      "name": "Crèche"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 2,
+    "fields": {
+      "code": "2",
+      "name": "Nursery"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 3,
+    "fields": {
+      "code": "3",
+      "name": "KG1"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 4,
+    "fields": {
+      "code": "4",
+      "name": "KG2"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 5,
+    "fields": {
+      "code": "5",
+      "name": "Class 1"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 6,
+    "fields": {
+      "code": "6",
+      "name": "Class 2"
+    }
+  },
+  {
+    "model": "suggestor.classlevel",
+    "pk": 7,
+    "fields": {
+      "code": "7",
+      "name": "Class 3"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 1,
+    "fields": {
+      "class_level": 3,
+      "title": "Language and Literacy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 2,
+    "fields": {
+      "class_level": 3,
+      "title": "Numeracy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 3,
+    "fields": {
+      "class_level": 3,
+      "title": "Our World Our People"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 4,
+    "fields": {
+      "class_level": 3,
+      "title": "Creative Arts"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 5,
+    "fields": {
+      "class_level": 4,
+      "title": "Language and Literacy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 6,
+    "fields": {
+      "class_level": 4,
+      "title": "Numeracy"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 7,
+    "fields": {
+      "class_level": 4,
+      "title": "Our World Our People"
+    }
+  },
+  {
+    "model": "suggestor.subject",
+    "pk": 8,
+    "fields": {
+      "class_level": 4,
+      "title": "Creative Arts"
+    }
+  },
+  {
     "model": "suggestor.theme",
     "pk": 1,
     "fields": {
-      "title": "Myself"
+      "title": "All About Me"
     }
   },
   {
@@ -17,2869 +137,2252 @@
     "model": "suggestor.theme",
     "pk": 3,
     "fields": {
-      "title": "My School"
+      "title": "Values and Beliefs"
     }
   },
   {
     "model": "suggestor.theme",
     "pk": 4,
     "fields": {
-      "title": "Our Environment"
+      "title": "My Local Community"
     }
   },
   {
     "model": "suggestor.theme",
     "pk": 5,
     "fields": {
-      "title": "Our Nation Ghana"
+      "title": "My Nation Ghana"
     }
   },
   {
     "model": "suggestor.theme",
     "pk": 6,
     "fields": {
-      "title": "Our Global World"
+      "title": "All Around Us"
+    }
+  },
+  {
+    "model": "suggestor.theme",
+    "pk": 7,
+    "fields": {
+      "title": "My Global Community"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 1,
+    "fields": {
+      "title": "Oral Language"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 2,
+    "fields": {
+      "title": "Print Awareness"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 3,
+    "fields": {
+      "title": "Listening Comprehension and Vocabulary"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 4,
+    "fields": {
+      "title": "Phonemic Awareness and Alphabetic Knowledge"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 5,
+    "fields": {
+      "title": "Phonics"
+    }
+  },
+  {
+    "model": "suggestor.keylearningarea",
+    "pk": 6,
+    "fields": {
+      "title": "Writing"
     }
   },
   {
     "model": "suggestor.keylearningarea",
     "pk": 7,
     "fields": {
-      "title": "Literacy"
+      "title": "Number and Operations"
     }
   },
   {
     "model": "suggestor.keylearningarea",
     "pk": 8,
     "fields": {
-      "title": "Numeracy"
+      "title": "Algebra and Patterns"
     }
   },
   {
     "model": "suggestor.keylearningarea",
     "pk": 9,
     "fields": {
-      "title": "Science and Environment"
+      "title": "Geometry and Measurement"
     }
   },
   {
     "model": "suggestor.keylearningarea",
     "pk": 10,
     "fields": {
-      "title": "Creative Arts"
+      "title": "Data Handling"
     }
   },
   {
     "model": "suggestor.keylearningarea",
     "pk": 11,
     "fields": {
-      "title": "Physical Development"
+      "title": "Visual Arts"
     }
   },
   {
     "model": "suggestor.keylearningarea",
     "pk": 12,
     "fields": {
-      "title": "Social Studies"
-    }
-  },
-  {
-    "model": "suggestor.keylearningarea",
-    "pk": 13,
-    "fields": {
-      "title": "Computing"
+      "title": "Performing Arts"
     }
   },
   {
     "model": "suggestor.corecompetency",
-    "pk": 14,
+    "pk": 1,
     "fields": {
       "title": "Critical Thinking and Problem Solving"
     }
   },
   {
     "model": "suggestor.corecompetency",
-    "pk": 15,
+    "pk": 2,
     "fields": {
       "title": "Creativity and Innovation"
     }
   },
   {
     "model": "suggestor.corecompetency",
-    "pk": 16,
+    "pk": 3,
     "fields": {
       "title": "Communication and Collaboration"
     }
   },
   {
     "model": "suggestor.corecompetency",
-    "pk": 17,
+    "pk": 4,
     "fields": {
       "title": "Cultural Identity and Global Citizenship"
     }
   },
   {
     "model": "suggestor.corecompetency",
-    "pk": 18,
+    "pk": 5,
     "fields": {
       "title": "Personal Development and Leadership"
     }
   },
   {
     "model": "suggestor.corecompetency",
-    "pk": 19,
+    "pk": 6,
     "fields": {
       "title": "Digital Literacy"
     }
   },
   {
+    "model": "suggestor.strand",
+    "pk": 1,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 1,
+      "title": "All About Me",
+      "slug": "all-about-me",
+      "themes": [1],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 2,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 1,
+      "title": "My Family",
+      "slug": "my-family",
+      "themes": [2],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 3,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 2,
+      "title": "Values and Beliefs",
+      "slug": "values-and-beliefs",
+      "themes": [3],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 4,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 2,
+      "title": "My Local Community",
+      "slug": "my-local-community",
+      "themes": [4],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 5,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 2,
+      "title": "My Nation Ghana",
+      "slug": "my-nation-ghana",
+      "themes": [5],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 6,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 3,
+      "title": "All Around Us",
+      "slug": "all-around-us",
+      "themes": [6],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [1, 2, 3, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 7,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 3,
+      "title": "My Global Community",
+      "slug": "my-global-community",
+      "themes": [7],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 6]
+    }
+  }, 
+  {
+    "model": "suggestor.substrand",
+    "pk": 1,
+    "fields": {
+      "strand": 1,
+      "title": "I am a wonderful and unique creation",
+      "slug": "i-am-a-wonderful-and-unique-creation"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 2,
+    "fields": {
+      "strand": 1,
+      "title": "The parts of the human body and their functions",
+      "slug": "the-parts-of-the-human-body-and-their-functions"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 3,
+    "fields": {
+      "strand": 1,
+      "title": "Caring for the parts of my body",
+      "slug": "caring-for-the-parts-of-my-body"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 4,
+    "fields": {
+      "strand": 1,
+      "title": "Keeping my body healthy by eating good food and taking my vaccination",
+      "slug": "keeping-my-body-healthy-by-eating-good-food-and-taking-my-vaccination"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 5,
+    "fields": {
+      "strand": 1,
+      "title": "My environment and my Health",
+      "slug": "my-environment-and-my-health"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 6,
+    "fields": {
+      "strand": 1,
+      "title": "Protecting ourselves from home and road accidents",
+      "slug": "protecting-ourselves-from-home-and-road-accidents"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 7,
+    "fields": {
+      "strand": 2,
+      "title": "Types and members of my family",
+      "slug": "types-and-members-of-my-family"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 8,
+    "fields": {
+      "strand": 2,
+      "title": "Origin and History of my Family",
+      "slug": "origin-and-history-of-my-family"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 9,
+    "fields": {
+      "strand": 2,
+      "title": "Family Celebrations and Festivals",
+      "slug": "family-celebrations-and-festivals"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 10,
+    "fields": {
+      "strand": 2,
+      "title": "My school family-rules and regulations",
+      "slug": "my-school-family-rules-and-regulations"
+    }
+  }, 
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 1,
+    "fields": {
+      "substrand": 1,
+      "code": "K1.1.1.1",
+      "description": "Demonstrate the understanding that all learners are wonderful and have unique body features that make them different from other people and other God's creation in the environment.",
+      "competencies": [5, 3],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 2,
+    "fields": {
+      "substrand": 2,
+      "code": "K1.1.2.1",
+      "description": "Demonstrate the understanding of appropriate names of the parts of the body and describe the functions of each part.",
+      "competencies": [3, 1, 5],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 3,
+    "fields": {
+      "substrand": 3,
+      "code": "K1.1.3.1",
+      "description": "Demonstrate understanding of the importance of personal hygiene and how to care for my body parts e.g. hand, feet finger nails-washing, face washing, nose",
+      "competencies": [3, 5],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 4,
+    "fields": {
+      "substrand": 4,
+      "code": "K1.1.4.1",
+      "description": "Demonstrate the understanding that eating good food and taking all my childhood vaccinations will keep me growing healthy and strong.",
+      "competencies": [3, 5, 1],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 5,
+    "fields": {
+      "substrand": 5,
+      "code": "K1.1.5.1",
+      "description": "Demonstrate understanding of how keeping our home and school environment clean can keep us healthy and strong.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  }, 
+  {
+    "model": "suggestor.indicator",
+    "pk": 1,
+    "fields": {
+      "standard": 1,
+      "code": "K1.1.1.1.1",
+      "description": "Identify and talk in simple sentences, about the features of our body that make us unique and different from other God's creation. E.g. animals",
+      "competencies": [5, 3],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 2,
+    "fields": {
+      "standard": 1,
+      "code": "K1.1.1.1.2",
+      "description": "Sing an action song that helps learners name the parts of the body and point to them",
+      "competencies": [5, 3, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 3,
+    "fields": {
+      "standard": 1,
+      "code": "K1.1.1.1.3",
+      "description": "Recognize and talk about the different parts of book, (the front/ cover page of a book and back of a book) and relate the content of the text to our body parts.",
+      "competencies": [5, 3, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 4,
+    "fields": {
+      "standard": 2,
+      "code": "K1.1.2.1.1",
+      "description": "Using a conversation poster of body parts, learners talk about the functions of the parts of the human body that we can see.",
+      "competencies": [3, 1, 5],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 5,
+    "fields": {
+      "standard": 3,
+      "code": "K1.1.3.1.1",
+      "description": "Sing songs and recite rhymes about how we take care of each part of the body and demonstrate how to do it. e.g. This is the way we wash our face...",
+      "competencies": [3, 5],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 1,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 1,
+      "strand": 1,
+      "substrand": 1,
+      "indicator": 1,
+      "standard": 1,
+      "themes": [1],
+      "key_learning_areas": [1, 2],
+      "competencies": [5, 3],
+      "resource_types": [1, 2],
+      "goals": [1],
+      "title": "Body Parts Identification Game",
+      "brief_description": "Interactive game using pictures and songs to help learners identify and appreciate their unique body features",
+      "materials": [1, 2, 3],
+      "time_needed": "core",
+      "steps_to_make": "1. Prepare picture cards of different body parts\n2. Create a simple song about body parts\n3. Set up a circle for learners to sit\n4. Prepare a ball for the passing game",
+      "tips_for_use": "Use positive language throughout the activity. Encourage all learners to participate. Model the description first before asking learners to do so.",
+      "intended_use": "intro",
+      "tlr_type": "game",
+      "special_needs": [1, 2],
+      "learning_styles": [1, 2, 3],
+      "class_size": "medium",
+      "bloom_level": "remember",
+      "budget_band": "low",
+      "learning_outcome": "Learners will be able to identify and describe their unique body features using positive language",
+      "search_keywords": "body parts, self-awareness, uniqueness, identity, KG1",
+      "slug": "body-parts-identification-game",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 2,
+    "fields": {
+      "class_level": 3,
+      "subject": 1,
+      "term": 1,
+      "strand": 1,
+      "substrand": 2,
+      "indicator": 4,
+      "standard": 2,
+      "themes": [1],
+      "key_learning_areas": [1, 3],
+      "competencies": [3, 1, 5],
+      "resource_types": [3, 6],
+      "goals": [1, 2],
+      "title": "Body Functions Action Poster",
+      "brief_description": "Large conversational poster showing body parts and their functions with interactive elements",
+      "materials": [1, 2, 5],
+      "time_needed": "core",
+      "steps_to_make": "1. Draw or paste pictures of body parts on large manila card\n2. Add arrows pointing to each part\n3. Write simple function descriptions\n4. Laminate for durability\n5. Add velcro strips for interactive elements",
+      "tips_for_use": "Point to each body part while explaining its function. Have learners demonstrate the functions. Use both local language and English.",
+      "intended_use": "aid",
+      "tlr_type": "poster",
+      "special_needs": [3, 4],
+      "learning_styles": [1, 3],
+      "class_size": "large",
+      "bloom_level": "understand",
+      "budget_band": "medium",
+      "learning_outcome": "Learners will understand and explain the functions of different body parts",
+      "search_keywords": "body functions, poster, visual aid, interactive, KG1",
+      "slug": "body-functions-action-poster",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 3,
+    "fields": {
+      "class_level": 3,
+      "subject": 4,
+      "term": 1,
+      "strand": 1,
+      "substrand": 3,
+      "indicator": 5,
+      "standard": 3,
+      "themes": [1],
+      "key_learning_areas": [11, 12],
+      "competencies": [3, 5, 2],
+      "resource_types": [6],
+      "goals": [1, 2],
+      "title": "Personal Hygiene Song and Dance",
+      "brief_description": "Musical activity combining songs, rhymes and dance movements to teach body care habits",
+      "materials": [2],
+      "time_needed": "short",
+      "steps_to_make": "1. Prepare lyrics for hygiene songs\n2. Create simple dance movements for each verse\n3. Practice the song rhythm\n4. Prepare props if needed (pretend soap, toothbrush)",
+      "tips_for_use": "Start with familiar tunes. Repeat the songs multiple times. Encourage all learners to participate in movements. Connect songs to real hygiene practices.",
+      "intended_use": "intro",
+      "tlr_type": "audio",
+      "special_needs": [4, 5],
+      "learning_styles": [2, 3, 5],
+      "class_size": "large",
+      "bloom_level": "apply",
+      "budget_band": "none",
+      "learning_outcome": "Learners will demonstrate proper hygiene practices through song and movement",
+      "search_keywords": "hygiene, songs, dance, body care, habits, KG1",
+      "slug": "personal-hygiene-song-and-dance",
+      "is_published": true,
+      "download_count": 0
+    }
+  }, 
+  {
     "model": "suggestor.resourcetype",
-    "pk": 20,
+    "pk": 1,
+    "fields": {
+      "title": "Poster"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 2,
     "fields": {
       "title": "Flashcards"
     }
   },
   {
     "model": "suggestor.resourcetype",
-    "pk": 21,
+    "pk": 3,
     "fields": {
       "title": "Manipulatives"
     }
   },
   {
     "model": "suggestor.resourcetype",
-    "pk": 22,
-    "fields": {
-      "title": "Posters"
-    }
-  },
-  {
-    "model": "suggestor.resourcetype",
-    "pk": 23,
-    "fields": {
-      "title": "Songs"
-    }
-  },
-  {
-    "model": "suggestor.resourcetype",
-    "pk": 24,
-    "fields": {
-      "title": "Storybooks"
-    }
-  },
-  {
-    "model": "suggestor.resourcetype",
-    "pk": 25,
-    "fields": {
-      "title": "Videos"
-    }
-  },
-  {
-    "model": "suggestor.resourcetype",
-    "pk": 26,
+    "pk": 4,
     "fields": {
       "title": "Charts"
     }
   },
   {
     "model": "suggestor.resourcetype",
-    "pk": 27,
+    "pk": 5,
     "fields": {
-      "title": "Diagrams"
+      "title": "Storybooks"
     }
   },
   {
     "model": "suggestor.resourcetype",
-    "pk": 28,
+    "pk": 6,
     "fields": {
       "title": "Games"
     }
   },
   {
     "model": "suggestor.goaltag",
-    "pk": 29,
+    "pk": 1,
     "fields": {
       "title": "Introduce"
     }
   },
   {
     "model": "suggestor.goaltag",
-    "pk": 30,
+    "pk": 2,
     "fields": {
       "title": "Reinforce"
     }
   },
   {
     "model": "suggestor.goaltag",
-    "pk": 31,
+    "pk": 3,
     "fields": {
       "title": "Assess"
     }
   },
   {
     "model": "suggestor.material",
+    "pk": 13,
+    "fields": {
+      "name": "Big Books"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 14,
+    "fields": {
+      "name": "Conversational Posters"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 15,
+    "fields": {
+      "name": "Letter Cards"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 16,
+    "fields": {
+      "name": "Word Cards"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 17,
+    "fields": {
+      "name": "Flash Cards"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 18,
+    "fields": {
+      "name": "Cut-out Shapes"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 19,
+    "fields": {
+      "name": "Rubber Band"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 20,
+    "fields": {
+      "name": "Number Cards"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 21,
+    "fields": {
+      "name": "Musical Instruments"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 22,
+    "fields": {
+      "name": "Dress-up Clothes"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 23,
+    "fields": {
+      "name": "Empty Cans/Tins"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 24,
+    "fields": {
+      "name": "Rope/Thread/String"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 25,
+    "fields": {
+      "name": "Balloons"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 26,
+    "fields": {
+      "name": "Seeds"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 27,
+    "fields": {
+      "name": "Small Plants"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 28,
+    "fields": {
+      "name": "Food Items"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 29,
+    "fields": {
+      "name": "Water Containers"
+    }
+  },
+  {
+    "model": "suggestor.material",
+    "pk": 30,
+    "fields": {
+      "name": "Measuring Tools"
+    }
+  },
+  {
+    "model": "suggestor.specialneed",
+    "pk": 1,
+    "fields": {
+      "name": "Dyslexia",
+      "description": "Difficulty reading and decoding words"
+    }
+  },
+  {
+    "model": "suggestor.specialneed",
+    "pk": 2,
+    "fields": {
+      "name": "ADHD",
+      "description": "Attention deficit, trouble focusing"
+    }
+  },
+  {
+    "model": "suggestor.specialneed",
+    "pk": 3,
+    "fields": {
+      "name": "Visual Impairment",
+      "description": "Low vision or blindness"
+    }
+  },
+  {
+    "model": "suggestor.specialneed",
+    "pk": 4,
+    "fields": {
+      "name": "Hearing Impairment",
+      "description": "Partial or full hearing loss"
+    }
+  },
+  {
+    "model": "suggestor.specialneed",
+    "pk": 5,
+    "fields": {
+      "name": "Autism Spectrum",
+      "description": "Neurodiverse needs related to interaction and focus"
+    }
+  },
+  {
+    "model": "suggestor.specialneed",
+    "pk": 6,
+    "fields": {
+      "name": "Other",
+      "description": "Any other learning need not listed"
+    }
+  },
+  {
+    "model": "suggestor.learningstyle",
+    "pk": 1,
+    "fields": {
+      "name": "Visual",
+      "description": "Prefers diagrams, images, charts"
+    }
+  },
+  {
+    "model": "suggestor.learningstyle",
+    "pk": 2,
+    "fields": {
+      "name": "Auditory",
+      "description": "Learns better through listening"
+    }
+  },
+  {
+    "model": "suggestor.learningstyle",
+    "pk": 3,
+    "fields": {
+      "name": "Kinesthetic",
+      "description": "Prefers hands-on activities"
+    }
+  },
+  {
+    "model": "suggestor.learningstyle",
+    "pk": 4,
+    "fields": {
+      "name": "Read/Write",
+      "description": "Learns best through reading and writing"
+    }
+  },
+  {
+    "model": "suggestor.learningstyle",
+    "pk": 5,
+    "fields": {
+      "name": "Multimodal",
+      "description": "Uses a combination of learning styles"
+    }
+  }, 
+  {
+    "model": "suggestor.goaltag",
+    "pk": 4,
+    "fields": {
+      "title": "Formative Assessment"
+    }
+  },
+  {
+    "model": "suggestor.goaltag",
+    "pk": 5,
+    "fields": {
+      "title": "Summative Assessment"
+    }
+  },
+  {
+    "model": "suggestor.goaltag",
+    "pk": 6,
+    "fields": {
+      "title": "Review"
+    }
+  },
+  {
+    "model": "suggestor.goaltag",
+    "pk": 7,
+    "fields": {
+      "title": "Practice"
+    }
+  },
+  {
+    "model": "suggestor.goaltag",
+    "pk": 8,
+    "fields": {
+      "title": "Extension"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 7,
+    "fields": {
+      "title": "Audio Resources"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 8,
+    "fields": {
+      "title": "Video Resources"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 9,
+    "fields": {
+      "title": "Digital Resources"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 10,
+    "fields": {
+      "title": "Physical Objects"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 11,
+    "fields": {
+      "title": "Reading Materials"
+    }
+  },
+  {
+    "model": "suggestor.resourcetype",
+    "pk": 12,
+    "fields": {
+      "title": "Assessment Tools"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 11,
+    "fields": {
+      "strand": 3,
+      "title": "Our Family Values",
+      "slug": "our-family-values"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 12,
+    "fields": {
+      "strand": 3,
+      "title": "Our Cultural and Family Values",
+      "slug": "our-cultural-and-family-values"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 13,
+    "fields": {
+      "strand": 3,
+      "title": "Our Religious Values",
+      "slug": "our-religious-values"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 14,
+    "fields": {
+      "strand": 3,
+      "title": "Our Beliefs",
+      "slug": "our-beliefs"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 15,
+    "fields": {
+      "strand": 4,
+      "title": "Knowing the special places in our local community",
+      "slug": "knowing-special-places-local-community"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 16,
+    "fields": {
+      "strand": 4,
+      "title": "Knowing the important people/occupation in our community",
+      "slug": "knowing-important-people-occupation-community"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 17,
+    "fields": {
+      "strand": 4,
+      "title": "Knowing the special leaders in our community",
+      "slug": "knowing-special-leaders-community"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 18,
+    "fields": {
+      "strand": 5,
+      "title": "History and celebration of Ghana's Independence",
+      "slug": "history-celebration-ghana-independence"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 19,
+    "fields": {
+      "strand": 6,
+      "title": "Living and non-living things",
+      "slug": "living-non-living-things"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 20,
+    "fields": {
+      "strand": 6,
+      "title": "Living things: Animals (Domestic and wild)",
+      "slug": "living-things-animals-domestic-wild"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 21,
+    "fields": {
+      "strand": 6,
+      "title": "Water",
+      "slug": "water"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 22,
+    "fields": {
+      "strand": 6,
+      "title": "Air",
+      "slug": "air"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 23,
+    "fields": {
+      "strand": 6,
+      "title": "Plants - 1",
+      "slug": "plants-1"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 24,
+    "fields": {
+      "strand": 6,
+      "title": "Plants - 2",
+      "slug": "plants-2"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 25,
+    "fields": {
+      "strand": 6,
+      "title": "Gardening",
+      "slug": "gardening"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 26,
+    "fields": {
+      "strand": 6,
+      "title": "Light - Day and Night",
+      "slug": "light-day-night"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 27,
+    "fields": {
+      "strand": 6,
+      "title": "Changing weather conditions",
+      "slug": "changing-weather-conditions"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 28,
+    "fields": {
+      "strand": 7,
+      "title": "Connecting and communicating with the global community",
+      "slug": "connecting-communicating-global-community"
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 6,
+    "fields": {
+      "substrand": 6,
+      "code": "K1.1.6.1",
+      "description": "Demonstrate understanding of measures to take to keep safe (from accidents, hurts, and harms).",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 7,
+    "fields": {
+      "substrand": 7,
+      "code": "K1.2.1.1",
+      "description": "Demonstrate understanding of the importance, roles and responsibilities of family members.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 8,
+    "fields": {
+      "substrand": 8,
+      "code": "K1.2.2.1",
+      "description": "Demonstrate knowledge of the origin and history of our families.",
+      "competencies": [3, 4, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 9,
+    "fields": {
+      "substrand": 9,
+      "code": "K1.2.3.1",
+      "description": "Demonstrate knowledge of celebrations and festivals that the individual families celebrate.",
+      "competencies": [3, 4, 5, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 10,
+    "fields": {
+      "substrand": 10,
+      "code": "K1.2.4.1",
+      "description": "Demonstrate understanding of the rules and regulations that governs the members of the school.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 11,
+    "fields": {
+      "substrand": 11,
+      "code": "K1.3.1.1",
+      "description": "Demonstrate understanding of the good manners that our families values and why they value them.",
+      "competencies": [3, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 12,
+    "fields": {
+      "substrand": 12,
+      "code": "K1.3.2.1",
+      "description": "Demonstrate understanding of the virtues, good manners and behaviour patterns our community values and why.",
+      "competencies": [3, 4, 5, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 13,
+    "fields": {
+      "substrand": 13,
+      "code": "K1.3.3.1",
+      "description": "Demonstrate understanding of the religious and moral values and virtues we need to exhibit as good Christians and Muslims.",
+      "competencies": [3, 4, 5, 1],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 14,
+    "fields": {
+      "substrand": 14,
+      "code": "K1.3.4.1",
+      "description": "Demonstrate understanding of and relating well with people with different beliefs.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 15,
+    "fields": {
+      "substrand": 15,
+      "code": "K1.4.1.1",
+      "description": "Demonstrate understanding of the special places in our local communities.",
+      "competencies": [3, 5, 4, 1],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 6,
+    "fields": {
+      "standard": 1,
+      "code": "K1.1.1.1.4",
+      "description": "Use new and positive expressions/vocabulary related to the parts of the body",
+      "competencies": [5, 3, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 7,
+    "fields": {
+      "standard": 1,
+      "code": "K1.1.1.1.5",
+      "description": "Sing songs about the body parts and the letters of the alphabet and clap hands on the rhythm of the songs",
+      "competencies": [3, 1],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 8,
+    "fields": {
+      "standard": 1,
+      "code": "K1.1.1.1.6",
+      "description": "Draw a beautiful picture of themselves and scribble freely underneath the picture paper",
+      "competencies": [1, 2, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 9,
+    "fields": {
+      "standard": 1,
+      "code": "K1.1.1.1.7",
+      "description": "Create sets of human parts that are similar and represent them with numbers up to 5.",
+      "competencies": [1],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 10,
+    "fields": {
+      "standard": 2,
+      "code": "K1.1.2.1.2",
+      "description": "Use visual information to aid comprehension before, during and after reading a text on functions of the parts of the human body.",
+      "competencies": [3, 1, 5],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 11,
+    "fields": {
+      "standard": 2,
+      "code": "K1.1.2.1.3",
+      "description": "Learn and use new vocabulary related to what they do with the parts of the body",
+      "competencies": [3],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 12,
+    "fields": {
+      "standard": 2,
+      "code": "K1.1.2.1.4",
+      "description": "Count the number of the names of the body parts in songs through clapping on the rhythm",
+      "competencies": [3, 1],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 13,
+    "fields": {
+      "standard": 3,
+      "code": "K1.1.3.1.2",
+      "description": "Watch a short video clip and talk about how to care for the various parts of the body.",
+      "competencies": [3, 5, 6],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 14,
+    "fields": {
+      "standard": 3,
+      "code": "K1.1.3.1.3",
+      "description": "Talk about what we use in caring for the human body in our everyday life as they listen to a read aloud text.",
+      "competencies": [3, 1],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 15,
+    "fields": {
+      "standard": 4,
+      "code": "K1.1.4.1.1",
+      "description": "Learners talk about different types of food they eat at home and classify those that can make them grow healthy.",
+      "competencies": [3, 5, 1],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 8,
+    "fields": {
+      "class_level": 4,
+      "subject": 7,
+      "term": 1,
+      "title": "All About Me",
+      "slug": "kg2-all-about-me",
+      "themes": [1],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 9,
+    "fields": {
+      "class_level": 4,
+      "subject": 7,
+      "term": 1,
+      "title": "My Family",
+      "slug": "kg2-my-family",
+      "themes": [2],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 10,
+    "fields": {
+      "class_level": 4,
+      "subject": 7,
+      "term": 2,
+      "title": "Values and Beliefs",
+      "slug": "kg2-values-and-beliefs",
+      "themes": [3],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 11,
+    "fields": {
+      "class_level": 4,
+      "subject": 7,
+      "term": 2,
+      "title": "My Local Community",
+      "slug": "kg2-my-local-community",
+      "themes": [4],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 12,
+    "fields": {
+      "class_level": 4,
+      "subject": 7,
+      "term": 2,
+      "title": "My Nation Ghana",
+      "slug": "kg2-my-nation-ghana",
+      "themes": [5],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 13,
+    "fields": {
+      "class_level": 4,
+      "subject": 7,
+      "term": 3,
+      "title": "All Around Us",
+      "slug": "kg2-all-around-us",
+      "themes": [6],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [1, 2, 3, 5]
+    }
+  },
+  {
+    "model": "suggestor.strand",
+    "pk": 14,
+    "fields": {
+      "class_level": 4,
+      "subject": 7,
+      "term": 3,
+      "title": "My Global Community",
+      "slug": "kg2-my-global-community",
+      "themes": [7],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 4, 6]
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 4,
+    "fields": {
+      "class_level": 3,
+      "subject": 2,
+      "term": 1,
+      "strand": 1,
+      "substrand": 1,
+      "indicator": 9,
+      "standard": 1,
+      "themes": [1],
+      "key_learning_areas": [7],
+      "competencies": [1],
+      "resource_types": [3, 6],
+      "goals": [1],
+      "title": "Number Matching with Body Parts",
+      "brief_description": "Counting and matching activity using body parts to teach numbers 1-5",
+      "materials": [6, 8, 20],
+      "time_needed": "short",
+      "steps_to_make": "1. Collect bottle tops and pebbles\n2. Create number cards 1-5\n3. Draw body parts in sets\n4. Prepare matching game area",
+      "tips_for_use": "Start with smaller numbers. Use real body parts first, then move to pictures. Encourage counting aloud.",
+      "intended_use": "aid",
+      "tlr_type": "manipulative",
+      "special_needs": [1, 2],
+      "learning_styles": [1, 3],
+      "class_size": "small",
+      "bloom_level": "apply",
+      "budget_band": "none",
+      "learning_outcome": "Learners will count and match body parts with correct numbers up to 5",
+      "search_keywords": "counting, numbers, body parts, matching, KG1, numeracy",
+      "slug": "number-matching-body-parts",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 5,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 1,
+      "strand": 1,
+      "substrand": 4,
+      "indicator": 15,
+      "standard": 4,
+      "themes": [1],
+      "key_learning_areas": [1, 3],
+      "competencies": [3, 5, 1],
+      "resource_types": [10, 11],
+      "goals": [1],
+      "title": "Healthy Food Classification Activity",
+      "brief_description": "Hands-on activity to classify foods into the six food groups for healthy eating",
+      "materials": [28, 1, 2, 18],
+      "time_needed": "core",
+      "steps_to_make": "1. Collect real food items or pictures\n2. Create six large circles for food groups\n3. Label each circle with food group name\n4. Prepare classification cards",
+      "tips_for_use": "Use real foods when possible. Discuss why each food belongs in its group. Connect to foods learners eat at home.",
+      "intended_use": "aid",
+      "tlr_type": "manipulative",
+      "special_needs": [3, 4],
+      "learning_styles": [1, 3, 5],
+      "class_size": "medium",
+      "bloom_level": "analyze",
+      "budget_band": "low",
+      "learning_outcome": "Learners will classify foods into appropriate food groups and understand healthy eating",
+      "search_keywords": "nutrition, food groups, health, classification, KG1",
+      "slug": "healthy-food-classification-activity",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 6,
+    "fields": {
+      "class_level": 3,
+      "subject": 1,
+      "term": 1,
+      "strand": 1,
+      "substrand": 3,
+      "indicator": 14,
+      "standard": 3,
+      "themes": [1],
+      "key_learning_areas": [1, 2, 3],
+      "competencies": [3, 1, 6],
+      "resource_types": [7, 8],
+      "goals": [1, 2],
+      "title": "Digital Body Care Video and Discussion",
+      "brief_description": "Interactive video lesson on body care followed by discussion and demonstration",
+      "materials": [14],
+      "time_needed": "core",
+      "steps_to_make": "1. Prepare age-appropriate video on body care\n2. Create discussion questions\n3. Set up viewing area\n4. Prepare demonstration materials",
+      "tips_for_use": "Pause video for discussions. Encourage questions. Follow up with real demonstrations. Connect to daily routines.",
+      "intended_use": "intro",
+      "tlr_type": "video",
+      "special_needs": [3, 4],
+      "learning_styles": [1, 2],
+      "class_size": "large",
+      "bloom_level": "understand",
+      "budget_band": "none",
+      "learning_outcome": "Learners will understand and demonstrate proper body care practices",
+      "search_keywords": "hygiene, video, digital, body care, demonstration, KG1",
+      "slug": "digital-body-care-video-discussion",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 16,
+    "fields": {
+      "substrand": 16,
+      "code": "K1.4.2.1",
+      "description": "Demonstrate knowledge of the people in the community and their occupation.",
+      "competencies": [3, 4, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 17,
+    "fields": {
+      "substrand": 17,
+      "code": "K1.4.3.1",
+      "description": "Demonstrate understanding and knowledge of the special leaders and their roles in our communities.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 18,
+    "fields": {
+      "substrand": 18,
+      "code": "K1.5.1.1",
+      "description": "Demonstrate knowledge of the history and independence of Ghana",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 19,
+    "fields": {
+      "substrand": 19,
+      "code": "K1.6.1.1",
+      "description": "Demonstrate understanding of living and non-living things.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 20,
+    "fields": {
+      "substrand": 20,
+      "code": "K1.6.2.1",
+      "description": "Demonstrate understanding of domestic and wild animals.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 21,
+    "fields": {
+      "substrand": 21,
+      "code": "K1.6.3.1",
+      "description": "Demonstrate understanding of sources of water and its uses.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 22,
+    "fields": {
+      "substrand": 22,
+      "code": "K1.6.4.1",
+      "description": "Demonstrate understanding of the presence of air and tell its importance.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 23,
+    "fields": {
+      "substrand": 23,
+      "code": "K1.6.5.1",
+      "description": "Demonstrate understanding of the parts of plants and their functions.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 24,
+    "fields": {
+      "substrand": 24,
+      "code": "K1.6.6.1",
+      "description": "Demonstrate understanding of how plants grow",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 25,
+    "fields": {
+      "substrand": 25,
+      "code": "K1.6.7.1",
+      "description": "Demonstrate understanding of the types of soil.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  }, 
+  {
+    "model": "suggestor.indicator",
+    "pk": 16,
+    "fields": {
+      "standard": 6,
+      "code": "K1.1.6.1.1",
+      "description": "Talk about possible accidents we can have at home and at school and safety measures we can take to avoid them.",
+      "competencies": [3, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 17,
+    "fields": {
+      "standard": 6,
+      "code": "K1.1.6.1.2",
+      "description": "Recognize that spoken words are represented in written language in books.",
+      "competencies": [1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 18,
+    "fields": {
+      "standard": 6,
+      "code": "K1.1.6.1.3",
+      "description": "Listen to and respond to a read aloud text about keeping safe in the environment.",
+      "competencies": [3, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 19,
+    "fields": {
+      "standard": 7,
+      "code": "K1.2.1.1.1",
+      "description": "Discuss different types of family they have at home, their roles and responsibilities",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 20,
+    "fields": {
+      "standard": 7,
+      "code": "K1.2.1.1.2",
+      "description": "Demonstrate that print matches with illustration in a book.",
+      "competencies": [3],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 21,
+    "fields": {
+      "standard": 8,
+      "code": "K1.2.2.1.1",
+      "description": "Listen and tell stories about origin and history of their family members",
+      "competencies": [3, 4, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 22,
+    "fields": {
+      "standard": 9,
+      "code": "K1.2.3.1.1",
+      "description": "Talk about some special family days and activities e.g. birthdays, naming, festivals, etc.",
+      "competencies": [3, 4, 5, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 23,
+    "fields": {
+      "standard": 10,
+      "code": "K1.2.4.1.1",
+      "description": "Talk about the members of the school, activities they do and create rules and regulations that should govern their classroom.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 24,
+    "fields": {
+      "standard": 11,
+      "code": "K1.3.1.1.1",
+      "description": "identify the good manners our families value and how it can change our personal likes and dislikes.",
+      "competencies": [3, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 25,
+    "fields": {
+      "standard": 12,
+      "code": "K1.3.2.1.1",
+      "description": "Talk about some important cultural values and good manners that promote respect and politeness",
+      "competencies": [3, 4, 5, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 29,
+    "fields": {
+      "strand": 8,
+      "title": "I am a wonderful and unique creation",
+      "slug": "kg2-i-am-wonderful-unique-creation"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 30,
+    "fields": {
+      "strand": 8,
+      "title": "Parts of the body that we cannot see (internal) and parts of the body that we can see (external) and their functions",
+      "slug": "kg2-internal-external-body-parts-functions"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
+    "pk": 31,
+    "fields": {
+      "strand": 8,
+      "title": "Personal hygiene and caring for the parts of the body",
+      "slug": "kg2-personal-hygiene-caring-body-parts"
+    }
+  },
+  {
+    "model": "suggestor.substrand",
     "pk": 32,
     "fields": {
-      "name": "Bottle tops"
+      "strand": 8,
+      "title": "Eating good food and taking my vaccinations to keep my body healthy",
+      "slug": "kg2-eating-good-food-vaccinations-healthy"
     }
   },
   {
-    "model": "suggestor.material",
+    "model": "suggestor.substrand",
     "pk": 33,
     "fields": {
-      "name": "Cardboard"
+      "strand": 8,
+      "title": "My environment and my Health",
+      "slug": "kg2-my-environment-health"
     }
   },
   {
-    "model": "suggestor.material",
+    "model": "suggestor.substrand",
     "pk": 34,
     "fields": {
-      "name": "Markers"
+      "strand": 8,
+      "title": "Protecting ourselves from road accidents and harmful strangers",
+      "slug": "kg2-protecting-road-accidents-harmful-strangers"
     }
   },
   {
-    "model": "suggestor.material",
+    "model": "suggestor.substrand",
     "pk": 35,
     "fields": {
-      "name": "Crayons"
+      "strand": 9,
+      "title": "Types and members of my family",
+      "slug": "kg2-types-members-family"
     }
   },
   {
-    "model": "suggestor.material",
+    "model": "suggestor.substrand",
     "pk": 36,
     "fields": {
-      "name": "Paper"
+      "strand": 9,
+      "title": "My family: Our origin and history",
+      "slug": "kg2-family-origin-history"
     }
   },
   {
-    "model": "suggestor.material",
+    "model": "suggestor.substrand",
     "pk": 37,
     "fields": {
-      "name": "Glue"
+      "strand": 9,
+      "title": "Family Celebrations and festivals",
+      "slug": "kg2-family-celebrations-festivals"
     }
   },
   {
-    "model": "suggestor.material",
+    "model": "suggestor.substrand",
     "pk": 38,
     "fields": {
-      "name": "String"
+      "strand": 9,
+      "title": "My school family Rules and Regulations for Learners and Teachers at school",
+      "slug": "kg2-school-family-rules-regulations"
     }
   },
   {
-    "model": "suggestor.material",
+    "model": "suggestor.contentstandard",
+    "pk": 26,
+    "fields": {
+      "substrand": 29,
+      "code": "K2.1.1.1",
+      "description": "Demonstrate the understanding that all learners are wonderful and have unique body features that make them different from other people and other God's creation in the environment.",
+      "competencies": [5, 3],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 27,
+    "fields": {
+      "substrand": 30,
+      "code": "K2.1.2.1",
+      "description": "Demonstrate the knowledge of appropriate names of the parts of the internal body that we cannot see and their functions",
+      "competencies": [5, 3, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 28,
+    "fields": {
+      "substrand": 31,
+      "code": "K2.1.3.1",
+      "description": "Demonstrate understanding of personal hygiene and care of the human body.",
+      "competencies": [3, 5],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 29,
+    "fields": {
+      "substrand": 32,
+      "code": "K2.1.4.1",
+      "description": "Demonstrate the understanding and knowledge of keeping our bodies healthy by eating good food and visiting the hospital when sick",
+      "competencies": [3, 5, 6, 1],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 30,
+    "fields": {
+      "substrand": 33,
+      "code": "K2.1.5.1",
+      "description": "Demonstrate understanding of the environment and how to keep it safe",
+      "competencies": [3, 5, 6],
+      "goals": [1, 2]
+    }
+  }, 
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 31,
+    "fields": {
+      "substrand": 26,
+      "code": "K1.6.8.1",
+      "description": "Demonstrate understanding of the sources of light for day and night.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 32,
+    "fields": {
+      "substrand": 27,
+      "code": "K1.6.9.1",
+      "description": "Demonstrate understanding of changing weather conditions and seasons.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.contentstandard",
+    "pk": 33,
+    "fields": {
+      "substrand": 28,
+      "code": "K1.7.1.1",
+      "description": "Demonstrate understanding of different ways we connect and communicate with the global world.",
+      "competencies": [3, 4, 6],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 26,
+    "fields": {
+      "standard": 15,
+      "code": "K1.4.1.1.1",
+      "description": "Visit and talk about some special places in our community",
+      "competencies": [3, 5, 4, 1],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 27,
+    "fields": {
+      "standard": 16,
+      "code": "K1.4.2.1.1",
+      "description": "Talk about who the neighbours are, the work they do and how important their profession are in the community.",
+      "competencies": [3, 4, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 28,
+    "fields": {
+      "standard": 17,
+      "code": "K1.4.3.1.1",
+      "description": "Talk about and describe the traditional and religious leaders in our community.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 29,
+    "fields": {
+      "standard": 18,
+      "code": "K1.5.1.1.1",
+      "description": "locate their home regions on an outline map of Ghana and talk about the history behind their festivals.",
+      "competencies": [3, 4, 5],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 30,
+    "fields": {
+      "standard": 19,
+      "code": "K1.6.1.1.1",
+      "description": "Talk about different types of things around us and classify them into living things and non-living things",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 31,
+    "fields": {
+      "standard": 20,
+      "code": "K1.6.2.1.1",
+      "description": "Sing and talk about different kinds of animals, what they eat, the sound they make and put them into groups.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 32,
+    "fields": {
+      "standard": 21,
+      "code": "K1.6.3.1.1",
+      "description": "Talk about where we get water from and its uses.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 33,
+    "fields": {
+      "standard": 22,
+      "code": "K1.6.4.1.1",
+      "description": "Share their understanding and describe the presence of air through experimentation.",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 34,
+    "fields": {
+      "standard": 23,
+      "code": "K1.6.5.1.1",
+      "description": "Sing and talk about parts of a plants and their functions",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 35,
+    "fields": {
+      "standard": 24,
+      "code": "K1.6.6.1.1",
+      "description": "Talk about and discuss how plants and what human should do to enhance the growth process",
+      "competencies": [3, 5, 1, 2],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 7,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 2,
+      "strand": 4,
+      "substrand": 15,
+      "indicator": 26,
+      "standard": 15,
+      "themes": [4],
+      "key_learning_areas": [1, 3],
+      "competencies": [3, 5, 4, 1],
+      "resource_types": [1, 4],
+      "goals": [1],
+      "title": "Community Places Field Trip Guide",
+      "brief_description": "Structured field trip activity to explore special places in the local community with observation guide",
+      "materials": [14, 1, 2],
+      "time_needed": "core",
+      "steps_to_make": "1. Create observation checklist for field trip\n2. Prepare permission letters for parents\n3. Contact community places in advance\n4. Design post-trip discussion questions\n5. Prepare safety guidelines",
+      "tips_for_use": "Visit places beforehand. Ensure safety protocols. Encourage questions during visit. Connect to learners' experiences.",
+      "intended_use": "aid",
+      "tlr_type": "poster",
+      "special_needs": [1, 2, 5],
+      "learning_styles": [1, 2, 3, 5],
+      "class_size": "medium",
+      "bloom_level": "analyze",
+      "budget_band": "low",
+      "learning_outcome": "Learners will identify and describe special places in their community and their importance",
+      "search_keywords": "community, field trip, places, local, observation, KG1",
+      "slug": "community-places-field-trip-guide",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 8,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 2,
+      "strand": 4,
+      "substrand": 16,
+      "indicator": 27,
+      "standard": 16,
+      "themes": [4],
+      "key_learning_areas": [1, 3],
+      "competencies": [3, 4, 5],
+      "resource_types": [6, 1],
+      "goals": [1],
+      "title": "Community Helpers Role Play Center",
+      "brief_description": "Dramatic play center with costumes and props for learners to role-play different community occupations",
+      "materials": [22, 1, 2, 12],
+      "time_needed": "core",
+      "steps_to_make": "1. Collect or make costumes for different professions\n2. Create job-related props and tools\n3. Set up different stations for each profession\n4. Prepare role cards with job descriptions\n5. Create evaluation rubric",
+      "tips_for_use": "Rotate learners through different roles. Encourage authentic actions. Connect to real community workers. Discuss importance of each job.",
+      "intended_use": "aid",
+      "tlr_type": "game",
+      "special_needs": [2, 5],
+      "learning_styles": [3, 5],
+      "class_size": "small",
+      "bloom_level": "create",
+      "budget_band": "medium",
+      "learning_outcome": "Learners will understand and demonstrate knowledge of different community occupations and their importance",
+      "search_keywords": "occupations, role play, community helpers, dramatic play, KG1",
+      "slug": "community-helpers-role-play-center",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 9,
+    "fields": {
+      "class_level": 3,
+      "subject": 3,
+      "term": 3,
+      "strand": 6,
+      "substrand": 19,
+      "indicator": 30,
+      "standard": 19,
+      "themes": [6],
+      "key_learning_areas": [1, 3],
+      "competencies": [3, 5, 1, 2],
+      "resource_types": [3, 6],
+      "goals": [1],
+      "title": "Living vs Non-Living Sorting Game",
+      "brief_description": "Interactive sorting activity using real objects and pictures to classify living and non-living things",
+      "materials": [12, 3, 6, 8, 26, 27],
+      "time_needed": "short",
+      "steps_to_make": "1. Collect variety of real objects (living and non-living)\n2. Create picture cards as backup\n3. Make two large sorting circles\n4. Label circles 'Living' and 'Non-Living'\n5. Prepare discussion questions",
+      "tips_for_use": "Start with obvious examples. Discuss characteristics of living things. Use real objects when possible. Encourage reasoning for choices.",
+      "intended_use": "aid",
+      "tlr_type": "game",
+      "special_needs": [1, 3],
+      "learning_styles": [1, 3, 5],
+      "class_size": "medium",
+      "bloom_level": "analyze",
+      "budget_band": "none",
+      "learning_outcome": "Learners will correctly classify objects as living or non-living and explain their reasoning",
+      "search_keywords": "living things, non-living, classification, sorting, nature, KG1",
+      "slug": "living-vs-non-living-sorting-game",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.tlr",
+    "pk": 10,
+    "fields": {
+      "class_level": 3,
+      "subject": 2,
+      "term": 3,
+      "strand": 6,
+      "substrand": 20,
+      "indicator": 31,
+      "standard": 20,
+      "themes": [6],
+      "key_learning_areas": [7, 8],
+      "competencies": [3, 1],
+      "resource_types": [3, 6],
+      "goals": [1, 2],
+      "title": "Animal Sounds and Counting Game",
+      "brief_description": "Musical counting game combining animal sounds, movements, and number recognition up to 10",
+      "materials": [3, 20, 21],
+      "time_needed": "short",
+      "steps_to_make": "1. Create animal picture cards\n2. Prepare number cards 1-10\n3. Record or prepare animal sounds\n4. Create movement cards for each animal\n5. Set up game area",
+      "tips_for_use": "Start with familiar animals. Encourage mimicking sounds and movements. Count animals in groups. Connect to Old MacDonald song.",
+      "intended_use": "aid",
+      "tlr_type": "game",
+      "special_needs": [4, 5],
+      "learning_styles": [2, 3],
+      "class_size": "large",
+      "bloom_level": "apply",
+      "budget_band": "low",
+      "learning_outcome": "Learners will count, group animals, and demonstrate understanding of animal characteristics through sounds and movements",
+      "search_keywords": "animals, counting, sounds, music, movement, domestic, wild, KG1",
+      "slug": "animal-sounds-counting-game",
+      "is_published": true,
+      "download_count": 0
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 36,
+    "fields": {
+      "standard": 26,
+      "code": "K2.1.1.1.1",
+      "description": "Identify and describe in simple sentences (using home language), the wonderful features of our body that make us unique and different from other God's creation, e.g. animals.",
+      "competencies": [5, 3],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 37,
+    "fields": {
+      "standard": 27,
+      "code": "K2.1.2.1.1",
+      "description": "Using a conversational poster of body parts, learners talk about the parts of the human body that we can see and cannot see.",
+      "competencies": [5, 3, 1],
+      "goals": [1]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
+    "pk": 38,
+    "fields": {
+      "standard": 28,
+      "code": "K2.1.3.1.1",
+      "description": "Learners use simple language to describe and engage in conversation about how to care for different part of their bodies.",
+      "competencies": [3, 5],
+      "goals": [1, 2]
+    }
+  },
+  {
+    "model": "suggestor.indicator",
     "pk": 39,
     "fields": {
-      "name": "Stones"
+      "standard": 29,
+      "code": "K2.1.4.1.1",
+      "description": "Talk about how to keep our bodies healthy by eating balanced meal and visiting the hospital for our vaccinations.",
+      "competencies": [3, 5, 6],
+      "goals": [1]
     }
   },
   {
-    "model": "suggestor.material",
+    "model": "suggestor.indicator",
     "pk": 40,
     "fields": {
-      "name": "Leaves"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 41,
-    "fields": {
-      "name": "Clay"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 42,
-    "fields": {
-      "name": "Fabric pieces"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 43,
-    "fields": {
-      "name": "Felt"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 44,
-    "fields": {
-      "name": "EVA foam sheets"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 45,
-    "fields": {
-      "name": "Crepe paper"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 46,
-    "fields": {
-      "name": "Craft punches"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 47,
-    "fields": {
-      "name": "Cricut machine"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 48,
-    "fields": {
-      "name": "Pipe cleaners"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 49,
-    "fields": {
-      "name": "Paint"
-    }
-  },
-  {
-    "model": "suggestor.material",
-    "pk": 50,
-    "fields": {
-      "name": "Dimensional tape"
-    }
-  },
-  {
-    "model": "suggestor.classlevel",
-    "pk": 51,
-    "fields": {
-      "code": "CR",
-      "name": "Cr\u00e8che"
-    }
-  },
-  {
-    "model": "suggestor.classlevel",
-    "pk": 52,
-    "fields": {
-      "code": "NU",
-      "name": "Nursery"
-    }
-  },
-  {
-    "model": "suggestor.classlevel",
-    "pk": 53,
-    "fields": {
-      "code": "KG1",
-      "name": "KG1"
-    }
-  },
-  {
-    "model": "suggestor.classlevel",
-    "pk": 54,
-    "fields": {
-      "code": "KG2",
-      "name": "KG2"
-    }
-  },
-  {
-    "model": "suggestor.classlevel",
-    "pk": 55,
-    "fields": {
-      "code": "1",
-      "name": "Class 1"
-    }
-  },
-  {
-    "model": "suggestor.classlevel",
-    "pk": 56,
-    "fields": {
-      "code": "2",
-      "name": "Class 2"
-    }
-  },
-  {
-    "model": "suggestor.classlevel",
-    "pk": 57,
-    "fields": {
-      "code": "3",
-      "name": "Class 3"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 58,
-    "fields": {
-      "class_level": 51,
-      "title": "Early Sensory Development"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 59,
-    "fields": {
-      "class_level": 51,
-      "title": "Motor Skills"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 60,
-    "fields": {
-      "class_level": 51,
-      "title": "Social Interaction"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 61,
-    "fields": {
-      "class_level": 52,
-      "title": "Pre-Literacy"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 62,
-    "fields": {
-      "class_level": 52,
-      "title": "Pre-Numeracy"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 63,
-    "fields": {
-      "class_level": 52,
-      "title": "Creative Arts"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 64,
-    "fields": {
-      "class_level": 52,
-      "title": "Physical Development"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 65,
-    "fields": {
-      "class_level": 53,
-      "title": "Literacy"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 66,
-    "fields": {
-      "class_level": 53,
-      "title": "Numeracy"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 67,
-    "fields": {
-      "class_level": 53,
-      "title": "Our World Our People"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 68,
-    "fields": {
-      "class_level": 53,
-      "title": "Creative Arts"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 69,
-    "fields": {
-      "class_level": 53,
-      "title": "Physical Education"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 70,
-    "fields": {
-      "class_level": 54,
-      "title": "Literacy"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 71,
-    "fields": {
-      "class_level": 54,
-      "title": "Numeracy"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 72,
-    "fields": {
-      "class_level": 54,
-      "title": "Our World Our People"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 73,
-    "fields": {
-      "class_level": 54,
-      "title": "Creative Arts"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 74,
-    "fields": {
-      "class_level": 54,
-      "title": "Physical Education"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 75,
-    "fields": {
-      "class_level": 55,
-      "title": "English Language"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 76,
-    "fields": {
-      "class_level": 55,
-      "title": "Mathematics"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 77,
-    "fields": {
-      "class_level": 55,
-      "title": "Science"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 78,
-    "fields": {
-      "class_level": 55,
-      "title": "Our World Our People"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 79,
-    "fields": {
-      "class_level": 55,
-      "title": "Creative Arts"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 80,
-    "fields": {
-      "class_level": 55,
-      "title": "Physical Education"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 81,
-    "fields": {
-      "class_level": 55,
-      "title": "Computing"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 82,
-    "fields": {
-      "class_level": 55,
-      "title": "Ghanaian Language"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 83,
-    "fields": {
-      "class_level": 56,
-      "title": "English Language"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 84,
-    "fields": {
-      "class_level": 56,
-      "title": "Mathematics"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 85,
-    "fields": {
-      "class_level": 56,
-      "title": "Science"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 86,
-    "fields": {
-      "class_level": 56,
-      "title": "Our World Our People"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 87,
-    "fields": {
-      "class_level": 56,
-      "title": "Creative Arts"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 88,
-    "fields": {
-      "class_level": 56,
-      "title": "Physical Education"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 89,
-    "fields": {
-      "class_level": 56,
-      "title": "Computing"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 90,
-    "fields": {
-      "class_level": 56,
-      "title": "Ghanaian Language"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 91,
-    "fields": {
-      "class_level": 57,
-      "title": "English Language"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 92,
-    "fields": {
-      "class_level": 57,
-      "title": "Mathematics"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 93,
-    "fields": {
-      "class_level": 57,
-      "title": "Science"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 94,
-    "fields": {
-      "class_level": 57,
-      "title": "Our World Our People"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 95,
-    "fields": {
-      "class_level": 57,
-      "title": "Creative Arts"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 96,
-    "fields": {
-      "class_level": 57,
-      "title": "Physical Education"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 97,
-    "fields": {
-      "class_level": 57,
-      "title": "Computing"
-    }
-  },
-  {
-    "model": "suggestor.subject",
-    "pk": 98,
-    "fields": {
-      "class_level": 57,
-      "title": "Ghanaian Language"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 100,
-    "fields": {
-      "class_level": 55,
-      "title": "Numbers",
-      "term": 1
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 101,
-    "fields": {
-      "strand": 100,
-      "title": "Counting and Writing Numbers"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 102,
-    "fields": {
-      "substrand": 101,
-      "code": "B1.1.1.1.1",
-      "description": "Pupils will be able to count, read and write numbers up to 100."
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 103,
-    "fields": {
-      "standard": 102,
-      "code": "B1.1.1.1.1",
-      "description": "Pupils can count objects up to 100."
-    }
-  },  {
-    "model": "suggestor.strand",
-    "pk": 101,
-    "fields": {
-      "class_level": 1,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 1
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 102,
-    "fields": {
-      "strand": 101,
-      "title": "Parts of the Human Body"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 103,
-    "fields": {
-      "substrand": 102,
-      "code": "K1.1.1.1",
-      "description": "Identify the major parts of the human body"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 104,
-    "fields": {
-      "content_standard": 103,
-      "code": "K1.1.1.1.1",
-      "description": "Identify and name the head, arms, legs and feet."
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 105,
-    "fields": {
-      "content_standard": 103,
-      "code": "K1.1.1.1.2",
-      "description": "Mention functions of the various body parts."
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 102,
-    "fields": {
-      "class_level": 53,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 103,
-    "fields": {
-      "strand": 102,
-      "title": "Caring for the parts of my body"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 104,
-    "fields": {
-      "substrand": 103,
-      "code": "K1.1.3.1",
-      "description": "Demonstrate ways to care for body parts"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 106,
-    "fields": {
-      "content_standard": 104,
-      "code": "K1.1.3.1.1",
-      "description": "Brush teeth and comb hair correctly."
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 107,
-    "fields": {
-      "content_standard": 104,
-      "code": "K1.1.3.1.2",
-      "description": "Demonstrate hand and body washing routines."
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 103,
-    "fields": {
-      "class_level": 53,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 104,
-    "fields": {
-      "strand": 103,
-      "title": "Caring for the parts of my body"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 105,
-    "fields": {
-      "substrand": 104,
-      "code": "K1.1.3.1",
-      "description": "Demonstrate ways to care for body parts"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 108,
-    "fields": {
-      "content_standard": 105,
-      "code": "K1.1.3.1.1",
-      "description": "Brush teeth and comb hair correctly."
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 109,
-    "fields": {
-      "content_standard": 105,
-      "code": "K1.1.3.1.2",
-      "description": "Demonstrate hand and body washing routines."
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 104,
-    "fields": {
-      "class_level": 53,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 105,
-    "fields": {
-      "strand": 104,
-      "title": "Keeping my body healthy"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 106,
-    "fields": {
-      "substrand": 105,
-      "code": "K1.1.4.1",
-      "description": "Understand the importance of good food and vaccination"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 110,
-    "fields": {
-      "content_standard": 106,
-      "code": "K1.1.4.1.1",
-      "description": "Name foods that make the body strong."
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 111,
-    "fields": {
-      "content_standard": 106,
-      "code": "K1.1.4.1.2",
-      "description": "Talk about vaccinations."
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 105,
-    "fields": {
-      "class_level": 53,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 106,
-    "fields": {
-      "strand": 105,
-      "title": "Keeping my body healthy"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 107,
-    "fields": {
-      "substrand": 106,
-      "code": "K1.1.4.1",
-      "description": "Understand the importance of good food and vaccination"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 112,
-    "fields": {
-      "content_standard": 107,
-      "code": "K1.1.4.1.1",
-      "description": "Name foods that make the body strong."
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 113,
-    "fields": {
-      "content_standard": 107,
-      "code": "K1.1.4.1.2",
-      "description": "Talk about vaccinations."
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 106,
-    "fields": {
-      "class_level": 53,
-      "title": "My Family",
-      "term": 1,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 107,
-    "fields": {
-      "strand": 106,
-      "title": "Members of the family"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 108,
-    "fields": {
-      "substrand": 107,
-      "code": "K1.2.1.1",
-      "description": "Identify members of the nuclear and extended family"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 114,
-    "fields": {
-      "content_standard": 108,
-      "code": "K1.2.1.1.1",
-      "description": "Name father, mother, siblings."
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 115,
-    "fields": {
-      "content_standard": 108,
-      "code": "K1.2.1.1.2",
-      "description": "Mention roles of extended family members."
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 107,
-    "fields": {
-      "class_level": 53,
-      "title": "My Family",
-      "term": 1,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 108,
-    "fields": {
-      "strand": 107,
-      "title": "Members of the family"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 109,
-    "fields": {
-      "substrand": 108,
-      "code": "K1.2.1.1",
-      "description": "Identify members of the nuclear and extended family"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 116,
-    "fields": {
-      "content_standard": 109,
-      "code": "K1.2.1.1.1",
-      "description": "Name father, mother, siblings."
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 117,
-    "fields": {
-      "content_standard": 109,
-      "code": "K1.2.1.1.2",
-      "description": "Mention roles of extended family members."
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 108,
-    "fields": {
-      "class_level": 53,
-      "title": "Values and Beliefs",
-      "term": 2,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 109,
-    "fields": {
-      "strand": 108,
-      "title": "Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 110,
-    "fields": {
-      "substrand": 109,
-      "code": "K1.2.8.1",
-      "description": "Understanding of respecting others"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 118,
-    "fields": {
-      "content_standard": 110,
-      "code": "K1.2.8.1.1",
-      "description": "Indicator 1 for Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 119,
-    "fields": {
-      "content_standard": 110,
-      "code": "K1.2.8.1.2",
-      "description": "Indicator 2 for Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 109,
-    "fields": {
-      "class_level": 53,
-      "title": "Values and Beliefs",
-      "term": 2,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 110,
-    "fields": {
-      "strand": 109,
-      "title": "Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 111,
-    "fields": {
-      "substrand": 110,
-      "code": "K1.2.9.1",
-      "description": "Understanding of respecting others"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 120,
-    "fields": {
-      "content_standard": 111,
-      "code": "K1.2.9.1.1",
-      "description": "Indicator 1 for Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 121,
-    "fields": {
-      "content_standard": 111,
-      "code": "K1.2.9.1.2",
-      "description": "Indicator 2 for Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 110,
-    "fields": {
-      "class_level": 53,
-      "title": "Values and Beliefs",
-      "term": 2,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 111,
-    "fields": {
-      "strand": 110,
-      "title": "Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 112,
-    "fields": {
-      "substrand": 111,
-      "code": "K1.2.0.1",
-      "description": "Understanding of respecting others"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 122,
-    "fields": {
-      "content_standard": 112,
-      "code": "K1.2.0.1.1",
-      "description": "Indicator 1 for Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 123,
-    "fields": {
-      "content_standard": 112,
-      "code": "K1.2.0.1.2",
-      "description": "Indicator 2 for Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 111,
-    "fields": {
-      "class_level": 53,
-      "title": "Values and Beliefs",
-      "term": 2,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 112,
-    "fields": {
-      "strand": 111,
-      "title": "Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 113,
-    "fields": {
-      "substrand": 112,
-      "code": "K1.2.1.1",
-      "description": "Understanding of respecting others"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 124,
-    "fields": {
-      "content_standard": 113,
-      "code": "K1.2.1.1.1",
-      "description": "Indicator 1 for Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 125,
-    "fields": {
-      "content_standard": 113,
-      "code": "K1.2.1.1.2",
-      "description": "Indicator 2 for Respecting others"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 112,
-    "fields": {
-      "class_level": 53,
-      "title": "My Local Community",
-      "term": 2,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 113,
-    "fields": {
-      "strand": 112,
-      "title": "Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 114,
-    "fields": {
-      "substrand": 113,
-      "code": "K1.2.2.1",
-      "description": "Understanding of places in my community"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 126,
-    "fields": {
-      "content_standard": 114,
-      "code": "K1.2.2.1.1",
-      "description": "Indicator 1 for Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 127,
-    "fields": {
-      "content_standard": 114,
-      "code": "K1.2.2.1.2",
-      "description": "Indicator 2 for Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 113,
-    "fields": {
-      "class_level": 53,
-      "title": "My Local Community",
-      "term": 2,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 114,
-    "fields": {
-      "strand": 113,
-      "title": "Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 115,
-    "fields": {
-      "substrand": 114,
-      "code": "K1.2.3.1",
-      "description": "Understanding of places in my community"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 128,
-    "fields": {
-      "content_standard": 115,
-      "code": "K1.2.3.1.1",
-      "description": "Indicator 1 for Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 129,
-    "fields": {
-      "content_standard": 115,
-      "code": "K1.2.3.1.2",
-      "description": "Indicator 2 for Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 114,
-    "fields": {
-      "class_level": 53,
-      "title": "My Local Community",
-      "term": 2,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 115,
-    "fields": {
-      "strand": 114,
-      "title": "Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 116,
-    "fields": {
-      "substrand": 115,
-      "code": "K1.2.4.1",
-      "description": "Understanding of places in my community"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 130,
-    "fields": {
-      "content_standard": 116,
-      "code": "K1.2.4.1.1",
-      "description": "Indicator 1 for Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 131,
-    "fields": {
-      "content_standard": 116,
-      "code": "K1.2.4.1.2",
-      "description": "Indicator 2 for Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 115,
-    "fields": {
-      "class_level": 53,
-      "title": "My Local Community",
-      "term": 2,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 116,
-    "fields": {
-      "strand": 115,
-      "title": "Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 117,
-    "fields": {
-      "substrand": 116,
-      "code": "K1.2.5.1",
-      "description": "Understanding of places in my community"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 132,
-    "fields": {
-      "content_standard": 117,
-      "code": "K1.2.5.1.1",
-      "description": "Indicator 1 for Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 133,
-    "fields": {
-      "content_standard": 117,
-      "code": "K1.2.5.1.2",
-      "description": "Indicator 2 for Places in my community"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 116,
-    "fields": {
-      "class_level": 53,
-      "title": "All Around Us",
-      "term": 3,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 117,
-    "fields": {
-      "strand": 116,
-      "title": "Things around us"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 118,
-    "fields": {
-      "substrand": 117,
-      "code": "K1.3.6.1",
-      "description": "Understanding of things around us"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 134,
-    "fields": {
-      "content_standard": 118,
-      "code": "K1.3.6.1.1",
-      "description": "Indicator 1 for Things around us"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 135,
-    "fields": {
-      "content_standard": 118,
-      "code": "K1.3.6.1.2",
-      "description": "Indicator 2 for Things around us"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 117,
-    "fields": {
-      "class_level": 53,
-      "title": "All Around Us",
-      "term": 3,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 118,
-    "fields": {
-      "strand": 117,
-      "title": "Things around us"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 119,
-    "fields": {
-      "substrand": 118,
-      "code": "K1.3.7.1",
-      "description": "Understanding of things around us"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 136,
-    "fields": {
-      "content_standard": 119,
-      "code": "K1.3.7.1.1",
-      "description": "Indicator 1 for Things around us"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 137,
-    "fields": {
-      "content_standard": 119,
-      "code": "K1.3.7.1.2",
-      "description": "Indicator 2 for Things around us"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 118,
-    "fields": {
-      "class_level": 53,
-      "title": "All Around Us",
-      "term": 3,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 119,
-    "fields": {
-      "strand": 118,
-      "title": "Things around us"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 120,
-    "fields": {
-      "substrand": 119,
-      "code": "K1.3.8.1",
-      "description": "Understanding of things around us"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 138,
-    "fields": {
-      "content_standard": 120,
-      "code": "K1.3.8.1.1",
-      "description": "Indicator 1 for Things around us"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 139,
-    "fields": {
-      "content_standard": 120,
-      "code": "K1.3.8.1.2",
-      "description": "Indicator 2 for Things around us"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 119,
-    "fields": {
-      "class_level": 53,
-      "title": "All Around Us",
-      "term": 3,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 120,
-    "fields": {
-      "strand": 119,
-      "title": "Things around us"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 121,
-    "fields": {
-      "substrand": 120,
-      "code": "K1.3.9.1",
-      "description": "Understanding of things around us"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 140,
-    "fields": {
-      "content_standard": 121,
-      "code": "K1.3.9.1.1",
-      "description": "Indicator 1 for Things around us"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 141,
-    "fields": {
-      "content_standard": 121,
-      "code": "K1.3.9.1.2",
-      "description": "Indicator 2 for Things around us"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 120,
-    "fields": {
-      "class_level": 53,
-      "title": "My Global Community",
-      "term": 3,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 121,
-    "fields": {
-      "strand": 120,
-      "title": "Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 122,
-    "fields": {
-      "substrand": 121,
-      "code": "K1.3.0.1",
-      "description": "Understanding of children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 142,
-    "fields": {
-      "content_standard": 122,
-      "code": "K1.3.0.1.1",
-      "description": "Indicator 1 for Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 143,
-    "fields": {
-      "content_standard": 122,
-      "code": "K1.3.0.1.2",
-      "description": "Indicator 2 for Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 121,
-    "fields": {
-      "class_level": 53,
-      "title": "My Global Community",
-      "term": 3,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 122,
-    "fields": {
-      "strand": 121,
-      "title": "Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 123,
-    "fields": {
-      "substrand": 122,
-      "code": "K1.3.1.1",
-      "description": "Understanding of children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 144,
-    "fields": {
-      "content_standard": 123,
-      "code": "K1.3.1.1.1",
-      "description": "Indicator 1 for Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 145,
-    "fields": {
-      "content_standard": 123,
-      "code": "K1.3.1.1.2",
-      "description": "Indicator 2 for Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 122,
-    "fields": {
-      "class_level": 53,
-      "title": "My Global Community",
-      "term": 3,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 123,
-    "fields": {
-      "strand": 122,
-      "title": "Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 124,
-    "fields": {
-      "substrand": 123,
-      "code": "K1.3.2.1",
-      "description": "Understanding of children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 146,
-    "fields": {
-      "content_standard": 124,
-      "code": "K1.3.2.1.1",
-      "description": "Indicator 1 for Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 147,
-    "fields": {
-      "content_standard": 124,
-      "code": "K1.3.2.1.2",
-      "description": "Indicator 2 for Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 123,
-    "fields": {
-      "class_level": 53,
-      "title": "My Global Community",
-      "term": 3,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 124,
-    "fields": {
-      "strand": 123,
-      "title": "Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 125,
-    "fields": {
-      "substrand": 124,
-      "code": "K1.3.3.1",
-      "description": "Understanding of children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 148,
-    "fields": {
-      "content_standard": 125,
-      "code": "K1.3.3.1.1",
-      "description": "Indicator 1 for Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 149,
-    "fields": {
-      "content_standard": 125,
-      "code": "K1.3.3.1.2",
-      "description": "Indicator 2 for Children in other countries"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 124,
-    "fields": {
-      "class_level": 54,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 125,
-    "fields": {
-      "strand": 124,
-      "title": "Personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 126,
-    "fields": {
-      "substrand": 125,
-      "code": "K2.1.4.1",
-      "description": "Understanding of personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 150,
-    "fields": {
-      "content_standard": 126,
-      "code": "K2.1.4.1.1",
-      "description": "Indicator 1 for Personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 151,
-    "fields": {
-      "content_standard": 126,
-      "code": "K2.1.4.1.2",
-      "description": "Indicator 2 for Personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 125,
-    "fields": {
-      "class_level": 54,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 126,
-    "fields": {
-      "strand": 125,
-      "title": "Personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 127,
-    "fields": {
-      "substrand": 126,
-      "code": "K2.1.5.1",
-      "description": "Understanding of personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 152,
-    "fields": {
-      "content_standard": 127,
+      "standard": 30,
       "code": "K2.1.5.1.1",
-      "description": "Indicator 1 for Personal hygiene"
+      "description": "Take a walk in the environment, discuss and point to things that are safe and unsafe to play with.",
+      "competencies": [3, 5, 6],
+      "goals": [1, 2]
     }
   },
   {
-    "model": "suggestor.indicator",
-    "pk": 153,
+    "model": "suggestor.theme",
+    "pk": 8,
     "fields": {
-      "content_standard": 127,
-      "code": "K2.1.5.1.2",
-      "description": "Indicator 2 for Personal hygiene"
+      "title": "Health and Safety"
     }
   },
   {
-    "model": "suggestor.strand",
-    "pk": 126,
+    "model": "suggestor.theme",
+    "pk": 9,
     "fields": {
-      "class_level": 54,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 67
+      "title": "Nature and Environment"
     }
   },
   {
-    "model": "suggestor.substrand",
-    "pk": 127,
+    "model": "suggestor.theme",
+    "pk": 10,
     "fields": {
-      "strand": 126,
-      "title": "Personal hygiene"
+      "title": "Culture and Traditions"
     }
   },
   {
-    "model": "suggestor.contentstandard",
-    "pk": 128,
+    "model": "suggestor.theme",
+    "pk": 11,
     "fields": {
-      "substrand": 127,
-      "code": "K2.1.6.1",
-      "description": "Understanding of personal hygiene"
+      "title": "Communication and Technology"
     }
   },
   {
-    "model": "suggestor.indicator",
-    "pk": 154,
+    "model": "suggestor.theme",
+    "pk": 12,
     "fields": {
-      "content_standard": 128,
-      "code": "K2.1.6.1.1",
-      "description": "Indicator 1 for Personal hygiene"
+      "title": "Food and Nutrition"
     }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 155,
-    "fields": {
-      "content_standard": 128,
-      "code": "K2.1.6.1.2",
-      "description": "Indicator 2 for Personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 127,
-    "fields": {
-      "class_level": 54,
-      "title": "All About Me",
-      "term": 1,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 128,
-    "fields": {
-      "strand": 127,
-      "title": "Personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 129,
-    "fields": {
-      "substrand": 128,
-      "code": "K2.1.7.1",
-      "description": "Understanding of personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 156,
-    "fields": {
-      "content_standard": 129,
-      "code": "K2.1.7.1.1",
-      "description": "Indicator 1 for Personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 157,
-    "fields": {
-      "content_standard": 129,
-      "code": "K2.1.7.1.2",
-      "description": "Indicator 2 for Personal hygiene"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 128,
-    "fields": {
-      "class_level": 54,
-      "title": "My Family",
-      "term": 1,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 129,
-    "fields": {
-      "strand": 128,
-      "title": "Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 130,
-    "fields": {
-      "substrand": 129,
-      "code": "K2.1.8.1",
-      "description": "Understanding of extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 158,
-    "fields": {
-      "content_standard": 130,
-      "code": "K2.1.8.1.1",
-      "description": "Indicator 1 for Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 159,
-    "fields": {
-      "content_standard": 130,
-      "code": "K2.1.8.1.2",
-      "description": "Indicator 2 for Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 129,
-    "fields": {
-      "class_level": 54,
-      "title": "My Family",
-      "term": 1,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 130,
-    "fields": {
-      "strand": 129,
-      "title": "Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 131,
-    "fields": {
-      "substrand": 130,
-      "code": "K2.1.9.1",
-      "description": "Understanding of extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 160,
-    "fields": {
-      "content_standard": 131,
-      "code": "K2.1.9.1.1",
-      "description": "Indicator 1 for Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 161,
-    "fields": {
-      "content_standard": 131,
-      "code": "K2.1.9.1.2",
-      "description": "Indicator 2 for Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 130,
-    "fields": {
-      "class_level": 54,
-      "title": "My Family",
-      "term": 1,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 131,
-    "fields": {
-      "strand": 130,
-      "title": "Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 132,
-    "fields": {
-      "substrand": 131,
-      "code": "K2.1.0.1",
-      "description": "Understanding of extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 162,
-    "fields": {
-      "content_standard": 132,
-      "code": "K2.1.0.1.1",
-      "description": "Indicator 1 for Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 163,
-    "fields": {
-      "content_standard": 132,
-      "code": "K2.1.0.1.2",
-      "description": "Indicator 2 for Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 131,
-    "fields": {
-      "class_level": 54,
-      "title": "My Family",
-      "term": 1,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 132,
-    "fields": {
-      "strand": 131,
-      "title": "Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 133,
-    "fields": {
-      "substrand": 132,
-      "code": "K2.1.1.1",
-      "description": "Understanding of extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 164,
-    "fields": {
-      "content_standard": 133,
-      "code": "K2.1.1.1.1",
-      "description": "Indicator 1 for Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 165,
-    "fields": {
-      "content_standard": 133,
-      "code": "K2.1.1.1.2",
-      "description": "Indicator 2 for Extended family roles"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 132,
-    "fields": {
-      "class_level": 54,
-      "title": "Values and Beliefs",
-      "term": 2,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 133,
-    "fields": {
-      "strand": 132,
-      "title": "Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 134,
-    "fields": {
-      "substrand": 133,
-      "code": "K2.2.2.1",
-      "description": "Understanding of religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 166,
-    "fields": {
-      "content_standard": 134,
-      "code": "K2.2.2.1.1",
-      "description": "Indicator 1 for Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 167,
-    "fields": {
-      "content_standard": 134,
-      "code": "K2.2.2.1.2",
-      "description": "Indicator 2 for Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 133,
-    "fields": {
-      "class_level": 54,
-      "title": "Values and Beliefs",
-      "term": 2,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 134,
-    "fields": {
-      "strand": 133,
-      "title": "Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 135,
-    "fields": {
-      "substrand": 134,
-      "code": "K2.2.3.1",
-      "description": "Understanding of religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 168,
-    "fields": {
-      "content_standard": 135,
-      "code": "K2.2.3.1.1",
-      "description": "Indicator 1 for Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 169,
-    "fields": {
-      "content_standard": 135,
-      "code": "K2.2.3.1.2",
-      "description": "Indicator 2 for Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 134,
-    "fields": {
-      "class_level": 54,
-      "title": "Values and Beliefs",
-      "term": 2,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 135,
-    "fields": {
-      "strand": 134,
-      "title": "Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 136,
-    "fields": {
-      "substrand": 135,
-      "code": "K2.2.4.1",
-      "description": "Understanding of religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 170,
-    "fields": {
-      "content_standard": 136,
-      "code": "K2.2.4.1.1",
-      "description": "Indicator 1 for Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 171,
-    "fields": {
-      "content_standard": 136,
-      "code": "K2.2.4.1.2",
-      "description": "Indicator 2 for Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 135,
-    "fields": {
-      "class_level": 54,
-      "title": "Values and Beliefs",
-      "term": 2,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 136,
-    "fields": {
-      "strand": 135,
-      "title": "Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 137,
-    "fields": {
-      "substrand": 136,
-      "code": "K2.2.5.1",
-      "description": "Understanding of religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 172,
-    "fields": {
-      "content_standard": 137,
-      "code": "K2.2.5.1.1",
-      "description": "Indicator 1 for Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 173,
-    "fields": {
-      "content_standard": 137,
-      "code": "K2.2.5.1.2",
-      "description": "Indicator 2 for Religious festivals"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 136,
-    "fields": {
-      "class_level": 54,
-      "title": "My Local Community",
-      "term": 2,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 137,
-    "fields": {
-      "strand": 136,
-      "title": "Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 138,
-    "fields": {
-      "substrand": 137,
-      "code": "K2.2.6.1",
-      "description": "Understanding of community helpers"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 174,
-    "fields": {
-      "content_standard": 138,
-      "code": "K2.2.6.1.1",
-      "description": "Indicator 1 for Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 175,
-    "fields": {
-      "content_standard": 138,
-      "code": "K2.2.6.1.2",
-      "description": "Indicator 2 for Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 137,
-    "fields": {
-      "class_level": 54,
-      "title": "My Local Community",
-      "term": 2,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 138,
-    "fields": {
-      "strand": 137,
-      "title": "Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 139,
-    "fields": {
-      "substrand": 138,
-      "code": "K2.2.7.1",
-      "description": "Understanding of community helpers"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 176,
-    "fields": {
-      "content_standard": 139,
-      "code": "K2.2.7.1.1",
-      "description": "Indicator 1 for Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 177,
-    "fields": {
-      "content_standard": 139,
-      "code": "K2.2.7.1.2",
-      "description": "Indicator 2 for Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 138,
-    "fields": {
-      "class_level": 54,
-      "title": "My Local Community",
-      "term": 2,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 139,
-    "fields": {
-      "strand": 138,
-      "title": "Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 140,
-    "fields": {
-      "substrand": 139,
-      "code": "K2.2.8.1",
-      "description": "Understanding of community helpers"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 178,
-    "fields": {
-      "content_standard": 140,
-      "code": "K2.2.8.1.1",
-      "description": "Indicator 1 for Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 179,
-    "fields": {
-      "content_standard": 140,
-      "code": "K2.2.8.1.2",
-      "description": "Indicator 2 for Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 139,
-    "fields": {
-      "class_level": 54,
-      "title": "My Local Community",
-      "term": 2,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 140,
-    "fields": {
-      "strand": 139,
-      "title": "Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 141,
-    "fields": {
-      "substrand": 140,
-      "code": "K2.2.9.1",
-      "description": "Understanding of community helpers"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 180,
-    "fields": {
-      "content_standard": 141,
-      "code": "K2.2.9.1.1",
-      "description": "Indicator 1 for Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 181,
-    "fields": {
-      "content_standard": 141,
-      "code": "K2.2.9.1.2",
-      "description": "Indicator 2 for Community helpers"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 140,
-    "fields": {
-      "class_level": 54,
-      "title": "All Around Us",
-      "term": 3,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 141,
-    "fields": {
-      "strand": 140,
-      "title": "Natural features"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 142,
-    "fields": {
-      "substrand": 141,
-      "code": "K2.3.0.1",
-      "description": "Understanding of natural features"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 182,
-    "fields": {
-      "content_standard": 142,
-      "code": "K2.3.0.1.1",
-      "description": "Indicator 1 for Natural features"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 183,
-    "fields": {
-      "content_standard": 142,
-      "code": "K2.3.0.1.2",
-      "description": "Indicator 2 for Natural features"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 141,
-    "fields": {
-      "class_level": 54,
-      "title": "All Around Us",
-      "term": 3,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 142,
-    "fields": {
-      "strand": 141,
-      "title": "Natural features"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 143,
-    "fields": {
-      "substrand": 142,
-      "code": "K2.3.1.1",
-      "description": "Understanding of natural features"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 184,
-    "fields": {
-      "content_standard": 143,
-      "code": "K2.3.1.1.1",
-      "description": "Indicator 1 for Natural features"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 185,
-    "fields": {
-      "content_standard": 143,
-      "code": "K2.3.1.1.2",
-      "description": "Indicator 2 for Natural features"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 142,
-    "fields": {
-      "class_level": 54,
-      "title": "All Around Us",
-      "term": 3,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 143,
-    "fields": {
-      "strand": 142,
-      "title": "Natural features"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 144,
-    "fields": {
-      "substrand": 143,
-      "code": "K2.3.2.1",
-      "description": "Understanding of natural features"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 186,
-    "fields": {
-      "content_standard": 144,
-      "code": "K2.3.2.1.1",
-      "description": "Indicator 1 for Natural features"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 187,
-    "fields": {
-      "content_standard": 144,
-      "code": "K2.3.2.1.2",
-      "description": "Indicator 2 for Natural features"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 143,
-    "fields": {
-      "class_level": 54,
-      "title": "All Around Us",
-      "term": 3,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 144,
-    "fields": {
-      "strand": 143,
-      "title": "Natural features"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 145,
-    "fields": {
-      "substrand": 144,
-      "code": "K2.3.3.1",
-      "description": "Understanding of natural features"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 188,
-    "fields": {
-      "content_standard": 145,
-      "code": "K2.3.3.1.1",
-      "description": "Indicator 1 for Natural features"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 189,
-    "fields": {
-      "content_standard": 145,
-      "code": "K2.3.3.1.2",
-      "description": "Indicator 2 for Natural features"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 144,
-    "fields": {
-      "class_level": 54,
-      "title": "My Global Community",
-      "term": 3,
-      "subject": 65
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 145,
-    "fields": {
-      "strand": 144,
-      "title": "Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 146,
-    "fields": {
-      "substrand": 145,
-      "code": "K2.3.4.1",
-      "description": "Understanding of weather and people"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 190,
-    "fields": {
-      "content_standard": 146,
-      "code": "K2.3.4.1.1",
-      "description": "Indicator 1 for Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 191,
-    "fields": {
-      "content_standard": 146,
-      "code": "K2.3.4.1.2",
-      "description": "Indicator 2 for Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 145,
-    "fields": {
-      "class_level": 54,
-      "title": "My Global Community",
-      "term": 3,
-      "subject": 66
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 146,
-    "fields": {
-      "strand": 145,
-      "title": "Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 147,
-    "fields": {
-      "substrand": 146,
-      "code": "K2.3.5.1",
-      "description": "Understanding of weather and people"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 192,
-    "fields": {
-      "content_standard": 147,
-      "code": "K2.3.5.1.1",
-      "description": "Indicator 1 for Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 193,
-    "fields": {
-      "content_standard": 147,
-      "code": "K2.3.5.1.2",
-      "description": "Indicator 2 for Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 146,
-    "fields": {
-      "class_level": 54,
-      "title": "My Global Community",
-      "term": 3,
-      "subject": 67
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 147,
-    "fields": {
-      "strand": 146,
-      "title": "Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 148,
-    "fields": {
-      "substrand": 147,
-      "code": "K2.3.6.1",
-      "description": "Understanding of weather and people"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 194,
-    "fields": {
-      "content_standard": 148,
-      "code": "K2.3.6.1.1",
-      "description": "Indicator 1 for Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 195,
-    "fields": {
-      "content_standard": 148,
-      "code": "K2.3.6.1.2",
-      "description": "Indicator 2 for Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.strand",
-    "pk": 147,
-    "fields": {
-      "class_level": 54,
-      "title": "My Global Community",
-      "term": 3,
-      "subject": 68
-    }
-  },
-  {
-    "model": "suggestor.substrand",
-    "pk": 148,
-    "fields": {
-      "strand": 147,
-      "title": "Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.contentstandard",
-    "pk": 149,
-    "fields": {
-      "substrand": 148,
-      "code": "K2.3.7.1",
-      "description": "Understanding of weather and people"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 196,
-    "fields": {
-      "content_standard": 149,
-      "code": "K2.3.7.1.1",
-      "description": "Indicator 1 for Weather and people"
-    }
-  },
-  {
-    "model": "suggestor.indicator",
-    "pk": 197,
-    "fields": {
-      "content_standard": 149,
-      "code": "K2.3.7.1.2",
-      "description": "Indicator 2 for Weather and people"
-    }
-  }
-]
+  }]
+
+

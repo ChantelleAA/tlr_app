@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'suggestor',
     'smart_selects',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

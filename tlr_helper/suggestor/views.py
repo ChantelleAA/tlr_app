@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.db.models import Model
 import re
 
 @login_required
@@ -129,10 +130,10 @@ def print_view(request, pk):
 def serialize_filters(data):
     safe = {}
     for key, value in data.items():
-        if isinstance(value, models.Model):
+        if isinstance(value, Model):
             safe[key] = value.pk
         elif hasattr(value, "__iter__") and not isinstance(value, str):
-            safe[key] = [obj.pk if isinstance(obj, models.Model) else obj for obj in value]
+            safe[key] = [obj.pk if isinstance(obj, Model) else obj for obj in value]
         else:
             safe[key] = value
     return safe
