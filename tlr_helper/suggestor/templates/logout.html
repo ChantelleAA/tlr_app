@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container py-5 text-center">
-  <h3 class="mb-4">You have been logged out</h3>
-  <a href="{% url 'login' %}" class="btn btn-primary">Log in again</a>
-</div>
+<form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button type="submit" class="dropdown-item">Logout</button>
+</form>
 {% endblock %}
