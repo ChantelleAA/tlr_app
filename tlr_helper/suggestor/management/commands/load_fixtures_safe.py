@@ -26,16 +26,30 @@ class Command(BaseCommand):
                 model = obj.object.__class__
                 fields = obj.object.__dict__.copy()
                 fields.pop('_state', None)
+                
                 if hasattr(obj.object, 'code'):  # for ClassLevel and similar
-                    model.objects.update_or_create(code=fields['code'], defaults=fields)
+                    # Remove 'code' from defaults to avoid constraint violations
+                    code_value = fields.pop('code')
+                    model.objects.update_or_create(
+                        code=code_value, 
+                        defaults=fields
+                    )
                 else:
-                    model.objects.update_or_create(pk=obj.object.pk, defaults=fields)
+                    # Remove 'id' from defaults if it exists
+                    pk_value = fields.pop('id', obj.object.pk)
+                    model.objects.update_or_create(
+                        pk=pk_value, 
+                        defaults=fields
+                    )
                 loaded += 1
 
             self.stdout.write(self.style.SUCCESS(f'Successfully loaded or updated {loaded} objects!'))
 
         except Exception as e:
             self.stderr.write(self.style.ERROR(f'Error: {str(e)}'))
+            # Add more detailed error info for debugging
+            import traceback
+            self.stderr.write(self.style.ERROR(f'Traceback: {traceback.format_exc()}'))
 
         finally:
             if is_sqlite:
