@@ -78,8 +78,8 @@ class ClassLevel(models.Model):
 class Subject(models.Model):
     class_level = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
-    class Meta:
-        unique_together = ("class_level", "title")
+    # class Meta:
+    #     unique_together = ("class_level", "title")
     def __str__(self):
         return f"{self.title} ({self.class_level})"
 
