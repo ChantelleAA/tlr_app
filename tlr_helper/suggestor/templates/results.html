@@ -3,7 +3,217 @@
 
 {% block content %}
 <div class="container my-5">
-  <h2 class="text-center text-nile mb-4">Matching TLRs</h2>
-  {% include "partials/results_list.html" %}
+  <div class="row">
+    <div class="col-12">
+      <h2 class="text-center text-nile mb-4">Matching TLRs</h2>
+      
+      <!-- Pinterest Inspiration Card - BEFORE results -->
+      <div class="pinterest-inspiration-card mb-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-gradient-info text-white cursor-pointer" 
+               data-bs-toggle="collapse" 
+               data-bs-target="#pinterest-section"
+               aria-expanded="false"
+               aria-controls="pinterest-section">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-palette me-2"></i>
+                <h6 class="mb-0">🎨 Need More Creative Ideas? Browse Pinterest Inspiration</h6>
+              </div>
+              <i class="fas fa-chevron-down transition-icon"></i>
+            </div>
+            <small class="opacity-75 mt-1 d-block">Click to explore related Pinterest boards for extra inspiration</small>
+          </div>
+          
+          <div id="pinterest-section" class="collapse">
+            <div class="card-body bg-light">
+              <div class="row g-4">
+                {% for board in pinterest_boards %}
+                  <div class="col-lg-4 col-md-6">
+                    <div class="pinterest-preview-card">
+                      <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-header bg-white border-bottom-0 pb-2">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <small class="text-muted fw-bold">Pinterest Board</small>
+                            <span class="badge bg-primary-subtle text-primary">
+                              {{ board.matched_words }}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="card-body p-2">
+                          <a data-pin-do="embedBoard"
+                             data-pin-board-width="100%"
+                             data-pin-scale-height="300"
+                             data-pin-scale-width="100"
+                             href="{{ board.url }}">
+                          </a>
+                        </div>
+                        <div class="card-footer bg-white border-top-0 pt-0">
+                          <a href="{{ board.url }}" target="_blank" 
+                             class="btn btn-outline-primary btn-sm w-100">
+                            <i class="fab fa-pinterest me-1"></i>
+                            View Full Board
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% empty %}
+                  <div class="col-12 text-center py-4">
+                    <div class="text-muted">
+                      <i class="fas fa-search fa-2x mb-3 opacity-50"></i>
+                      <p>No Pinterest boards found for your search terms.</p>
+                      <small>Try different keywords to discover creative ideas!</small>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+              
+              {% if pinterest_boards %}
+                <div class="text-center mt-4">
+                  <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    These boards are automatically matched based on your search criteria
+                  </small>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main Results -->
+      {% include "partials/results_list.html" %}
+    </div>
+  </div>
 </div>
+
+<!-- Custom Styles -->
+<style>
+/* Pinterest Inspiration Card Styles */
+.pinterest-inspiration-card {
+  margin-bottom: 2rem;
+}
+
+.pinterest-inspiration-card .card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pinterest-inspiration-card .card-header:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.transition-icon {
+  transition: transform 0.3s ease;
+}
+
+.pinterest-inspiration-card .card-header[aria-expanded="true"] .transition-icon {
+  transform: rotate(180deg);
+}
+
+.pinterest-preview-card .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pinterest-preview-card .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+/* Pinterest embed container */
+.pinterest-preview-card [data-pin-do="embedBoard"] {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Custom button styling */
+.pinterest-preview-card .btn-outline-primary {
+  border-color: #E60023;
+  color: #E60023;
+  transition: all 0.2s ease;
+}
+
+.pinterest-preview-card .btn-outline-primary:hover {
+  background-color: #E60023;
+  border-color: #E60023;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pinterest-inspiration-card .card-header h6 {
+    font-size: 0.9rem;
+  }
+  
+  .pinterest-inspiration-card .card-header small {
+    font-size: 0.75rem;
+  }
+}
+
+/* Loading state for Pinterest embeds */
+.pinterest-preview-card [data-pin-do="embedBoard"] {
+  min-height: 300px;
+  background: linear-gradient(90deg, #f0f0f0 25%, transparent 37%, transparent 63%, #f0f0f0 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: -100% 50%; }
+}
+
+/* Custom collapse animation */
+#pinterest-section {
+  transition: all 0.4s ease;
+}
+
+/* Badge styling */
+.badge.bg-primary-subtle {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+}
+</style>
+
+<!-- JavaScript for enhanced interactions -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add click tracking
+  const pinterestHeader = document.querySelector('[data-bs-target="#pinterest-section"]');
+  if (pinterestHeader) {
+    pinterestHeader.addEventListener('click', function() {
+      // Optional: Add analytics tracking here
+      console.log('Pinterest inspiration section toggled');
+    });
+  }
+  
+  // Add smooth scroll to Pinterest section when opened
+  const pinterestCollapse = document.getElementById('pinterest-section');
+  if (pinterestCollapse) {
+    pinterestCollapse.addEventListener('shown.bs.collapse', function() {
+      this.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    });
+  }
+  
+  // Track Pinterest board clicks
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('a[href*="pinterest.com"]')) {
+      console.log('Pinterest board clicked:', e.target.closest('a').href);
+      // Optional: Add analytics tracking here
+    }
+  });
+});
+</script>
+
+<!-- Pinterest Embed Script -->
+<script async defer src="//assets.pinterest.com/js/pinit.js"></script>
+
 {% endblock %}

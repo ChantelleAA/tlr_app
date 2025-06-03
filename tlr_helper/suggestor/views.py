@@ -7,8 +7,48 @@ from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.db.models import Model
+import unicodedata
 import re
 from django.contrib.auth import login
+
+
+PINTEREST_BOARDS = [
+    {
+        "title": "Creative Teaching Aids for KG – Numeracy",
+        "url": "https://www.pinterest.com/Ellet_nahc/creative-teaching-aids-for-kg-numeracy/",
+    },
+    {
+        "title": "KG Literacy Visuals & Games",
+        "url": "https://www.pinterest.com/Ellet_nahc/kg-literacy-visuals-games/",
+    },
+    {
+        "title": "Our World – Nature and Environment",
+        "url": "https://www.pinterest.com/Ellet_nahc/our-world--nature-and-environment/",
+    },
+    {
+        "title": "Arts and Crafts for Class Activities",
+        "url": "https://www.pinterest.com/Ellet_nahc/arts-and-crafts-for-class-activities/",
+    },
+    {
+        "title": "Assessment Tools and DIY Materials",
+        "url": "https://www.pinterest.com/Ellet_nahc/assessment-tools-and-diy-materials/",
+    },
+    {
+        "title": "Inclusive Classrooms – Special Needs",
+        "url": "https://www.pinterest.com/Ellet_nahc/inclusive-classrooms-special-needs/",
+    },
+    {
+        "title": "Classroom Setup and Resource Displays",
+        "url": "https://www.pinterest.com/Ellet_nahc/classroom-setup-and-resource-displays/",
+    },
+]
+
+
+def normalize(text):
+    if not isinstance(text, str):
+        text = str(text)
+    text = unicodedata.normalize('NFKD', text).lower()
+    return re.sub(r'[^a-z0-9 ]+', '', text)
 
 @login_required
 def download_view(request, pk):
@@ -166,7 +206,58 @@ def results_page(request):
         return redirect("route_select")
 
     suggestions = find_matches(filters, route)
-    return render(request, "results.html", {"suggestions": suggestions})
+
+    def normalize(text):
+        if not isinstance(text, str):
+            text = str(text)
+        text = unicodedata.normalize('NFKD', text).lower()
+        return re.sub(r'[^a-z0-9 ]+', '', text)
+
+    # Collect all keywords from filters and suggestions
+    keywords = set()
+
+    for key in ["class_level", "subject", "strand", "substrand", "intended_use"]:
+        val = filters.get(key)
+        if val:
+            text = getattr(val, "title", None) or getattr(val, "name", None) or str(val)
+            stopwords = {"the", "and", "or", "for", "to", "in", "on", "of", "with", "by", "at", "a", "an", "from"}
+            words = [w for w in normalize(text).split() if w not in stopwords]
+            keywords.update(words)
+
+
+    for tlr in suggestions:
+        for tag_group in [
+            tlr.themes.all(),
+            tlr.key_learning_areas.all(),
+            tlr.resource_types.all(),
+            tlr.competencies.all(),
+            tlr.special_needs.all(),
+            tlr.learning_styles.all()
+        ]:
+            for tag in tag_group:
+                keywords.update(normalize(str(tag)).split())
+
+    # Match all boards that overlap with any keyword
+    stopwords = {"the", "and", "or", "for", "to", "in", "on", "of", "with", "by", "at", "a", "an", "from"}
+
+    matched_boards = []
+    for board in PINTEREST_BOARDS:
+        title_words = set(normalize(board["title"]).split())
+        match = keywords & title_words
+        filtered_match = [w for w in match if w not in stopwords]
+        if filtered_match:
+            matched_boards.append({
+                "url": board["url"],
+                "title": board["title"],
+                "matched_words": ", ".join(filtered_match)
+            })
+
+
+    return render(request, "results.html", {
+        "suggestions": suggestions,
+        "pinterest_boards": matched_boards,
+    })
+
 
 @login_required
 def chained_filter(request):
