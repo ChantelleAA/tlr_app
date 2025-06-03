@@ -31,6 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '.onrender.com',
     '127.0.0.1',
+    'tlr.teddghana.com',
 ]
 
 # Application definition
@@ -105,10 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/search/'
 LOGOUT_REDIRECT_URL = '/login/'
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
