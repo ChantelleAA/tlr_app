@@ -136,10 +136,10 @@ DATABASES = {}
 if os.getenv("RENDER"):
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tlr_db',
-        'USER': 'tlr_db_user',
-        'PASSWORD': 'fm7eu4aD9QqA2eXmUjy9G3YTWY4rkhxI',
-        'HOST': 'dpg-d0tm9sje5dus73820i6g-a',
+        'NAME': 'tlrdb',
+        'USER': 'tlrdb_user',
+        'PASSWORD': 'EaHqGbSSyWXSuhoJS6ctqa8A11MzYvth',
+        'HOST': 'dpg-d0v9ath5pdvs73889320-a',
         'PORT': '5432',
     }
 else:
