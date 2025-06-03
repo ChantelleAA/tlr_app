@@ -152,7 +152,7 @@ All curriculum data is based on the official Ghana Standards-Based Curriculum (N
 
 ## Author
 
-Built and maintained by [ChantelleAA](https://github.com/ChantelleAA), as part of work with TEDD Ghana and AIMS.
+Built and maintained by [ChantelleAA](https://github.com/ChantelleAA), as part of work with TEDD Ghana.
 
 ---
 
