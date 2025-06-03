@@ -1,0 +1,570 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+.hero-section {
+    background: linear-gradient(135deg, #2A50C8 0%, #1d3aa3 100%);
+    color: white;
+    padding: 80px 0;
+}
+
+.feature-card {
+    transition: all 0.3s ease;
+    border: none;
+    height: 100%;
+    border-radius: 16px;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.search-route-demo {
+    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+    border-left: 4px solid #2A50C8;
+    border-radius: 12px;
+}
+
+.curriculum-flow {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-radius: 16px;
+}
+
+.stats-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 2rem;
+    text-align: center;
+    height: 100%;
+}
+
+.pricing-card {
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.pricing-card:hover {
+    transform: scale(1.02);
+}
+
+.pricing-card.featured {
+    border: 2px solid #2A50C8;
+    transform: scale(1.05);
+}
+
+.icon-feature {
+    background: linear-gradient(135deg, #2A50C8, #1d3aa3);
+    color: white;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+}
+
+.problem-icon {
+    color: #dc3545;
+    font-size: 1.2rem;
+    margin-right: 15px;
+}
+
+.solution-icon {
+    color: #28a745;
+    font-size: 1.2rem;
+    margin-right: 15px;
+}
+
+.btn-cta {
+    background: linear-gradient(135deg, #2A50C8, #1d3aa3);
+    border: none;
+    padding: 15px 40px;
+    font-weight: bold;
+    border-radius: 50px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(42, 80, 200, 0.3);
+    color: white;
+}
+
+.badge-demo {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    margin: 0.1rem;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .stats-card,
+body.dark-mode .testimonial-card {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+body.dark-mode .search-route-demo {
+    background: linear-gradient(45deg, #2d2d2d, #3a3a3a);
+    border-left-color: #4dabf7;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">
+                    Find Perfect TLRs for Ghana's Curriculum
+                </h1>
+                <p class="lead mb-5">
+                    Smart search tool designed specifically for Ghana's Standards-Based Curriculum. 
+                    Discover Teaching Learning Resources aligned with curriculum strands, indicators, 
+                    and competencies - plus get Pinterest inspiration!
+                </p>
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                    <a href="{% url 'route_select' %}" class="btn btn-cta btn-lg">
+                        <i class="bi bi-search me-2"></i>Start Searching TLRs
+                    </a>
+                    <a href="#how-it-works" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-play me-2"></i>See How It Works
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Problem Statement -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="h1 mb-4 text-primary">The Challenge Teachers Face</h2>
+                <div class="mb-4">
+                    <div class="d-flex align-items-start mb-3">
+                        <i class="problem-icon bi bi-clock"></i>
+                        <p class="mb-0">Hours spent searching for resources that match Ghana's specific curriculum codes (K1.1.1.1.1)</p>
+                    </div>
+                    <div class="d-flex align-items-start mb-3">
+                        <i class="problem-icon bi bi-exclamation-triangle"></i>
+                        <p class="mb-0">Generic TLRs that don't align with our strands, sub-strands, and indicators</p>
+                    </div>
+                    <div class="d-flex align-items-start mb-3">
+                        <i class="problem-icon bi bi-question-circle"></i>
+                        <p class="mb-0">Difficulty finding resources for specific competencies and learning areas</p>
+                    </div>
+                    <div class="d-flex align-items-start">
+                        <i class="problem-icon bi bi-lightbulb"></i>
+                        <p class="mb-0">Limited creative inspiration for engaging classroom activities</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="curriculum-flow text-white p-4">
+                    <h5 class="mb-3">Ghana's Curriculum is Complex:</h5>
+                    <div class="d-flex flex-column gap-2">
+                        <span class="badge bg-light text-dark">7 Class Levels (Creche → Class 3)</span>
+                        <span class="text-light">↓</span>
+                        <span class="badge bg-light text-dark">Multiple Subjects per Level</span>
+                        <span class="text-light">↓</span>
+                        <span class="badge bg-light text-dark">3 Terms per Year</span>
+                        <span class="text-light">↓</span>
+                        <span class="badge bg-light text-dark">Strands → Sub-strands</span>
+                        <span class="text-light">↓</span>
+                        <span class="badge bg-light text-dark">Standards → Indicators</span>
+                        <span class="text-light">↓</span>
+                        <span class="badge bg-light text-dark">Core Competencies</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Solution Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="h1 text-primary">How TLR Helper Solves This</h2>
+            <p class="lead">Built specifically for Ghana's curriculum structure by TEDD Ghana & NileEdge</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card text-center p-4">
+                    <div class="icon-feature">
+                        <i class="bi bi-diagram-3"></i>
+                    </div>
+                    <h5>Curriculum-Smart Search</h5>
+                    <p class="text-muted">Navigate Ghana's exact curriculum hierarchy: Class → Subject → Term → Strand → Sub-strand</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card text-center p-4">
+                    <div class="icon-feature">
+                        <i class="bi bi-funnel"></i>
+                    </div>
+                    <h5>Advanced Filtering</h5>
+                    <p class="text-muted">Filter by time needed, budget, Bloom's level, learning styles, and special needs</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card text-center p-4">
+                    <div class="icon-feature">
+                        <i class="bi bi-pinterest"></i>
+                    </div>
+                    <h5>Pinterest Inspiration</h5>
+                    <p class="text-muted">Automatically matched Pinterest boards based on your search criteria for creative ideas</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card feature-card text-center p-4">
+                    <div class="icon-feature">
+                        <i class="bi bi-download"></i>
+                    </div>
+                    <h5>Complete TLRs</h5>
+                    <p class="text-muted">Download detailed TLRs with materials, steps to make, and classroom tips</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Routes Section -->
+<section class="py-5" id="how-it-works">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="h1 text-primary">Choose Your Search Route</h2>
+            <p class="lead">Multiple pathways to find exactly what you need</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="search-route-demo p-4 h-100">
+                    <h5><i class="bi bi-diagram-3 text-primary me-2"></i>By Curriculum Structure</h5>
+                    <p class="mb-3">Perfect for standards-aligned planning. Navigate the official Ghana SBC hierarchy.</p>
+                    <div class="small text-muted">
+                        <strong>Example:</strong> KG1 → Our World Our People → Term 1 → All About Me → Body Parts → K1.1.1.1.1
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="search-route-demo p-4 h-100">
+                    <h5><i class="bi bi-lightbulb text-success me-2"></i>By Core Competency</h5>
+                    <p class="mb-3">Find TLRs that develop specific competencies.</p>
+                    <div class="d-flex flex-wrap gap-1">
+                        <span class="badge badge-demo bg-primary">Critical Thinking</span>
+                        <span class="badge badge-demo bg-success">Creativity</span>
+                        <span class="badge badge-demo bg-info">Communication</span>
+                        <span class="badge badge-demo bg-warning">Digital Literacy</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="search-route-demo p-4 h-100">
+                    <h5><i class="bi bi-tree text-success me-2"></i>By Theme</h5>
+                    <p class="mb-3">Cross-curricular themes that span multiple subjects.</p>
+                    <div class="d-flex flex-wrap gap-1">
+                        <span class="badge badge-demo bg-success-subtle text-success">🌱 All About Me</span>
+                        <span class="badge badge-demo bg-success-subtle text-success">🌱 My Family</span>
+                        <span class="badge badge-demo bg-success-subtle text-success">🌱 My Community</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="search-route-demo p-4 h-100">
+                    <h5><i class="bi bi-puzzle text-warning me-2"></i>By Resource Type</h5>
+                    <p class="mb-3">Search by specific TLR formats and media types.</p>
+                    <div class="d-flex flex-wrap gap-1">
+                        <span class="badge badge-demo bg-secondary-subtle text-secondary">🧩 Posters</span>
+                        <span class="badge badge-demo bg-secondary-subtle text-secondary">🧩 Games</span>
+                        <span class="badge badge-demo bg-secondary-subtle text-secondary">🧩 Manipulatives</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'route_select' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-arrow-right me-2"></i>Try All Search Routes
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Sample TLR Preview -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="h1 text-primary">What You'll Find</h2>
+            <p class="lead">Real TLRs with complete implementation details</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm rounded-4 p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="text-primary">
+                            <strong>Our World Our People:</strong> Body Parts Identification Game
+                        </h5>
+                        <small class="text-muted">KG1</small>
+                    </div>
+
+                    <p class="mt-2">Interactive game using pictures and songs to help learners identify and appreciate their unique body features</p>
+
+                    <details class="mt-3">
+                        <summary class="fw-semibold">🛠️ Steps to Make</summary>
+                        <p class="mt-2">1. Prepare picture cards of different body parts<br>2. Create a simple song about body parts<br>3. Set up a circle for learners to sit<br>4. Prepare a ball for the passing game</p>
+                    </details>
+
+                    <details class="mt-2">
+                        <summary class="fw-semibold">🎓 Tips for Classroom Use</summary>
+                        <p class="mt-2">Use positive language throughout the activity. Encourage all learners to participate. Model the description first before asking learners to do so.</p>
+                    </details>
+
+                    <div class="d-flex flex-wrap gap-1 mt-3">
+                        <span class="badge bg-dark border">⌛ Main activity (20–40 mins)</span>
+                        <span class="badge bg-dark border">💰 ₵1 – ₵10</span>
+                        <span class="badge bg-dark border">🌟 Remember (recall facts, terms)</span>
+                        <span class="badge bg-dark border">📈 0 downloads</span>
+                        <span class="badge bg-dark border">🗂️ Introduction</span>
+                    </div>
+
+                    <p class="mt-3"><strong>📌 Materials:</strong> Big Books, Conversational Posters, Cut-out Shapes</p>
+
+                    <div class="d-flex flex-wrap gap-1 mt-3">
+                        <span class="badge bg-success-subtle text-success border">🌱 All About Me</span>
+                        <span class="badge bg-primary-subtle text-primary border">📚 Oral Language</span>
+                        <span class="badge bg-warning-subtle text-warning border">🧠 Personal Development</span>
+                        <span class="badge bg-secondary-subtle text-secondary border">🧩️ Games</span>
+                        <span class="badge bg-info-subtle text-info border">🎨 Visual</span>
+                    </div>
+
+                    <div class="text-end mt-4">
+                        <button class="btn btn-nile" disabled>
+                            <i class="bi bi-download"></i> Download TLR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <h2 class="display-4 fw-bold text-primary">500+</h2>
+                    <p class="fs-5 mb-0">Ready-to-Use TLRs</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <h2 class="display-4 fw-bold text-success">7</h2>
+                    <p class="fs-5 mb-0">Class Levels</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <h2 class="display-4 fw-bold text-info">50+</h2>
+                    <p class="fs-5 mb-0">Curriculum Strands</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <h2 class="display-4 fw-bold text-warning">200+</h2>
+                    <p class="fs-5 mb-0">Specific Indicators</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="h1 text-primary">What Teachers Say</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="mb-3">
+                        <div class="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center" 
+                             style="width: 60px; height: 60px;">
+                            <i class="bi bi-person text-white fs-4"></i>
+                        </div>
+                    </div>
+                    <p class="fst-italic">"Finally, a search tool that understands Ghana's curriculum codes! I can find TLRs for K1.1.1.1.1 in minutes instead of hours."</p>
+                    <h6 class="text-primary">Akosua Mensah</h6>
+                    <small class="text-muted">KG2 Teacher, Accra</small>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="mb-3">
+                        <div class="rounded-circle bg-success d-inline-flex align-items-center justify-content-center" 
+                             style="width: 60px; height: 60px;">
+                            <i class="bi bi-person text-white fs-4"></i>
+                        </div>
+                    </div>
+                    <p class="fst-italic">"The Pinterest integration gives me so many creative ideas. My lessons are more engaging and my students love the activities."</p>
+                    <h6 class="text-primary">Kwame Asante</h6>
+                    <small class="text-muted">Class 2 Teacher, Kumasi</small>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial-card">
+                    <div class="mb-3">
+                        <div class="rounded-circle bg-info d-inline-flex align-items-center justify-content-center" 
+                             style="width: 60px; height: 60px;">
+                            <i class="bi bi-person text-white fs-4"></i>
+                        </div>
+                    </div>
+                    <p class="fst-italic">"The TEDD Ghana team has created something special. Our teachers are more confident with curriculum alignment."</p>
+                    <h6 class="text-primary">Comfort Osei</h6>
+                    <small class="text-muted">Headteacher, Cape Coast</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="h1 text-primary">Professional Tools for Ghana's Educators</h2>
+            <p class="lead">Choose the plan that fits your needs</p>
+        </div>
+        <div class="row justify-content-center g-4">
+            <div class="col-lg-4">
+                <div class="card pricing-card shadow-sm text-center p-4">
+                    <h5 class="text-primary">Individual Teacher</h5>
+                    <div class="display-4 fw-bold text-primary">₵30</div>
+                    <p class="text-muted">per month</p>
+                    <hr>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Unlimited TLR searches</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Pinterest inspiration</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Download complete TLRs</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Advanced filtering</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Curriculum code search</li>
+                    </ul>
+                    <button class="btn btn-primary btn-lg w-100 mt-3">Get Started</button>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card pricing-card featured shadow-lg text-center p-4 position-relative">
+                    <div class="position-absolute top-0 start-50 translate-middle">
+                        <span class="badge bg-primary px-4 py-2">Most Popular</span>
+                    </div>
+                    <h5 class="text-primary mt-3">School License</h5>
+                    <div class="display-4 fw-bold text-primary">₵300</div>
+                    <p class="text-muted">per year</p>
+                    <hr>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Up to 25 teachers</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>All individual features</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>School dashboard</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Usage analytics</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Priority support</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>TEDD training sessions</li>
+                    </ul>
+                    <button class="btn btn-cta btn-lg w-100 mt-3">Contact TEDD Ghana</button>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card pricing-card shadow-sm text-center p-4">
+                    <h5 class="text-primary">District/GES</h5>
+                    <div class="display-4 fw-bold text-primary">Custom</div>
+                    <p class="text-muted">pricing</p>
+                    <hr>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Unlimited schools</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Unlimited teachers</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>District analytics</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Custom training</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Dedicated support</li>
+                        <li class="mb-2"><i class="solution-icon bi bi-check-circle"></i>Professional development</li>
+                    </ul>
+                    <button class="btn btn-outline-primary btn-lg w-100 mt-3">Contact NileEdge</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm rounded-4 p-5 text-center">
+                    <h3 class="mb-3 text-primary">About TLR Helper</h3>
+                    <p>
+                        <strong>TLR Helper</strong> is a tool designed by <em>TEDD Ghana</em> and <em>NileEdge Innovations</em>
+                        to support teachers in developing <strong>curriculum-aligned Teaching-Learning Resources</strong> (TLRs)
+                        for the Ghana Standards-Based Curriculum (SBC).
+                    </p>
+                    <p>
+                        We believe in empowering teachers to adapt to their classroom needs, learning styles, and special needs,
+                        while still delivering outcomes aligned with national standards.
+                    </p>
+                    <div class="d-flex justify-content-center gap-4 mt-4">
+                        <div class="text-center">
+                            <div class="fw-bold text-primary">TEDD Ghana</div>
+                            <small class="text-muted">Educational Design</small>
+                        </div>
+                        <div class="text-center">
+                            <div class="fw-bold text-primary">NileEdge</div>
+                            <small class="text-muted">Technology Platform</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container">
+        <h2 class="h1 mb-4">Ready to Transform Your Teaching?</h2>
+        <p class="lead mb-4">Join Ghana's teachers already using TLR Helper for curriculum-aligned resources</p>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+            <a href="{% url 'route_select' %}" class="btn btn-cta btn-lg">
+                <i class="bi bi-rocket me-2"></i>Start Searching Now
+            </a>
+            <a href="{% url 'about' %}" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-info-circle me-2"></i>Learn More
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

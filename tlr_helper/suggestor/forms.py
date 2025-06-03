@@ -197,3 +197,48 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
+
+# In suggestor/forms.py, add this form:
+
+class ContactForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        label="Full Name",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your full name'})
+    )
+    email = forms.EmailField(
+        label="Email Address",
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'your.email@example.com'})
+    )
+    phone = forms.CharField(
+        max_length=20,
+        required=False,
+        label="Phone Number (Optional)",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+233 XX XXX XXXX'})
+    )
+    organization = forms.CharField(
+        max_length=150,
+        required=False,
+        label="School/Organization (Optional)",
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your school or organization'})
+    )
+    subject = forms.ChoiceField(
+        choices=[
+            ('general', 'General Inquiry'),
+            ('support', 'Technical Support'),
+            ('pricing', 'Pricing & Plans'),
+            ('training', 'TEDD Training'),
+            ('feedback', 'Feedback'),
+            ('partnership', 'Partnership Opportunity'),
+        ],
+        label="Subject",
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    message = forms.CharField(
+        label="Message",
+        widget=forms.Textarea(attrs={
+            'class': 'form-control', 
+            'rows': 6, 
+            'placeholder': 'Please share your message, feedback, or inquiry...'
+        })
+    )

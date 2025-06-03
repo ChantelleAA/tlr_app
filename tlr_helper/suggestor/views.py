@@ -41,8 +41,16 @@ PINTEREST_BOARDS = [
         "title": "Classroom Setup and Resource Displays",
         "url": "https://www.pinterest.com/Ellet_nahc/classroom-setup-and-resource-displays/",
     },
+    {
+        "title": "Nature and Environment Activities",
+        "url": "https://www.pinterest.com/Ellet_nahc/kg2-nature-and-environment/",
+    }
 ]
 
+
+def welcome_page(request):
+    """Landing page showing TLR Helper features and pricing"""
+    return render(request, 'welcome.html')
 
 def normalize(text):
     if not isinstance(text, str):
@@ -275,3 +283,34 @@ def signup_view(request):
     else:
         form = SignUpForm()
     return render(request, "signup.html", {"form": form})
+
+
+from django.contrib import messages
+from .forms import ContactForm 
+
+def contact_page(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Here you can handle the form data
+            # For now, we'll just show a success message
+            # You could email this data, save to database, etc.
+            
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            
+            # TODO: Send email or save to database
+            # Example: send_contact_email(name, email, subject, message)
+            
+            messages.success(
+                request, 
+                f"Thank you {name}! Your message has been sent. "
+                "The TEDD Ghana team will get back to you soon."
+            )
+            return redirect('contact')
+    else:
+        form = ContactForm()
+    
+    return render(request, 'contact.html', {'form': form})
