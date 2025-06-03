@@ -1,11 +1,13 @@
+# management/commands/load_fixtures_safe.py
+
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.db import connection, transaction
-from django.core import serializers
+from django.apps import apps
 import json
 
 class Command(BaseCommand):
-    help = 'Safely loads initial_data.json using update_or_create to avoid duplicates'
+    help = 'Safely loads initial_data.json with proper foreign key handling'
 
     def handle(self, *args, **options):
         cursor = connection.cursor()
@@ -18,14 +20,15 @@ class Command(BaseCommand):
 
             self.stdout.write('Loading initial_data.json...')
 
+            # Load fixture data
             with open('suggestor/fixtures/initial_data.json', 'r') as f:
                 fixture_data = json.load(f)
 
-            loaded = 0
-            updated = 0
-            skipped = 0
+            created_count = 0
+            updated_count = 0
+            skipped_count = 0
 
-            # Process in order: first create basic lookup tables, then complex ones
+            # Process models in dependency order to handle foreign keys properly
             model_order = [
                 'suggestor.classlevel',
                 'suggestor.theme',
@@ -36,17 +39,17 @@ class Command(BaseCommand):
                 'suggestor.material',
                 'suggestor.specialneed',
                 'suggestor.learningstyle',
-                'suggestor.subject',
-                'suggestor.strand',
-                'suggestor.substrand',
-                'suggestor.contentstandard',
-                'suggestor.indicator',
-                'suggestor.tlr',
-                'suggestor.tlrimage',
-                'suggestor.tlrvideo'
+                'suggestor.subject',           # Depends on ClassLevel
+                'suggestor.strand',            # Depends on ClassLevel, Subject
+                'suggestor.substrand',         # Depends on Strand
+                'suggestor.contentstandard',   # Depends on SubStrand
+                'suggestor.indicator',         # Depends on ContentStandard
+                'suggestor.tlr',              # Depends on all above
+                'suggestor.tlrimage',         # Depends on TLR
+                'suggestor.tlrvideo',         # Depends on TLR
             ]
 
-            # Group objects by model
+            # Group fixture data by model
             objects_by_model = {}
             for obj_data in fixture_data:
                 model_name = obj_data['model']
@@ -54,7 +57,7 @@ class Command(BaseCommand):
                     objects_by_model[model_name] = []
                 objects_by_model[model_name].append(obj_data)
 
-            # Process in the specified order
+            # Process each model in order
             for model_name in model_order:
                 if model_name not in objects_by_model:
                     continue
@@ -64,97 +67,67 @@ class Command(BaseCommand):
                 for obj_data in objects_by_model[model_name]:
                     try:
                         app_label, model_class_name = model_name.split('.')
+                        model_class = apps.get_model(app_label, model_class_name)
                         
-                        # Import the model dynamically
-                        from django.apps import apps
-                        model = apps.get_model(app_label, model_class_name)
-                        
+                        pk = obj_data['pk']
                         fields = obj_data['fields'].copy()
-                        pk = obj_data.get('pk')
                         
-                        # Handle models with unique 'code' field specially
-                        if hasattr(model, 'code') and 'code' in fields:
-                            code_value = fields.pop('code')  # Remove code from fields for defaults
-                            obj, created = model.objects.get_or_create(
+                        # Resolve foreign key relationships
+                        resolved_fields = self.resolve_foreign_keys(model_class, fields)
+                        
+                        # Handle models with unique identifiers
+                        if self.has_unique_field(model_class, 'code') and 'code' in resolved_fields:
+                            code_value = resolved_fields['code']
+                            obj, created = model_class.objects.update_or_create(
                                 code=code_value,
-                                defaults={'id': pk, 'code': code_value, **fields}
+                                defaults=resolved_fields
                             )
-                            if not created:
-                                # Update existing object
-                                for key, value in fields.items():
-                                    setattr(obj, key, value)
-                                obj.save()
-                                updated += 1
-                                self.stdout.write(f'  Updated {model_class_name} code={code_value}')
-                            else:
-                                loaded += 1
-                                self.stdout.write(f'  Created {model_class_name} code={code_value}')
-                        
-                        # Handle models with unique names/titles
-                        elif hasattr(model, 'name') and 'name' in fields:
-                            name_value = fields.pop('name')
-                            obj, created = model.objects.get_or_create(
+                            action = "Created" if created else "Updated"
+                            self.stdout.write(f'  {action} {model_class_name.lower()} code={code_value}')
+                            
+                        elif self.has_unique_field(model_class, 'name') and 'name' in resolved_fields:
+                            name_value = resolved_fields['name']
+                            obj, created = model_class.objects.update_or_create(
                                 name=name_value,
-                                defaults={'id': pk, 'name': name_value, **fields}
+                                defaults=resolved_fields
                             )
-                            if not created:
-                                for key, value in fields.items():
-                                    setattr(obj, key, value)
-                                obj.save()
-                                updated += 1
-                                self.stdout.write(f'  Updated {model_class_name} name={name_value}')
-                            else:
-                                loaded += 1
-                                self.stdout.write(f'  Created {model_class_name} name={name_value}')
-                        
-                        elif hasattr(model, 'title') and 'title' in fields:
-                            title_value = fields.pop('title')
-                            obj, created = model.objects.get_or_create(
+                            action = "Created" if created else "Updated"
+                            self.stdout.write(f'  {action} {model_class_name.lower()} name={name_value}')
+                            
+                        elif self.has_unique_field(model_class, 'title') and 'title' in resolved_fields:
+                            title_value = resolved_fields['title']
+                            obj, created = model_class.objects.update_or_create(
                                 title=title_value,
-                                defaults={'id': pk, 'title': title_value, **fields}
+                                defaults=resolved_fields
                             )
-                            if not created:
-                                for key, value in fields.items():
-                                    setattr(obj, key, value)
-                                obj.save()
-                                updated += 1
-                                self.stdout.write(f'  Updated {model_class_name} title={title_value}')
-                            else:
-                                loaded += 1
-                                self.stdout.write(f'  Created {model_class_name} title={title_value}')
-                        
-                        # For other models, use primary key
+                            action = "Created" if created else "Updated"
+                            self.stdout.write(f'  {action} {model_class_name.lower()} title={title_value}')
+                            
                         else:
-                            obj, created = model.objects.get_or_create(
+                            # For models without unique fields, use primary key
+                            obj, created = model_class.objects.update_or_create(
                                 pk=pk,
-                                defaults={'id': pk, **fields}
+                                defaults=resolved_fields
                             )
-                            if not created:
-                                for key, value in fields.items():
-                                    setattr(obj, key, value)
-                                obj.save()
-                                updated += 1
-                                self.stdout.write(f'  Updated {model_class_name} pk={pk}')
-                            else:
-                                loaded += 1
-                                self.stdout.write(f'  Created {model_class_name} pk={pk}')
-                                
-                    except Exception as obj_error:
-                        self.stderr.write(
-                            self.style.ERROR(f'  Error processing {model_class_name} pk={pk}: {str(obj_error)}')
-                        )
-                        skipped += 1
+                            action = "Created" if created else "Updated"
+                            self.stdout.write(f'  {action} {model_class_name.lower()} pk={pk}')
+                            
+                        # Handle many-to-many fields
+                        self.handle_many_to_many(obj, obj_data['fields'], model_class)
+                        
+                        if created:
+                            created_count += 1
+                        else:
+                            updated_count += 1
+                            
+                    except Exception as e:
+                        self.stdout.write(f'  Error processing {model_class_name.lower()} pk={pk}: {str(e)}')
+                        skipped_count += 1
                         continue
-
-            # Handle any remaining models not in the order list
-            for model_name, objects in objects_by_model.items():
-                if model_name not in model_order:
-                    self.stdout.write(f'Processing remaining model {model_name}...')
-                    # Process these with the same logic...
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f'Fixture loading complete! Created: {loaded}, Updated: {updated}, Skipped: {skipped}'
+                    f'Fixture loading complete! Created: {created_count}, Updated: {updated_count}, Skipped: {skipped_count}'
                 )
             )
 
@@ -166,3 +139,76 @@ class Command(BaseCommand):
         finally:
             if is_sqlite:
                 cursor.execute('PRAGMA foreign_keys = ON;')
+
+    def resolve_foreign_keys(self, model_class, fields):
+        """Convert foreign key IDs to actual model instances"""
+        resolved_fields = {}
+        
+        for field_name, value in fields.items():
+            try:
+                field = model_class._meta.get_field(field_name)
+                
+                # Skip many-to-many fields (handle separately)
+                if field.many_to_many:
+                    continue
+                    
+                # Handle foreign key fields
+                if hasattr(field, 'related_model') and field.related_model:
+                    if value is not None:
+                        try:
+                            # Convert ID to actual model instance
+                            related_obj = field.related_model.objects.get(pk=value)
+                            resolved_fields[field_name] = related_obj
+                        except field.related_model.DoesNotExist:
+                            self.stdout.write(f'    Warning: Related {field.related_model.__name__} with pk={value} not found for field {field_name}')
+                            # Skip this field if related object doesn't exist
+                            continue
+                        except field.related_model.MultipleObjectsReturned:
+                            # Handle multiple objects returned
+                            related_obj = field.related_model.objects.filter(pk=value).first()
+                            resolved_fields[field_name] = related_obj
+                    else:
+                        resolved_fields[field_name] = None
+                else:
+                    # Regular field, keep as is
+                    resolved_fields[field_name] = value
+                    
+            except Exception:
+                # If field doesn't exist or other error, keep original value
+                resolved_fields[field_name] = value
+                
+        return resolved_fields
+
+    def handle_many_to_many(self, obj, original_fields, model_class):
+        """Handle many-to-many field assignments after object creation"""
+        for field_name, value in original_fields.items():
+            try:
+                field = model_class._meta.get_field(field_name)
+                
+                if field.many_to_many and value:
+                    # Get the related manager
+                    manager = getattr(obj, field_name)
+                    
+                    # Clear existing relationships
+                    manager.clear()
+                    
+                    # Add new relationships
+                    for pk_value in value:
+                        try:
+                            related_obj = field.related_model.objects.get(pk=pk_value)
+                            manager.add(related_obj)
+                        except field.related_model.DoesNotExist:
+                            self.stdout.write(f'    Warning: Related {field.related_model.__name__} with pk={pk_value} not found for M2M field {field_name}')
+                            continue
+                            
+            except Exception:
+                # Skip if field doesn't exist or other error
+                continue
+
+    def has_unique_field(self, model_class, field_name):
+        """Check if model has a unique field with given name"""
+        try:
+            field = model_class._meta.get_field(field_name)
+            return field.unique
+        except:
+            return False
