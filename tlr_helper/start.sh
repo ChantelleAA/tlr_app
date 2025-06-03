@@ -15,7 +15,8 @@ sleep 3
 echo "Checking database schema..."
 python manage.py shell -c "
 from django.db import connection
-from django.core.exceptions import OperationalError
+from django.db import OperationalError
+
 try:
     cursor = connection.cursor()
     # Use PostgreSQL-compatible syntax for Render

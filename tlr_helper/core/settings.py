@@ -142,6 +142,8 @@ if os.getenv("RENDER"):
         'HOST': 'dpg-d0v9ath5pdvs73889320-a',
         'PORT': '5432',
     }
+# if os.getenv("RENDER"):
+#     DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
 else:
     # Local development
     DATABASES['default'] = {
