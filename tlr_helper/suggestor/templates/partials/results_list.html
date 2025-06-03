@@ -1,9 +1,59 @@
 {% load static %}
+
+<!-- Subtle Tag Legend - Only shows on first load, then disappears -->
+<div id="tag-guide" class="tag-guide-banner mb-3">
+  <div class="alert alert-light border-0 shadow-sm rounded-4 position-relative">
+    <button type="button" class="btn-close btn-close-sm position-absolute top-0 end-0 m-2" 
+            onclick="dismissTagGuide()" aria-label="Close"></button>
+    
+    <div class="d-flex align-items-center mb-2">
+      <i class="fas fa-palette text-muted me-2"></i>
+      <small class="fw-semibold text-muted">Tag Color Guide</small>
+    </div>
+    
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <span class="badge bg-success-subtle text-success border me-1">🌱 Themes</span>
+      <span class="badge bg-primary-subtle text-primary border me-1">📚 Learning Areas</span>
+      <span class="badge bg-warning-subtle text-warning border me-1">🧠 Skills</span>
+      <span class="badge bg-secondary-subtle text-secondary border me-1">🧩 Types</span>
+      <span class="badge bg-danger-subtle text-danger border me-1">♿ Access</span>
+      <span class="badge bg-info-subtle text-info border me-1">🎨 Styles</span>
+      <small class="text-muted ms-2 opacity-75">← Color-coded for easy identification</small>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Help Button -->
+<div class="tag-help-float" onclick="showTagTooltip()" title="Tag Color Guide">
+  <i class="fas fa-question-circle"></i>
+</div>
+
+<!-- Tooltip for tag help -->
+<div id="tag-tooltip" class="tag-tooltip">
+  <div class="tooltip-content">
+    <div class="fw-semibold mb-1">Tag Colors:</div>
+    <div class="tooltip-grid">
+      <span class="badge bg-success-subtle text-success">🌱</span> <small>Themes</small>
+      <span class="badge bg-primary-subtle text-primary">📚</span> <small>Learning</small>
+      <span class="badge bg-warning-subtle text-warning">🧠</span> <small>Skills</small>
+      <span class="badge bg-secondary-subtle text-secondary">🧩</span> <small>Types</small>
+      <span class="badge bg-danger-subtle text-danger">♿</span> <small>Access</small>
+      <span class="badge bg-info-subtle text-info">🎨</span> <small>Styles</small>
+    </div>
+  </div>
+</div>
+
 {% for tlr in suggestions %}
   <div class="card mb-4 shadow-sm rounded-4 p-4">
     <div class="d-flex justify-content-between align-items-center">
-      <h5 class="text-primary">{{ tlr.title }}</h5>
-      <small class="text-muted">{{ tlr.subject }} | {{ tlr.class_level }}</small>
+      <h5 class="text-primary">
+        {% if tlr.subject %}
+          <strong>{{ tlr.subject }}:</strong> {{ tlr.title }}
+        {% else %}
+          {{ tlr.title }}
+        {% endif %}
+      </h5>
+      <small class="text-muted">{{ tlr.class_level }}</small>
     </div>
 
     <p class="mt-2">{{ tlr.brief_description|truncatewords:30 }}</p>
@@ -56,22 +106,22 @@
 
     <div class="d-flex flex-wrap gap-1 mt-3">
       {% for tag in tlr.themes.all %}
-        <span class="badge bg-success-subtle text-success border">🌱 {{ tag }}</span>
+        <span class="badge bg-success-subtle text-success border tag-hover" data-category="themes">🌱 {{ tag }}</span>
       {% endfor %}
       {% for tag in tlr.key_learning_areas.all %}
-        <span class="badge bg-primary-subtle text-primary border">📚 {{ tag }}</span>
+        <span class="badge bg-primary-subtle text-primary border tag-hover" data-category="learning">📚 {{ tag }}</span>
       {% endfor %}
       {% for tag in tlr.competencies.all %}
-        <span class="badge bg-warning-subtle text-warning border">🧠 {{ tag }}</span>
+        <span class="badge bg-warning-subtle text-warning border tag-hover" data-category="skills">🧠 {{ tag }}</span>
       {% endfor %}
       {% for tag in tlr.resource_types.all %}
-        <span class="badge bg-secondary-subtle text-secondary border">🧩️ {{ tag }}</span>
+        <span class="badge bg-secondary-subtle text-secondary border tag-hover" data-category="types">🧩️ {{ tag }}</span>
       {% endfor %}
       {% for tag in tlr.special_needs.all %}
-        <span class="badge bg-danger-subtle text-danger border">♿ {{ tag }}</span>
+        <span class="badge bg-danger-subtle text-danger border tag-hover" data-category="access">♿ {{ tag }}</span>
       {% endfor %}
       {% for tag in tlr.learning_styles.all %}
-        <span class="badge bg-info-subtle text-info border">🎨 {{ tag }}</span>
+        <span class="badge bg-info-subtle text-info border tag-hover" data-category="styles">🎨 {{ tag }}</span>
       {% endfor %}
     </div>
 
@@ -106,7 +156,6 @@
   </div>
 {% endif %}
 
-
     <div class="text-end mt-4">
       <a href="{% url 'download_tlr' tlr.pk %}" class="btn btn-nile">
         <i class="bi bi-download"></i> Download TLR
@@ -116,3 +165,218 @@
 {% empty %}
   <div class="alert alert-info text-center">No TLRs matched your search. Try adjusting your filters.</div>
 {% endfor %}
+
+<!-- Custom Styles -->
+<style>
+/* Subtle Tag Guide Banner */
+.tag-guide-banner {
+  animation: slideDown 0.5s ease-out;
+}
+
+.tag-guide-banner .alert {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-left: 4px solid #6f42c1;
+}
+
+/* Floating Help Button */
+.tag-help-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: #6f42c1;
+  color: white;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.tag-help-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(111, 66, 193, 0.4);
+}
+
+/* Tag Tooltip */
+.tag-tooltip {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  padding: 12px;
+  display: none;
+  z-index: 1001;
+  max-width: 200px;
+  border: 1px solid #e9ecef;
+}
+
+.tooltip-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  align-items: center;
+}
+
+/* Tag Hover Effects */
+.tag-hover {
+  transition: all 0.2s ease;
+  cursor: help;
+}
+
+.tag-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Badge fixes for better visibility */
+.badge.bg-secondary-subtle {
+  color: #6c757d !important;
+}
+
+.badge.bg-warning-subtle {
+  color: #664d03 !important;
+}
+
+/* Bold subject styling */
+.text-primary strong {
+  font-weight: 700;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tag-guide-banner .d-flex {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .tag-help-float {
+    bottom: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .tag-tooltip {
+    bottom: 60px;
+    right: 15px;
+    max-width: 180px;
+  }
+}
+</style>
+
+<!-- JavaScript for Interactions -->
+<script>
+// Dismiss the tag guide banner
+function dismissTagGuide() {
+  const banner = document.getElementById('tag-guide');
+  banner.style.animation = 'fadeOut 0.3s ease-out';
+  setTimeout(() => {
+    banner.style.display = 'none';
+    // Show floating help button
+    document.querySelector('.tag-help-float').style.display = 'flex';
+  }, 300);
+  
+  // Remember user dismissed it
+  localStorage.setItem('tagGuideDismissed', 'true');
+}
+
+// Show tag tooltip or full guide
+function showTagTooltip() {
+  const tooltip = document.getElementById('tag-tooltip');
+  tooltip.style.display = 'block';
+  
+  // Hide after 3 seconds
+  setTimeout(() => {
+    tooltip.style.display = 'none';
+  }, 3000);
+}
+
+// Show full tag guide
+function showTagGuide() {
+  const banner = document.getElementById('tag-guide');
+  const helpButton = document.querySelector('.tag-help-float');
+  
+  // Show the banner
+  banner.style.display = 'block';
+  banner.style.animation = 'slideDown 0.5s ease-out';
+  
+  // Hide floating button
+  helpButton.style.display = 'none';
+  
+  // Remove localStorage flag
+  localStorage.removeItem('tagGuideDismissed');
+}
+
+// Auto-dismiss banner after 8 seconds
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if user has previously dismissed
+  if (localStorage.getItem('tagGuideDismissed') === 'true') {
+    document.getElementById('tag-guide').style.display = 'none';
+    document.querySelector('.tag-help-float').style.display = 'flex';
+  } else {
+    // Auto-dismiss after 8 seconds
+    setTimeout(() => {
+      const banner = document.getElementById('tag-guide');
+      if (banner.style.display !== 'none') {
+        dismissTagGuide();
+      }
+    }, 8000);
+  }
+  
+  // Hide tooltip when clicking elsewhere
+  document.addEventListener('click', function(e) {
+    const tooltip = document.getElementById('tag-tooltip');
+    const helpButton = document.querySelector('.tag-help-float');
+    
+    if (!helpButton.contains(e.target) && !tooltip.contains(e.target)) {
+      tooltip.style.display = 'none';
+    }
+  });
+  
+  // Add subtle hover tooltips for individual tags
+  const tags = document.querySelectorAll('.tag-hover');
+  tags.forEach(tag => {
+    const category = tag.getAttribute('data-category');
+    const categoryNames = {
+      'themes': 'Educational Theme',
+      'learning': 'Learning Area',
+      'skills': 'Competency/Skill',
+      'types': 'Resource Type',
+      'access': 'Accessibility Support',
+      'styles': 'Learning Style'
+    };
+    
+    tag.setAttribute('title', categoryNames[category] || 'Tag');
+  });
+});
+</script>

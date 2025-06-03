@@ -108,7 +108,7 @@ def load_subjects(request):
     else:
         form.fields["subject"].queryset = Subject.objects.none()
 
-    return render(request, "partials/subject_options.html", {"form": form})
+    return render(request, "partials/form_field_wrapper.html", {"field": form["subject"]})
 
 
 
