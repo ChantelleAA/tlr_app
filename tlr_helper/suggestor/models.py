@@ -249,7 +249,7 @@ class Tlr(models.Model):
     def __str__(self):
         return self.title
 
-@receiver(post_migrate)
+# @receiver(post_migrate)
 def populate_initial_data(sender, **kwargs):
     if sender.label != "suggestor":
         return
