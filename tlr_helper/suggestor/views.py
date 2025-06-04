@@ -10,6 +10,9 @@ from django.db.models import Model
 import unicodedata
 import re
 from django.contrib.auth import login
+from django.core.mail import send_mail
+from django.contrib import messages
+from .forms import ContactForm 
 
 
 PINTEREST_BOARDS = [
@@ -285,25 +288,32 @@ def signup_view(request):
     return render(request, "signup.html", {"form": form})
 
 
-from django.contrib import messages
-from .forms import ContactForm 
+
 
 def contact_page(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Here you can handle the form data
-            # For now, we'll just show a success message
-            # You could email this data, save to database, etc.
-            
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            
-            # TODO: Send email or save to database
-            # Example: send_contact_email(name, email, subject, message)
-            
+
+            # Send email
+            send_mail(
+                subject=f"[{subject.upper()}] Contact Form from {name}",
+                message=(
+                    f"From: {name}\n"
+                    f"Email: {email}\n"
+                    f"Phone: {form.cleaned_data.get('phone', '')}\n"
+                    f"Organization: {form.cleaned_data.get('organization', '')}\n\n"
+                    f"Message:\n{message}"
+                ),
+                from_email='your_email@gmail.com',  # Or use DEFAULT_FROM_EMAIL
+                recipient_list=['teddghana@gmail.com', 'support@nileedge.com'],  # Adjust as needed
+                fail_silently=False,
+            )
+
             messages.success(
                 request, 
                 f"Thank you {name}! Your message has been sent. "

@@ -342,3 +342,4 @@ def populate_initial_data(sender, **kwargs):
     ]
     for name, desc in styles:
         LearningStyle.objects.get_or_create(name=name, defaults={"description": desc})
+
