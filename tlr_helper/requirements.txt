@@ -1,0 +1,16 @@
+asgiref==3.8.1
+Django==5.2.1
+django-appconf==1.1.0
+django-select2==8.4.1
+django-smart-selects==1.7.2
+numpy==2.2.6
+pandas==2.2.3
+python-dateutil==2.9.0.post0
+pytz==2025.2
+six==1.17.0
+sqlparse==0.5.3
+tzdata==2025.2
+gunicorn
+dj-database-url
+whitenoise
+psycopg2

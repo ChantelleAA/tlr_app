@@ -1,1 +1,9 @@
-{{ form.strand.label_tag }} {{ form.strand }}
+<label for="id_strand">{{ form.strand.label }}</label>
+<select name="strand" id="id_strand" class="form-select"
+        hx-get="{% url 'ajax_load_substrands' %}"
+        hx-target="#substrand-field"
+        hx-trigger="change from:closest form">
+  {% for strand in form.fields.strand.queryset %}
+    <option value="{{ strand.pk }}">{{ strand.title }}</option>
+  {% endfor %}
+</select>

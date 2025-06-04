@@ -1,32 +1,25 @@
 {% extends "base.html" %}
-{% load static %}
-
 {% block content %}
 <div class="container my-5">
   <div class="card shadow-sm rounded-4 mx-auto p-4" style="max-width: 600px;">
     <h3 class="mb-3 text-center text-nile">Choose a Search Path</h3>
 
-    {# ── fire GET as soon as any radio changes ── #}
-    <form hx-get="/filters/"
-          hx-target="#filter-panel"
-          hx-swap="innerHTML"
-          hx-trigger="change">
-
-      <div class="mb-3">
-        {{ route_form.route.label_tag }}
-        {% for radio in route_form.route %}
-          <div class="form-check">
-            {{ radio.tag }}             <!-- already includes value="curriculum" etc. -->
-            <label class="form-check-label">{{ radio.choice_label }}</label>
-          </div>
+    <form method="post">{% csrf_token %}
+      <div class="btn-group w-100 flex-wrap" role="group">
+        {% for value,label in form.fields.route.choices %}
+          <input  type="radio" class="btn-check" name="route"
+                  id="route{{forloop.counter}}" value="{{value}}"
+                  {% if forloop.first %}checked{% endif %}>
+          <label class="btn btn-outline-primary m-1"
+                 for="route{{forloop.counter}}">
+              {{label}}
+          </label>
         {% endfor %}
       </div>
 
+      <button class="btn btn-nile w-100 mt-4">Next</button>
     </form>
   </div>
-
-  <!-- HTMX drops the filter form in here -->
-<div id="filter-panel" class="mt-4">
-</div>
 </div>
 {% endblock %}
+

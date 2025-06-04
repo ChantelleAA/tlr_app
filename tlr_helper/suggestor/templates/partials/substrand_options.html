@@ -1,1 +1,7 @@
-{{ form.substrand.label_tag }} {{ form.substrand }}
+<label for="id_substrand">Sub-strand</label>
+<select name="substrand" id="id_substrand" class="form-select">
+  <option value="">────────</option>
+  {% for ss in substrands %}
+      <option value="{{ ss.pk }}">{{ ss.title }}</option>
+  {% endfor %}
+</select>

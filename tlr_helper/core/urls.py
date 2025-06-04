@@ -18,14 +18,41 @@ from django.contrib import admin
 from django.urls import path, include
 from suggestor import views as v
 
+# urlpatterns = [
+#     path("admin/", admin.site.urls),
+
+#     path("download/<int:pk>/", v.download_view, name="download"),
+
+#     path("ajax/strands/", v.load_strands, name="ajax_load_strands"),
+
+#     path("ajax/substrands/", v.load_substrands, name="ajax_load_substrands"),
+
+#     path("", v.pick_route, name="pick_route"),
+
+#     path("filters/", v.show_filters, name="show_filters"),
+
+#     path("suggest/", v.suggest, name="suggest"),
+
+#     path('chaining/', include('smart_selects.urls')),
+
+#     path("load-subjects/", v.load_subjects, name="load_subjects"),
+# ]
+
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("download/<int:pk>/", v.download_view, name="download"),
-    path("ajax/strands/", v.load_strands, name="ajax_load_strands"),
-    path("ajax/substrands/", v.load_substrands, name="ajax_load_substrands"),
-    path("", v.pick_route, name="pick_route"),
-    path("filters/", v.show_filters, name="show_filters"),
-    path("suggest/", v.suggest, name="suggest"),
-    path('chaining/', include('smart_selects.urls')),
-    path("load-subjects/", v.load_subjects, name="load_subjects"),
+    path("admin/",      admin.site.urls),
+    path("chained-filter/", v.chained_filter, name="chained_filter"),
+    # path("", include("suggestor.urls")), 
+
+    # 3-step flow
+    path("",            v.route_select, name="route_select"),       # step-1
+    path("filters/",    v.filter_page,  name="filter_page"),        # step-2
+    path("results/",    v.results_page, name="results_page"),       # step-3
+
+    # downloads
+    path("download/<int:pk>/", v.download_view, name="download_tlr"),
+
+    # AJAX endpoints
+    path("ajax/subjects/",     v.load_subjects,     name="ajax_load_subjects"),
+    path("ajax/strands/",      v.load_strands,      name="ajax_load_strands"),
+    path("ajax/substrands/",   v.load_substrands,   name="ajax_load_substrands"),
 ]

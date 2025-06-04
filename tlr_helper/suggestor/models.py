@@ -131,13 +131,21 @@ class ClassLevel(models.Model):
     def __str__(self):
         return self.name
 
-class Theme(models.Model):
-    title = models.CharField(max_length=120, unique=True)
+class Subject(models.Model):
+    """Core Learning Area / School subject (Maths, English, etc.)."""
+    class_level = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
+    title = models.CharField(max_length=120)
+
+    class Meta:
+        unique_together = ("class_level", "title")
+
     def __str__(self):
-        return self.title
+        return f"{self.title} ({self.class_level})"
 
 class Strand(models.Model):
     class_level = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True) 
+    term = models.PositiveSmallIntegerField(choices=[(1, "Term 1"), (2, "Term 2"), (3, "Term 3")])
     title = models.CharField(max_length=120)
 
     def __str__(self):
@@ -189,16 +197,7 @@ class GoalTag(models.Model):
     def __str__(self):
         return self.title
 
-class Subject(models.Model):
-    """Core Learning Area / School subject (Maths, English, etc.)."""
-    class_level = models.ForeignKey(ClassLevel, on_delete=models.CASCADE)
-    title = models.CharField(max_length=120)
 
-    class Meta:
-        unique_together = ("class_level", "title")
-
-    def __str__(self):
-        return f"{self.title} ({self.class_level})"
 
 
 class ContentStandard(models.Model):
