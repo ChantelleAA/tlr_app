@@ -274,17 +274,7 @@ def ajax_load_strands(request):
     subject_id = request.GET.get("subject") 
     term = request.GET.get("term")
 
-    print(f"STRANDS DEBUG:")
-    print(f"  class_level_id: {class_level_id}")
-    print(f"  subject_id: {subject_id}")
-    print(f"  term: {term}")
-
-    # Pass values back into the form so it knows what was selected
-    form = FilterForm(data={
-        "class_level": class_level_id,
-        "subject": subject_id,
-        "term": term,
-    })
+    # ... your existing debug code ...
 
     if class_level_id and subject_id and term and subject_id != '':
         try:
@@ -294,15 +284,14 @@ def ajax_load_strands(request):
                 term=int(term)
             )
             print(f"  Found {strands.count()} strands: {list(strands)}")
-            form.fields["strand"].queryset = strands
         except (ValueError, TypeError) as e:
             print(f"  Error filtering strands: {e}")
-            form.fields["strand"].queryset = Strand.objects.none()
+            strands = Strand.objects.none()
     else:
         print(f"  Missing required parameters or empty subject")
-        form.fields["strand"].queryset = Strand.objects.none()
+        strands = Strand.objects.none()
 
-    return render(request, "partials/form_field_wrapper.html", {"field": form["strand"]})
+    return render(request, "partials/strand_select.html", {"strands": strands})
 
 def ajax_load_substrands(request):
     strand_id = request.GET.get("strand")
