@@ -54,20 +54,31 @@
           </select>
         </div>
 
-        <!-- Subject (AJAX loaded) -->
         <div class="col-md-6" id="subject-field">
-          <label class="form-label fw-semibold">{{ form.subject.label }}</label>
-          {{ form.subject }}
+          <label for="id_subject" class="form-label fw-semibold">{{ form.subject.label }}</label>
+          <select name="subject" id="id_subject"
+                  class="form-select"
+                  hx-get="{% url 'ajax_load_strands' %}"
+                  hx-target="#strand-field"
+                  hx-trigger="change"
+                  hx-include="[name='class_level'], [name='subject'], [name='term']">
+          
+            {% for subj in form.subject.field.queryset %}
+              <option value="{{ subj.pk }}" {% if form.subject.value|stringformat:"s" == subj.pk|stringformat:"s" %}selected{% endif %}>
+                {{ subj.title }}
+              </option>
+            {% endfor %}
+          </select>
         </div>
 
-        <!-- Term -->
         <div class="col-md-6">
           <label for="id_term" class="form-label fw-semibold">{{ form.term.label }}</label>
           <select name="term" id="id_term"
                   class="form-select"
                   hx-get="{% url 'ajax_load_strands' %}"
                   hx-target="#strand-field"
-                  hx-trigger="change from:closest form">
+                  hx-trigger="change"
+                  hx-include="[name='class_level'], [name='subject'], [name='term']">
             {% for value, label in form.term.field.choices %}
               <option value="{{ value }}"
               {% if form.term.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
@@ -77,16 +88,37 @@
           </select>
         </div>
 
-        <!-- Route-specific field inputs -->
         {% if route == "curriculum" %}
           <div class="col-md-6" id="strand-field">
-            <label class="form-label fw-semibold">{{ form.strand.label }}</label>
-            {{ form.strand }}
+            <label for="id_strand" class="form-label fw-semibold">{{ form.strand.label }}</label>
+            <select name="strand" id="id_strand"
+                    class="form-select"
+                    hx-get="{% url 'ajax_load_substrands' %}"
+                    hx-target="#substrand-field"
+                    hx-trigger="change"
+                    hx-swap="innerHTML"
+                    hx-include="[name='strand']">
+              <option value="">-- Select Strand --</option>
+              {% for s in form.strand.field.queryset %}
+                <option value="{{ s.pk }}" {% if form.strand.value|stringformat:"s" == s.pk|stringformat:"s" %}selected{% endif %}>
+                  {{ s.title }}
+                </option>
+              {% endfor %}
+            </select>
           </div>
-          <div class="col-md-6">
-            <label class="form-label fw-semibold">{{ form.substrand.label }}</label>
-            {{ form.substrand }}
+
+          <div class="col-md-6" id="substrand-field">
+            <label for="id_substrand" class="form-label fw-semibold">{{ form.substrand.label }}</label>
+            <select name="substrand" id="id_substrand" class="form-select">
+              <option value="">-- Select Sub-strand --</option>
+              {% for ss in form.substrand.field.queryset %}
+                <option value="{{ ss.pk }}" {% if form.substrand.value|stringformat:"s" == ss.pk|stringformat:"s" %}selected{% endif %}>
+                  {{ ss.title }}
+                </option>
+              {% endfor %}
+            </select>
           </div>
+
         {% elif route == "key_area" %}
           <div class="col-md-6">
             <label class="form-label fw-semibold">{{ form.key_area.label }}</label>
@@ -117,7 +149,6 @@
 
       <hr class="my-5">
 
-      <!-- General Filters -->
       <button class="btn btn-link text-decoration-none fst-italic mb-3 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#extraFilters">
         ⚙️ Advanced Filters
       </button>

@@ -156,6 +156,8 @@ class FilterForm(forms.Form):
             try:
                 cls_id = int(self.data["class_level"])
                 self.fields["subject"].queryset = Subject.objects.filter(class_level_id=cls_id)
+                qs = Subject.objects.filter(class_level_id=cls_id)
+                print(f"Subject: {cls_id, qs}")
             except (TypeError, ValueError):
                 pass
 

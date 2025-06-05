@@ -50,7 +50,6 @@ PINTEREST_BOARDS = [
     }
 ]
 
-
 def welcome_page(request):
     """Landing page showing TLR Helper features and pricing"""
     return render(request, 'welcome.html')
@@ -84,32 +83,6 @@ def download_view(request, pk):
     return response
 
 
-def load_strands(request):
-    class_id = request.GET.get("class_level")
-    subject_id = request.GET.get("subject")
-    term = request.GET.get("term")
-    form = FilterForm()
-
-    if class_id and subject_id and term:
-        form.fields["strand"].queryset = Strand.objects.filter(
-            subject__class_level_id=class_id,
-            subject_id=subject_id,
-            term=term
-        )
-    else:
-        form.fields["strand"].queryset = Strand.objects.none()
-
-    return render(request, "partials/strand_options.html", {"form": form})
-
-
-
-def load_substrands(request):
-    strand_id = request.GET.get("strand")
-    subs = SubStrand.objects.filter(strand_id=strand_id)
-    html = render_to_string("partials/substrand_options.html", {"subs": subs})
-    return HttpResponse(html)
-
-
 def load_subjects(request):
     class_id = request.GET.get("class_level")
     form = FilterForm()
@@ -120,8 +93,6 @@ def load_subjects(request):
         form.fields["subject"].queryset = Subject.objects.none()
 
     return render(request, "partials/form_field_wrapper.html", {"field": form["subject"]})
-
-
 
 def pick_route(request):
     form = RouteSelectForm()
@@ -287,8 +258,70 @@ def signup_view(request):
         form = SignUpForm()
     return render(request, "signup.html", {"form": form})
 
+def ajax_load_subjects(request):
+    class_level_id = request.GET.get("class_level")
+    form = FilterForm()
+    if class_level_id:
+        form.fields["subject"].queryset = Subject.objects.filter(class_level_id=class_level_id)
+    else:
+        form.fields["subject"].queryset = Subject.objects.none()
+    
+    # Use existing template instead of missing one
+    return render(request, "partials/form_field_wrapper.html", {"field": form["subject"]})
 
+def ajax_load_strands(request):
+    class_level_id = request.GET.get("class_level")
+    subject_id = request.GET.get("subject") 
+    term = request.GET.get("term")
 
+    print(f"STRANDS DEBUG:")
+    print(f"  class_level_id: {class_level_id}")
+    print(f"  subject_id: {subject_id}")
+    print(f"  term: {term}")
+
+    # Pass values back into the form so it knows what was selected
+    form = FilterForm(data={
+        "class_level": class_level_id,
+        "subject": subject_id,
+        "term": term,
+    })
+
+    if class_level_id and subject_id and term and subject_id != '':
+        try:
+            strands = Strand.objects.filter(
+                class_level_id=int(class_level_id),
+                subject_id=int(subject_id),
+                term=int(term)
+            )
+            print(f"  Found {strands.count()} strands: {list(strands)}")
+            form.fields["strand"].queryset = strands
+        except (ValueError, TypeError) as e:
+            print(f"  Error filtering strands: {e}")
+            form.fields["strand"].queryset = Strand.objects.none()
+    else:
+        print(f"  Missing required parameters or empty subject")
+        form.fields["strand"].queryset = Strand.objects.none()
+
+    return render(request, "partials/form_field_wrapper.html", {"field": form["strand"]})
+
+def ajax_load_substrands(request):
+    strand_id = request.GET.get("strand")
+    # Debug prints
+    print(f"SUBSTRANDS DEBUG:")
+    print(f"  strand_id: {strand_id}")
+    
+    substrands = SubStrand.objects.none()
+    
+    if strand_id and strand_id.isdigit():
+        try:
+            substrands = SubStrand.objects.filter(strand_id=int(strand_id))
+            print(f"  Found {substrands.count()} substrands: {list(substrands)}")
+        except (ValueError, TypeError) as e:
+            print(f"  Error filtering substrands: {e}")
+    else:
+        print(f"  Invalid or missing strand_id")
+
+    return render(request, "partials/substrand_select.html", {"substrands": substrands})
 
 def contact_page(request):
     if request.method == 'POST':

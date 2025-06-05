@@ -72,9 +72,9 @@ urlpatterns = [
     path("download/<int:pk>/", v.download_view, name="download_tlr"),
 
     # AJAX endpoints
-    path("ajax/subjects/",     v.load_subjects,     name="ajax_load_subjects"),
-    path("ajax/strands/",      v.load_strands,      name="ajax_load_strands"),
-    path("ajax/substrands/",   v.load_substrands,   name="ajax_load_substrands"),
+    path("ajax/subjects/",     v.ajax_load_subjects,     name="ajax_load_subjects"),
+    path("ajax/strands/",      v.ajax_load_strands,      name="ajax_load_strands"),
+    path("ajax/substrands/",   v.ajax_load_substrands,   name="ajax_load_substrands"),
 
     # Pages
     path("about/", v.about_page, name="about"),
