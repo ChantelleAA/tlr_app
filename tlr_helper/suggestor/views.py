@@ -13,7 +13,13 @@ from django.contrib.auth import login
 from django.core.mail import send_mail
 from django.contrib import messages
 from .forms import ContactForm 
-
+import BytesIO
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import inch
+from io import BytesIO
+import re
 
 PINTEREST_BOARDS = [
     {
@@ -63,25 +69,113 @@ def normalize(text):
 @login_required
 def download_view(request, pk):
     tlr = get_object_or_404(Tlr, pk=pk)
-    content = (
-        f"{tlr.title}\n\n"
-        f"Purpose: {tlr.brief_description}\n"
-        f"Materials: {', '.join(m.name for m in tlr.materials.all())}\n"
-        f"Time Required: {tlr.get_time_needed_display() if tlr.time_needed else 'N/A'}\n"
-        f"Budget Range: {tlr.get_budget_band_display() if tlr.budget_band else 'N/A'}\n"
-        f"Bloom Level: {tlr.get_bloom_level_display() if tlr.bloom_level else 'N/A'}\n"
-        f"Special Needs: {', '.join(n.name for n in tlr.special_needs.all())}\n"
-        f"Learning Styles: {', '.join(l.name for l in tlr.learning_styles.all())}\n\n"
-        "Steps to make:\n"
-        f"{tlr.steps_to_make}\n\n"
-        "Classroom tips:\n"
-        f"{tlr.tips_for_use}"
+    
+    # Create a file-like buffer to receive PDF data
+    buffer = BytesIO()
+    
+    # Create the PDF object, using the buffer as its "file"
+    doc = SimpleDocTemplate(buffer, pagesize=A4)
+    
+    # Container for the 'Flowable' objects
+    elements = []
+    
+    # Define styles
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=18,
+        spaceAfter=30,
+        textColor='#2c3e50'
     )
-    response = HttpResponse(content, content_type="text/plain")
+    
+    heading_style = ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading2'],
+        fontSize=14,
+        spaceBefore=12,
+        spaceAfter=6,
+        textColor='#34495e'
+    )
+    
+    normal_style = styles['Normal']
+    normal_style.fontSize = 10
+    normal_style.spaceAfter = 12
+    
+    # Add content to PDF
+    # Title
+    title = Paragraph(tlr.title, title_style)
+    elements.append(title)
+    elements.append(Spacer(1, 12))
+    
+    # Purpose
+    purpose_heading = Paragraph("<b>Purpose</b>", heading_style)
+    elements.append(purpose_heading)
+    purpose_text = Paragraph(tlr.brief_description or "N/A", normal_style)
+    elements.append(purpose_text)
+    
+    # Materials
+    materials = ', '.join(m.name for m in tlr.materials.all()) or "N/A"
+    materials_heading = Paragraph("<b>Materials</b>", heading_style)
+    elements.append(materials_heading)
+    materials_text = Paragraph(materials, normal_style)
+    elements.append(materials_text)
+    
+    # Time Required
+    time_heading = Paragraph("<b>Time Required</b>", heading_style)
+    elements.append(time_heading)
+    time_text = Paragraph(tlr.get_time_needed_display() if tlr.time_needed else 'N/A', normal_style)
+    elements.append(time_text)
+    
+    # Budget Range
+    budget_heading = Paragraph("<b>Budget Range</b>", heading_style)
+    elements.append(budget_heading)
+    budget_text = Paragraph(tlr.get_budget_band_display() if tlr.budget_band else 'N/A', normal_style)
+    elements.append(budget_text)
+    
+    # Bloom Level
+    bloom_heading = Paragraph("<b>Bloom Level</b>", heading_style)
+    elements.append(bloom_heading)
+    bloom_text = Paragraph(tlr.get_bloom_level_display() if tlr.bloom_level else 'N/A', normal_style)
+    elements.append(bloom_text)
+    
+    # Special Needs
+    special_needs = ', '.join(n.name for n in tlr.special_needs.all()) or "N/A"
+    special_heading = Paragraph("<b>Special Needs</b>", heading_style)
+    elements.append(special_heading)
+    special_text = Paragraph(special_needs, normal_style)
+    elements.append(special_text)
+    
+    # Learning Styles
+    learning_styles = ', '.join(l.name for l in tlr.learning_styles.all()) or "N/A"
+    learning_heading = Paragraph("<b>Learning Styles</b>", heading_style)
+    elements.append(learning_heading)
+    learning_text = Paragraph(learning_styles, normal_style)
+    elements.append(learning_text)
+    
+    # Steps to make
+    steps_heading = Paragraph("<b>Steps to Make</b>", heading_style)
+    elements.append(steps_heading)
+    steps_text = Paragraph(tlr.steps_to_make or "N/A", normal_style)
+    elements.append(steps_text)
+    
+    # Classroom tips
+    tips_heading = Paragraph("<b>Classroom Tips</b>", heading_style)
+    elements.append(tips_heading)
+    tips_text = Paragraph(tlr.tips_for_use or "N/A", normal_style)
+    elements.append(tips_text)
+    
+    # Build PDF
+    doc.build(elements)
+    
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type='application/pdf')
     safe_title = re.sub(r'[^\w\s-]', '', tlr.title).strip().replace(' ', '_')
-    response["Content-Disposition"] = f'attachment; filename="{safe_title}.txt"'
+    response['Content-Disposition'] = f'attachment; filename="{safe_title}.pdf"'
+    
     return response
-
 
 def load_subjects(request):
     class_id = request.GET.get("class_level")
