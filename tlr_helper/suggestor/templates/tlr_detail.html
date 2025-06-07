@@ -4,7 +4,7 @@
 {% block title %}{{ tlr.title }} - TLR Details{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
+<div class="container py-4">
   <!-- Breadcrumb Navigation -->
   <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
@@ -14,40 +14,37 @@
     </ol>
   </nav>
 
-  <!-- Header Section -->
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="card bg-gradient shadow-sm rounded-4 border-0">
-        <div class="card-body p-4">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <div>
-              <h1 class="h2 text-white mb-2">
-                {% if tlr.subject %}
-                  <strong>{{ tlr.subject }}:</strong> {{ tlr.title }}
-                {% else %}
-                  {{ tlr.title }}
-                {% endif %}
-              </h1>
-              <p class="text-white-50 mb-0">{{ tlr.class_level }} • {{ tlr.get_time_needed_display }}</p>
-            </div>
-            <div class="text-end">
-              <span class="badge bg-white text-primary fs-6 px-3 py-2">
-                📈 {{ tlr.download_count|default:"0" }} downloads
-              </span>
+  <!-- Professional Header Section -->
+  <div class="hero-section mb-5">
+    <div class="hero-content">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="hero-text">
+            <h1 class="hero-title">{{ tlr.title }}</h1>
+            <p class="hero-subtitle">
+              {% if tlr.subject %}{{ tlr.subject }} • {% endif %}
+              {{ tlr.class_level }} • {{ tlr.get_time_needed_display }}
+            </p>
+            <div class="hero-badges">
+              <span class="badge badge-custom">📈 {{ tlr.download_count|default:"0" }} downloads</span>
+              <span class="badge badge-custom">💰 {{ tlr.get_budget_band_display }}</span>
+              <span class="badge badge-custom">🧠 {{ tlr.get_bloom_level_display }}</span>
             </div>
           </div>
-          
-          <!-- Quick Action Buttons -->
-          <div class="d-flex gap-2 flex-wrap">
-            <a href="{% url 'download_tlr' tlr.pk %}" class="btn btn-light btn-lg">
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <div class="hero-actions">
+            <a href="{% url 'download_tlr' tlr.pk %}" class="btn btn-primary btn-lg mb-3 d-block">
               <i class="bi bi-download"></i> Download TLR
             </a>
-            <a href="{% url 'print_tlr' tlr.pk %}" class="btn btn-outline-light" target="_blank">
-              <i class="bi bi-printer"></i> Print View
-            </a>
-            <button class="btn btn-outline-light" onclick="window.history.back()">
-              <i class="bi bi-arrow-left"></i> Back to Results
-            </button>
+            <div class="secondary-actions d-flex gap-2 justify-content-lg-end justify-content-center">
+              <a href="{% url 'print_tlr' tlr.pk %}" class="btn btn-light" target="_blank">
+                <i class="bi bi-printer"></i> Print
+              </a>
+              <button class="btn btn-light" onclick="window.history.back()">
+                <i class="bi bi-arrow-left"></i> Back
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -55,57 +52,77 @@
   </div>
 
   <div class="row">
-    <!-- Main Content Column -->
-    <div class="col-xl-8 col-lg-7">
+    <!-- Main Content - Better proportions (70%) -->
+    <div class="col-lg-8 col-xl-9">
       
       <!-- Description Section -->
-      <div class="card mb-4 shadow-sm rounded-4">
-        <div class="card-header bg-transparent border-0 pb-0">
-          <h3 class="h5 mb-0"><i class="fas fa-info-circle text-primary me-2"></i>Description</h3>
+      <div class="content-card mb-4">
+        <div class="content-header">
+          <h3><i class="fas fa-info-circle text-primary me-2"></i>Description</h3>
         </div>
-        <div class="card-body">
+        <div class="content-body">
           <p class="lead">{{ tlr.brief_description }}</p>
           
           {% if tlr.learning_outcome %}
-            <div class="alert alert-light border-start border-4 border-success">
-              <h6 class="fw-semibold mb-2">🌟 Learning Outcome</h6>
+            <div class="highlight-box">
+              <h6 class="highlight-title">🌟 Learning Outcome</h6>
               <p class="mb-0">{{ tlr.learning_outcome }}</p>
             </div>
           {% endif %}
         </div>
       </div>
 
-      <!-- Materials & Requirements -->
-      <div class="card mb-4 shadow-sm rounded-4">
-        <div class="card-header bg-transparent border-0 pb-0">
-          <h3 class="h5 mb-0"><i class="fas fa-tools text-primary me-2"></i>Materials & Requirements</h3>
-        </div>
-        <div class="card-body">
-          <div class="row g-3">
-            <div class="col-md-6">
-              <h6 class="fw-semibold">📌 Materials Needed</h6>
+      <!-- Materials & Quick Info in 2 columns -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="content-card h-100">
+            <div class="content-header">
+              <h3><i class="fas fa-tools text-primary me-2"></i>Materials Needed</h3>
+            </div>
+            <div class="content-body">
               {% if tlr.materials.all %}
-                <ul class="list-unstyled">
+                <ul class="materials-list">
                   {% for material in tlr.materials.all %}
-                    <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>{{ material }}</li>
+                    <li><i class="fas fa-check-circle text-success me-2"></i>{{ material }}</li>
                   {% endfor %}
                 </ul>
               {% else %}
                 <p class="text-muted">No specific materials listed</p>
               {% endif %}
             </div>
-            
-            <div class="col-md-6">
-              <h6 class="fw-semibold">📊 Quick Info</h6>
-              <div class="d-flex flex-column gap-2">
-                <span class="badge bg-primary-subtle text-primary">⌛ {{ tlr.get_time_needed_display }}</span>
-                <span class="badge bg-success-subtle text-success">💰 {{ tlr.get_budget_band_display }}</span>
-                <span class="badge bg-warning-subtle text-warning">🧠 {{ tlr.get_bloom_level_display }}</span>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="content-card h-100">
+            <div class="content-header">
+              <h3><i class="fas fa-chart-bar text-primary me-2"></i>Quick Info</h3>
+            </div>
+            <div class="content-body">
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="info-label">⌛ Duration</span>
+                  <span class="info-value">{{ tlr.get_time_needed_display }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">💰 Budget</span>
+                  <span class="info-value">{{ tlr.get_budget_band_display }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">🧠 Bloom Level</span>
+                  <span class="info-value">{{ tlr.get_bloom_level_display }}</span>
+                </div>
                 {% if tlr.intended_use %}
-                  <span class="badge bg-info-subtle text-info">🗂️ {{ tlr.get_intended_use_display }}</span>
+                <div class="info-item">
+                  <span class="info-label">🗂️ Purpose</span>
+                  <span class="info-value">{{ tlr.get_intended_use_display }}</span>
+                </div>
                 {% endif %}
                 {% if tlr.class_size %}
-                  <span class="badge bg-secondary-subtle text-secondary">👥 Class Size: {{ tlr.get_class_size_display }}</span>
+                <div class="info-item">
+                  <span class="info-label">👥 Class Size</span>
+                  <span class="info-value">{{ tlr.get_class_size_display }}</span>
+                </div>
                 {% endif %}
               </div>
             </div>
@@ -115,11 +132,11 @@
 
       <!-- Steps to Make -->
       {% if tlr.steps_to_make %}
-        <div class="card mb-4 shadow-sm rounded-4">
-          <div class="card-header bg-transparent border-0 pb-0">
-            <h3 class="h5 mb-0"><i class="fas fa-list-ol text-primary me-2"></i>Steps to Make</h3>
+        <div class="content-card mb-4">
+          <div class="content-header">
+            <h3><i class="fas fa-list-ol text-primary me-2"></i>Steps to Make</h3>
           </div>
-          <div class="card-body">
+          <div class="content-body">
             <div class="steps-content">
               {{ tlr.steps_to_make|linebreaks }}
             </div>
@@ -129,11 +146,11 @@
 
       <!-- Tips for Classroom Use -->
       {% if tlr.tips_for_use %}
-        <div class="card mb-4 shadow-sm rounded-4">
-          <div class="card-header bg-transparent border-0 pb-0">
-            <h3 class="h5 mb-0"><i class="fas fa-lightbulb text-primary me-2"></i>Tips for Classroom Use</h3>
+        <div class="content-card mb-4">
+          <div class="content-header">
+            <h3><i class="fas fa-lightbulb text-primary me-2"></i>Tips for Classroom Use</h3>
           </div>
-          <div class="card-body">
+          <div class="content-body">
             <div class="tips-content">
               {{ tlr.tips_for_use|linebreaks }}
             </div>
@@ -142,113 +159,115 @@
       {% endif %}
 
       <!-- Curriculum Alignment -->
-      {% if tlr.standard or tlr.indicator %}
-        <div class="card mb-4 shadow-sm rounded-4">
-          <div class="card-header bg-transparent border-0 pb-0">
-            <h3 class="h5 mb-0"><i class="fas fa-graduation-cap text-primary me-2"></i>Curriculum Alignment</h3>
+      {% if tlr.standard or tlr.indicator or tlr.strand or tlr.substrand %}
+        <div class="content-card mb-4">
+          <div class="content-header">
+            <h3><i class="fas fa-graduation-cap text-primary me-2"></i>Curriculum Alignment</h3>
           </div>
-          <div class="card-body">
-            {% if tlr.standard %}
-              <div class="mb-3">
-                <h6 class="fw-semibold">Content Standard</h6>
-                <p class="mb-1"><strong>{{ tlr.standard.code }}</strong></p>
-                <p class="text-muted">{{ tlr.standard.description }}</p>
-              </div>
-            {% endif %}
-            
-            {% if tlr.indicator %}
-              <div class="mb-3">
-                <h6 class="fw-semibold">Indicator</h6>
-                <p class="mb-1"><strong>{{ tlr.indicator.code }}</strong></p>
-                <p class="text-muted">{{ tlr.indicator.description }}</p>
-              </div>
-            {% endif %}
-            
-            {% if tlr.strand %}
-              <div class="mb-3">
-                <h6 class="fw-semibold">Strand</h6>
-                <p class="text-muted">{{ tlr.strand.title }}</p>
-              </div>
-            {% endif %}
-            
-            {% if tlr.substrand %}
-              <div class="mb-3">
-                <h6 class="fw-semibold">Sub-strand</h6>
-                <p class="text-muted">{{ tlr.substrand.title }}</p>
-              </div>
-            {% endif %}
+          <div class="content-body">
+            <div class="curriculum-grid">
+              {% if tlr.standard %}
+                <div class="curriculum-item">
+                  <h6 class="curriculum-label">Content Standard</h6>
+                  <p class="curriculum-code">{{ tlr.standard.code }}</p>
+                  <p class="curriculum-desc">{{ tlr.standard.description }}</p>
+                </div>
+              {% endif %}
+              
+              {% if tlr.indicator %}
+                <div class="curriculum-item">
+                  <h6 class="curriculum-label">Indicator</h6>
+                  <p class="curriculum-code">{{ tlr.indicator.code }}</p>
+                  <p class="curriculum-desc">{{ tlr.indicator.description }}</p>
+                </div>
+              {% endif %}
+              
+              {% if tlr.strand %}
+                <div class="curriculum-item">
+                  <h6 class="curriculum-label">Strand</h6>
+                  <p class="curriculum-desc">{{ tlr.strand.title }}</p>
+                </div>
+              {% endif %}
+              
+              {% if tlr.substrand %}
+                <div class="curriculum-item">
+                  <h6 class="curriculum-label">Sub-strand</h6>
+                  <p class="curriculum-desc">{{ tlr.substrand.title }}</p>
+                </div>
+              {% endif %}
+            </div>
           </div>
         </div>
       {% endif %}
 
       <!-- Tags and Categories -->
-      <div class="card mb-4 shadow-sm rounded-4">
-        <div class="card-header bg-transparent border-0 pb-0">
-          <h3 class="h5 mb-0"><i class="fas fa-tags text-primary me-2"></i>Tags & Categories</h3>
+      <div class="content-card">
+        <div class="content-header">
+          <h3><i class="fas fa-tags text-primary me-2"></i>Tags & Categories</h3>
         </div>
-        <div class="card-body">
-          <div class="row g-3">
+        <div class="content-body">
+          <div class="tags-section">
             {% if tlr.themes.all %}
-              <div class="col-md-6">
-                <h6 class="fw-semibold">🌱 Themes</h6>
-                <div class="d-flex flex-wrap gap-1">
+              <div class="tag-group">
+                <h6 class="tag-group-title">🌱 Themes</h6>
+                <div class="tag-list">
                   {% for tag in tlr.themes.all %}
-                    <span class="badge bg-success-subtle text-success border">{{ tag }}</span>
+                    <span class="tag tag-theme">{{ tag }}</span>
                   {% endfor %}
                 </div>
               </div>
             {% endif %}
             
             {% if tlr.key_learning_areas.all %}
-              <div class="col-md-6">
-                <h6 class="fw-semibold">📚 Learning Areas</h6>
-                <div class="d-flex flex-wrap gap-1">
+              <div class="tag-group">
+                <h6 class="tag-group-title">📚 Learning Areas</h6>
+                <div class="tag-list">
                   {% for tag in tlr.key_learning_areas.all %}
-                    <span class="badge bg-primary-subtle text-primary border">{{ tag }}</span>
+                    <span class="tag tag-learning">{{ tag }}</span>
                   {% endfor %}
                 </div>
               </div>
             {% endif %}
             
             {% if tlr.competencies.all %}
-              <div class="col-md-6">
-                <h6 class="fw-semibold">🧠 Competencies</h6>
-                <div class="d-flex flex-wrap gap-1">
+              <div class="tag-group">
+                <h6 class="tag-group-title">🧠 Competencies</h6>
+                <div class="tag-list">
                   {% for tag in tlr.competencies.all %}
-                    <span class="badge bg-warning-subtle text-warning border">{{ tag }}</span>
+                    <span class="tag tag-competency">{{ tag }}</span>
                   {% endfor %}
                 </div>
               </div>
             {% endif %}
             
             {% if tlr.resource_types.all %}
-              <div class="col-md-6">
-                <h6 class="fw-semibold">🧩 Resource Types</h6>
-                <div class="d-flex flex-wrap gap-1">
+              <div class="tag-group">
+                <h6 class="tag-group-title">🧩 Resource Types</h6>
+                <div class="tag-list">
                   {% for tag in tlr.resource_types.all %}
-                    <span class="badge bg-secondary-subtle text-secondary border">{{ tag }}</span>
+                    <span class="tag tag-resource">{{ tag }}</span>
                   {% endfor %}
                 </div>
               </div>
             {% endif %}
             
             {% if tlr.special_needs.all %}
-              <div class="col-md-6">
-                <h6 class="fw-semibold">♿ Special Needs Support</h6>
-                <div class="d-flex flex-wrap gap-1">
+              <div class="tag-group">
+                <h6 class="tag-group-title">♿ Special Needs Support</h6>
+                <div class="tag-list">
                   {% for tag in tlr.special_needs.all %}
-                    <span class="badge bg-danger-subtle text-danger border">{{ tag }}</span>
+                    <span class="tag tag-special">{{ tag }}</span>
                   {% endfor %}
                 </div>
               </div>
             {% endif %}
             
             {% if tlr.learning_styles.all %}
-              <div class="col-md-6">
-                <h6 class="fw-semibold">🎨 Learning Styles</h6>
-                <div class="d-flex flex-wrap gap-1">
+              <div class="tag-group">
+                <h6 class="tag-group-title">🎨 Learning Styles</h6>
+                <div class="tag-list">
                   {% for tag in tlr.learning_styles.all %}
-                    <span class="badge bg-info-subtle text-info border">{{ tag }}</span>
+                    <span class="tag tag-style">{{ tag }}</span>
                   {% endfor %}
                 </div>
               </div>
@@ -259,34 +278,25 @@
 
     </div>
 
-    <!-- Media Sidebar -->
-    <div class="col-xl-4 col-lg-5">
-      <div class="sticky-top" style="top: 1rem;">
+    <!-- Compact Sidebar (30%) -->
+    <div class="col-lg-4 col-xl-3">
+      <div class="sidebar-sticky">
         
-        <!-- Images Section -->
+        <!-- Images Section - Compact -->
         {% if tlr.images.all %}
-          <div class="card mb-4 shadow-sm rounded-4">
-            <div class="card-header bg-transparent border-0 pb-0">
-              <h3 class="h5 mb-0">
-                <i class="fas fa-images text-primary me-2"></i>
-                Images ({{ tlr.images.count }})
-              </h3>
+          <div class="sidebar-card mb-4">
+            <div class="sidebar-header">
+              <h5><i class="fas fa-images text-primary me-2"></i>Images</h5>
             </div>
-            <div class="card-body">
-              <div class="row g-2">
+            <div class="sidebar-body">
+              <div class="image-grid">
                 {% for img in tlr.images.all %}
-                  <div class="col-6">
-                    <div class="image-container">
-                      <img src="{{ img.image.url }}" 
-                           alt="{{ img.caption|default:'TLR Image' }}" 
-                           class="img-fluid rounded shadow-sm clickable-image"
-                           style="height: 120px; width: 100%; object-fit: cover; cursor: pointer;"
-                           data-bs-toggle="modal" 
-                           data-bs-target="#imageModal{{ forloop.counter }}">
-                      {% if img.caption %}
-                        <small class="d-block text-muted mt-1 text-center">{{ img.caption|truncatechars:20 }}</small>
-                      {% endif %}
-                    </div>
+                  <div class="image-item">
+                    <img src="{{ img.image.url }}" 
+                         alt="{{ img.caption|default:'TLR Image' }}" 
+                         class="sidebar-image"
+                         data-bs-toggle="modal" 
+                         data-bs-target="#imageModal{{ forloop.counter }}">
                   </div>
 
                   <!-- Image Modal -->
@@ -314,43 +324,26 @@
           </div>
         {% endif %}
 
-        <!-- Videos Section -->
+        <!-- Videos Section - Compact -->
         {% if tlr.videos.all %}
-          <div class="card mb-4 shadow-sm rounded-4">
-            <div class="card-header bg-transparent border-0 pb-0">
-              <h3 class="h5 mb-0">
-                <i class="fas fa-video text-primary me-2"></i>
-                Videos ({{ tlr.videos.count }})
-              </h3>
+          <div class="sidebar-card mb-4">
+            <div class="sidebar-header">
+              <h5><i class="fas fa-video text-primary me-2"></i>Videos</h5>
             </div>
-            <div class="card-body">
+            <div class="sidebar-body">
               {% for video in tlr.videos.all %}
-                <div class="video-container mb-3">
+                <div class="video-item mb-3">
                   {% if video.caption %}
-                    <h6 class="fw-semibold mb-2">{{ video.caption }}</h6>
+                    <h6 class="video-title">{{ video.caption }}</h6>
                   {% endif %}
                   
-                  <div class="ratio ratio-16x9 rounded overflow-hidden">
+                  <div class="ratio ratio-16x9 rounded overflow-hidden mb-2">
                     {% if 'youtube.com' in video.url or 'youtu.be' in video.url %}
-                      <!-- Convert YouTube URL to embed format -->
-                      {% if 'watch?v=' in video.url %}
-                        <iframe src="{{ video.url|slice:'0:-11'|add:'embed/'|add:video.url|slice:'-11:' }}" 
-                                title="{{ video.caption|default:'YouTube Video' }}" 
-                                allowfullscreen 
-                                class="rounded"></iframe>
-                      {% elif 'youtu.be/' in video.url %}
-                        <iframe src="https://www.youtube.com/embed/{{ video.url|slice:'-11:' }}" 
-                                title="{{ video.caption|default:'YouTube Video' }}" 
-                                allowfullscreen 
-                                class="rounded"></iframe>
-                      {% else %}
-                        <iframe src="{{ video.url }}" 
-                                title="{{ video.caption|default:'Video' }}" 
-                                allowfullscreen 
-                                class="rounded"></iframe>
-                      {% endif %}
+                      <iframe src="{{ video.url }}" 
+                              title="{{ video.caption|default:'YouTube Video' }}" 
+                              allowfullscreen 
+                              class="rounded"></iframe>
                     {% else %}
-                      <!-- Generic iframe for other video services -->
                       <iframe src="{{ video.url }}" 
                               title="{{ video.caption|default:'Video' }}" 
                               allowfullscreen 
@@ -358,44 +351,42 @@
                     {% endif %}
                   </div>
                   
-                  <div class="mt-2">
-                    <a href="{{ video.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
-                      <i class="fas fa-external-link-alt"></i> Open in New Tab
-                    </a>
-                  </div>
+                  <a href="{{ video.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-external-link-alt"></i> Open
+                  </a>
                 </div>
               {% endfor %}
             </div>
           </div>
         {% endif %}
 
-        <!-- Download Card -->
-        <div class="card bg-primary text-white shadow-sm rounded-4">
-          <div class="card-body text-center">
+        <!-- Quick Download Card -->
+        <div class="download-card">
+          <div class="download-content">
             <i class="fas fa-download fa-2x mb-3"></i>
-            <h5 class="card-title">Ready to Use?</h5>
-            <p class="card-text">Download this TLR as a PDF with all the details you need for your classroom.</p>
-            <a href="{% url 'download_tlr' tlr.pk %}" class="btn btn-light btn-lg">
+            <h5>Ready to Use?</h5>
+            <p>Download this TLR as a comprehensive PDF guide.</p>
+            <a href="{% url 'download_tlr' tlr.pk %}" class="btn btn-white btn-lg w-100">
               <i class="bi bi-download"></i> Download PDF
             </a>
           </div>
         </div>
 
-        <!-- Additional Info Card -->
+        <!-- Resource Info -->
         {% if tlr.created_by or tlr.last_updated %}
-          <div class="card mt-4 shadow-sm rounded-4">
-            <div class="card-body text-center">
-              <h6 class="card-title">Resource Info</h6>
+          <div class="sidebar-card mt-4">
+            <div class="sidebar-body text-center">
+              <h6>Resource Info</h6>
               {% if tlr.created_by %}
                 <p class="text-muted mb-1">
                   <i class="fas fa-user me-1"></i>
-                  Created by {{ tlr.created_by.get_full_name|default:tlr.created_by.username }}
+                  {{ tlr.created_by.get_full_name|default:tlr.created_by.username }}
                 </p>
               {% endif %}
               {% if tlr.last_updated %}
                 <p class="text-muted mb-0">
                   <i class="fas fa-clock me-1"></i>
-                  Updated {{ tlr.last_updated|date:"M d, Y" }}
+                  {{ tlr.last_updated|date:"M d, Y" }}
                 </p>
               {% endif %}
             </div>
@@ -407,99 +398,426 @@
   </div>
 </div>
 
-<!-- Custom Styles -->
+<!-- Professional Styles -->
 <style>
-.bg-gradient {
-  background: linear-gradient(135deg, #6f42c1 0%, #5a3a9a 100%);
+/* Modern, clean design */
+:root {
+  --primary-color: #6f42c1;
+  --primary-light: #8a63d2;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --info-color: #17a2b8;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-bg: #f8f9fa;
+  --border-color: #dee2e6;
+  --border-radius: 12px;
+  --shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-.clickable-image {
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.hero-badges .badge-custom {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  font-size: 0.85rem;
+  backdrop-filter: blur(10px);
+}
+
+.hero-actions .btn {
+  margin-bottom: 0.5rem;
+}
+
+.secondary-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Content Cards */
+.content-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.content-header {
+  background: rgba(var(--primary-color), 0.05);
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.content-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.content-body {
+  padding: 1.5rem;
+}
+
+/* Highlight Box */
+.highlight-box {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  border-left: 4px solid var(--primary-color);
+  padding: 1.25rem;
+  border-radius: 0 8px 8px 0;
+  margin-top: 1rem;
+}
+
+.highlight-title {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Materials List */
+.materials-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.materials-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.materials-list li:last-child {
+  border-bottom: none;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--light-bg);
+  border-radius: 8px;
+}
+
+.info-label {
+  font-weight: 500;
+  color: var(--secondary-color);
+}
+
+.info-value {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Curriculum Grid */
+.curriculum-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.curriculum-item {
+  padding: 1rem;
+  background: var(--light-bg);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.curriculum-label {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.curriculum-code {
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.curriculum-desc {
+  color: var(--secondary-color);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Tags Section */
+.tags-section {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.tag-group-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.tag-theme { background: #e8f5e8; color: #2e7d32; border-color: #4caf50; }
+.tag-learning { background: #e3f2fd; color: #1565c0; border-color: #2196f3; }
+.tag-competency { background: #fff3e0; color: #ef6c00; border-color: #ff9800; }
+.tag-resource { background: #f3e5f5; color: #7b1fa2; border-color: #9c27b0; }
+.tag-special { background: #ffebee; color: #c62828; border-color: #f44336; }
+.tag-style { background: #e0f2f1; color: #00695c; border-color: #009688; }
+
+/* Sidebar */
+.sidebar-sticky {
+  position: sticky;
+  top: 2rem;
+}
+
+.sidebar-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.sidebar-header {
+  background: var(--light-bg);
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header h5 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.sidebar-body {
+  padding: 1.25rem;
+}
+
+/* Image Grid */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.sidebar-image {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.sidebar-image:hover {
+  transform: scale(1.05);
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 15px rgba(111, 66, 193, 0.2);
+}
+
+/* Video Items */
+.video-item {
+  padding: 1rem;
+  background: var(--light-bg);
+  border-radius: 8px;
+}
+
+.video-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+}
+
+/* Download Card */
+.download-card {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: center;
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.download-content h5 {
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.download-content p {
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 1.5rem;
+}
+
+.btn-white {
+  background: white;
+  color: var(--primary-color);
+  border: none;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
-.clickable-image:hover {
-  transform: scale(1.05);
+.btn-white:hover {
+  background: #f8f9fa;
+  color: var(--primary-color);
+  transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
+/* Content Typography */
 .steps-content, .tips-content {
   line-height: 1.7;
+  color: #2c3e50;
 }
 
 .steps-content p, .tips-content p {
   margin-bottom: 1rem;
 }
 
-.card {
-  border: 1px solid #dee2e6;
-}
-
-.card-header {
-  background: rgba(111, 66, 193, 0.05);
-}
-
-.badge {
-  font-size: 0.875rem;
-  padding: 0.5rem 0.75rem;
-}
-
-.sticky-top {
-  z-index: 1020;
-}
-
-/* Video container styling */
-.video-container {
-  border: 1px solid #dee2e6;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  background: #f8f9fa;
-}
-
-.video-container:last-child {
-  margin-bottom: 0 !important;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .sticky-top {
-    position: relative !important;
+/* Responsive Design */
+@media (max-width: 991px) {
+  .hero-section {
+    padding: 2rem;
+    text-align: center;
   }
   
-  .col-xl-4, .col-lg-5 {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .secondary-actions {
+    justify-content: center;
+  }
+  
+  .sidebar-sticky {
+    position: relative;
     margin-top: 2rem;
   }
   
-  .clickable-image {
-    height: 100px !important;
+  .image-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Print styles */
+@media (max-width: 767px) {
+  .hero-section {
+    padding: 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 1.5rem;
+  }
+  
+  .content-body {
+    padding: 1rem;
+  }
+  
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .info-grid {
+    gap: 0.75rem;
+  }
+  
+  .info-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.25rem;
+  }
+}
+
+/* Print Styles */
 @media print {
-  .btn, .modal, .sticky-top {
+  .btn, .modal, .sidebar-sticky, .hero-actions {
     display: none !important;
+  }
+  
+  .hero-section {
+    background: none !important;
+    color: black !important;
   }
 }
 </style>
 
-<!-- Bootstrap JS for modals -->
+<!-- Enhanced JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Add smooth scrolling to anchor links
+  // Smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-        behavior: 'smooth'
-      });
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     });
   });
   
-  // Track image clicks for analytics (optional)
-  document.querySelectorAll('.clickable-image').forEach(img => {
+  // Image hover effects and click tracking
+  document.querySelectorAll('.sidebar-image').forEach(img => {
     img.addEventListener('click', function() {
-      console.log('Image clicked:', this.alt);
-      // You can add analytics tracking here
+      console.log('Image viewed:', this.alt);
+    });
+  });
+  
+  // Download button tracking
+  document.querySelectorAll('a[href*="download"]').forEach(link => {
+    link.addEventListener('click', function() {
+      console.log('Download initiated for TLR');
     });
   });
 });
