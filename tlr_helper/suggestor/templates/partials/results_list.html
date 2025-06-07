@@ -171,37 +171,33 @@
                 <!-- Show first video thumbnail -->
                 {% for vid in tlr.videos.all|slice:":1" %}
                   <div class="video-thumbnail rounded overflow-hidden mb-2 position-relative" 
-                       style="cursor: pointer;"
+                       style="cursor: pointer; height: 120px;"
                        onclick="event.stopPropagation(); window.location.href='{% url 'tlr_detail' tlr.slug %}'">
-                    <div class="ratio ratio-16x9">
-                      {% if '/embed/' in vid.url %}
-                        <!-- Hard-coded extraction for YouTube embed URLs -->
-                        <div class="youtube-thumbnail position-relative" 
-                             style="background-image: url('https://img.youtube.com/vi/{{ vid.url|slice:'30:41' }}/hqdefault.jpg'); background-size: cover; background-position: center; background-color: #000;">
-                          <div class="position-absolute top-50 start-50 translate-middle">
-                            <i class="fas fa-play-circle fa-3x text-white opacity-75" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);"></i>
-                          </div>
-                          <div class="position-absolute bottom-0 end-0 m-2">
-                            <span class="badge bg-dark bg-opacity-75 text-white">YouTube</span>
-                          </div>
-                          <!-- Debug info -->
-                          <div class="position-absolute top-0 start-0 m-1">
-                            <small class="badge bg-warning text-dark">ID: {{ vid.url|slice:'30:41' }}</small>
-                          </div>
+                    
+                    {% if '/embed/' in vid.url %}
+                      <!-- Clean YouTube thumbnail -->
+                      <div class="youtube-thumbnail position-relative w-100 h-100">
+                        <img src="https://img.youtube.com/vi/{{ vid.url|slice:'30:41' }}/hqdefault.jpg" 
+                             alt="Video thumbnail" 
+                             class="img-fluid w-100 h-100 rounded" 
+                             style="object-fit: cover;">
+                        
+                        <!-- Play button overlay -->
+                        <div class="position-absolute top-50 start-50 translate-middle">
+                          <i class="fas fa-play-circle fa-3x text-white opacity-75" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);"></i>
                         </div>
-                      {% else %}
-                        <!-- Generic video placeholder -->
-                        <div class="d-flex align-items-center justify-content-center bg-secondary text-white">
-                          <div class="text-center">
-                            <i class="fas fa-video fa-2x mb-2"></i>
-                            <div><small>Video</small></div>
-                            <div class="mt-1">
-                              <small class="badge bg-danger">URL: {{ vid.url|truncatechars:25 }}</small>
-                            </div>
-                          </div>
+                        
+                        <!-- YouTube badge -->
+                        <div class="position-absolute bottom-0 end-0 m-2">
+                          <span class="badge bg-dark bg-opacity-75 text-white">YouTube</span>
                         </div>
-                      {% endif %}
-                    </div>
+                      </div>
+                    {% else %}
+                      <!-- Generic video placeholder -->
+                      <div class="d-flex align-items-center justify-content-center bg-secondary text-white w-100 h-100">
+                        <i class="fas fa-video fa-2x"></i>
+                      </div>
+                    {% endif %}
                   </div>
                 {% endfor %}
                 

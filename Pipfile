@@ -17,6 +17,9 @@ django-widget-tweaks = "*"
 reportlab = "*"
 weasyprint = "*"
 bytesio = "*"
+openai = "*"
+annotated-types = "*"
+bytesbufi = "*"
 
 [dev-packages]
 

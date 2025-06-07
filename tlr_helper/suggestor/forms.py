@@ -244,3 +244,51 @@ class ContactForm(forms.Form):
             'placeholder': 'Please share your message, feedback, or inquiry...'
         })
     )
+
+from django.db.models import Q
+
+# Add this new form after your existing forms
+# Add this to your forms.py if you haven't already
+class EnhancedRouteSelectForm(forms.Form):
+    # Quick keyword search option
+    keywords = forms.CharField(
+        required=False,
+        label="Quick Search",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Search by keywords (e.g., "counting games", "body parts", "literacy"...)',
+            'id': 'keyword-search'
+        }),
+        help_text="Search across TLR titles, descriptions, materials, and tags"
+    )
+    
+    # Multiple route selection
+    routes = forms.MultipleChoiceField(
+        choices=ROUTES,
+        required=False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'route-checkbox'}),
+        label="Or choose specific search paths:",
+        help_text="Select one or more search methods to combine filters"
+    )
+    
+    # Quick filters that work with any route
+    class_level = forms.ModelChoiceField(
+        queryset=ClassLevel.objects.all(),
+        required=False,
+        label="Class Level",
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    
+    time_needed = forms.ChoiceField(
+        choices=[('', 'Any duration')] + TIME_NEEDED_CHOICES,
+        required=False,
+        label="Time Available",
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    
+    budget_band = forms.ChoiceField(
+        choices=[('', 'Any budget')] + BUDGET_BANDS,
+        required=False,
+        label="Budget Range",
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )

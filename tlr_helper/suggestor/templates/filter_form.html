@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block extra_css %}
 <style>
@@ -19,160 +20,676 @@
     border-color: #d1dbe3 !important;
     color: #f8f9fa !important;
 }
+
+/* Enhanced Professional Styling */
+.main-card {
+    max-width: 860px;
+    margin: auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    border: 1px solid #e3e6ea;
+    overflow: hidden;
+}
+
+.card-header-custom {
+    background: linear-gradient(135deg, #6f42c1 0%, #5a3a9a 100%);
+    color: white;
+    padding: 2rem;
+    border: none;
+    position: relative;
+}
+
+.card-header-custom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.08"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.12"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.route-badge {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin: 0.2rem;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.section-divider {
+    height: 3px;
+    background: linear-gradient(90deg, #6f42c1, #28a745, #ffc107, #dc3545);
+    margin: 2rem 0;
+    border-radius: 2px;
+}
+
+.form-section {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-section:hover {
+    background: #f0f2f5;
+    border-color: #6f42c1;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(111, 66, 193, 0.1);
+}
+
+.section-title {
+    color: #6f42c1;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #6f42c1, #5a3a9a);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-select, .form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: #6f42c1;
+    box-shadow: 0 0 0 4px rgba(111, 66, 193, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-select:hover, .form-control:hover {
+    border-color: #a78bfa;
+}
+
+.advanced-toggle {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    border-radius: 15px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.advanced-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(111, 66, 193, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.advanced-toggle:hover::before {
+    left: 100%;
+}
+
+.advanced-toggle:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    border-color: #6f42c1;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(111, 66, 193, 0.15);
+}
+
+.advanced-content {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-nile {
+    background: linear-gradient(135deg, #6f42c1 0%, #5a3a9a 100%);
+    border: none;
+    color: white;
+    padding: 1.2rem 3rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-nile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-nile:hover::before {
+    left: 100%;
+}
+
+.btn-nile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(111, 66, 193, 0.4);
+    color: white;
+}
+
+.btn-nile:active {
+    transform: translateY(-1px);
+}
+
+.collapse-indicator {
+    transition: transform 0.3s ease;
+}
+
+.collapsed .collapse-indicator {
+    transform: rotate(180deg);
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.change-route-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.change-route-btn:hover {
+    background: rgba(255,255,255,0.3);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Professional animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.form-section:nth-child(1) { animation-delay: 0.1s; }
+.form-section:nth-child(2) { animation-delay: 0.2s; }
+.form-section:nth-child(3) { animation-delay: 0.3s; }
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+    .main-card {
+        margin: 1rem;
+        border-radius: 15px;
+    }
+    
+    .card-header-custom {
+        padding: 1.5rem;
+    }
+    
+    .filter-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .btn-nile {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+/* Loading states */
+.form-select.loading,
+.form-control.loading {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="%236f42c1" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path fill="%236f42c1" d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
 </style>
 {% endblock %}
 
 {% block content %}
-
 <div class="container my-5">
-  <div class="card shadow-lg rounded-4 p-5 card-theme-adaptive" style="max-width: 860px; margin: auto;">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="mb-0 text-primary">🎯 Refine Your Search</h4>
-      <a href="{% url 'route_select' %}" class="btn btn-outline-secondary btn-sm">
-        &larr; Change Route
-      </a>
+  <div class="card shadow-lg card-theme-adaptive main-card">
+    
+    <!-- Professional Header -->
+    <div class="card-header-custom">
+      <div class="header-content">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h2 class="mb-2 fw-bold">🎯 Refine Your Search</h2>
+            <p class="mb-0 opacity-90">Fine-tune your filters to find the perfect teaching resources</p>
+          </div>
+          <button class="change-route-btn" onclick="window.location.href='{% url 'route_select' %}'">
+            <i class="fas fa-arrow-left me-2"></i>Change Route
+          </button>
+        </div>
+        
+        <div class="d-flex flex-wrap align-items-center">
+          <span class="text-white-50 me-2">Selected paths:</span>
+          {% if routes %}
+            {% for route in routes %}
+              <span class="route-badge">
+                {% if route == "curriculum" %}📚 Curriculum Hierarchy
+                {% elif route == "key_area" %}🔑 Key Learning Areas
+                {% elif route == "competency" %}🧠 Core Competencies
+                {% elif route == "theme" %}🎨 Educational Themes
+                {% elif route == "resource" %}🛠️ Resource Types
+                {% elif route == "goal" %}🎯 Lesson Goals
+                {% else %}{{ route|title }}
+                {% endif %}
+              </span>
+            {% endfor %}
+          {% else %}
+            <span class="route-badge">📚 {{ route|title }}</span>
+          {% endif %}
+        </div>
+      </div>
     </div>
 
-    <form method="post" class="needs-validation" novalidate>
-      {% csrf_token %}
+    <!-- Main Form Content -->
+    <div class="card-body p-4">
+      <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
 
-      <div class="row g-4">
-        <!-- Class Level -->
-        <div class="col-md-6">
-          <label for="id_class_level" class="form-label fw-semibold">{{ form.class_level.label }}</label>
-          <select name="class_level" id="id_class_level"
-                  class="form-select"
-                  hx-get="{% url 'ajax_load_subjects' %}"
-                  hx-target="#subject-field"
-                  hx-trigger="change">
-            {% for cl in form.class_level.field.queryset %}
-              <option value="{{ cl.pk }}"
-              {% if form.class_level.value == cl.pk|stringformat:"s" %}selected{% endif %}>
-                {{ cl.name }}
-              </option>
-            {% endfor %}
-          </select>
-        </div>
+        <!-- Core Curriculum Section (Always shown if curriculum is selected) -->
+        {% if "curriculum" in routes or route == "curriculum" %}
+          <div class="form-section">
+            <h5 class="section-title">
+              <div class="section-icon"><i class="fas fa-graduation-cap"></i></div>
+              Curriculum Hierarchy
+            </h5>
+            
+            <div class="filter-grid">
+              <!-- Class Level -->
+              <div>
+                <label for="id_class_level" class="form-label fw-semibold">{{ form.class_level.label }}</label>
+                <select name="class_level" id="id_class_level"
+                        class="form-select"
+                        hx-get="{% url 'ajax_load_subjects' %}"
+                        hx-target="#subject-field"
+                        hx-trigger="change"
+                        hx-indicator=".loading-indicator">
+                  <option value="">-- Select Class Level --</option>
+                  {% for cl in form.class_level.field.queryset %}
+                    <option value="{{ cl.pk }}"
+                    {% if form.class_level.value == cl.pk|stringformat:"s" %}selected{% endif %}>
+                      {{ cl.name }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
 
-        <div class="col-md-6" id="subject-field">
-          <label for="id_subject" class="form-label fw-semibold">{{ form.subject.label }}</label>
-          <select name="subject" id="id_subject"
-                  class="form-select"
-                  hx-get="{% url 'ajax_load_strands' %}"
-                  hx-target="#strand-field"
-                  hx-trigger="change"
-                  hx-include="[name='class_level'], [name='subject'], [name='term']">
-          
-            {% for subj in form.subject.field.queryset %}
-              <option value="{{ subj.pk }}" {% if form.subject.value|stringformat:"s" == subj.pk|stringformat:"s" %}selected{% endif %}>
-                {{ subj.title }}
-              </option>
-            {% endfor %}
-          </select>
-        </div>
+              <!-- Term -->
+              <div>
+                <label for="id_term" class="form-label fw-semibold">{{ form.term.label }}</label>
+                <select name="term" id="id_term"
+                        class="form-select"
+                        hx-get="{% url 'ajax_load_strands' %}"
+                        hx-target="#strand-field"
+                        hx-trigger="change"
+                        hx-include="[name='class_level'], [name='subject'], [name='term']">
+                  <option value="">-- Select Term --</option>
+                  {% for value, label in form.term.field.choices %}
+                    <option value="{{ value }}"
+                    {% if form.term.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
+                      {{ label }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
 
-        <div class="col-md-6">
-          <label for="id_term" class="form-label fw-semibold">{{ form.term.label }}</label>
-          <select name="term" id="id_term"
-                  class="form-select"
-                  hx-get="{% url 'ajax_load_strands' %}"
-                  hx-target="#strand-field"
-                  hx-trigger="change"
-                  hx-include="[name='class_level'], [name='subject'], [name='term']">
-            {% for value, label in form.term.field.choices %}
-              <option value="{{ value }}"
-              {% if form.term.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}>
-                {{ label }}
-              </option>
-            {% endfor %}
-          </select>
-        </div>
+              <!-- Subject -->
+              <div id="subject-field">
+                <label for="id_subject" class="form-label fw-semibold">{{ form.subject.label }}</label>
+                <select name="subject" id="id_subject"
+                        class="form-select"
+                        hx-get="{% url 'ajax_load_strands' %}"
+                        hx-target="#strand-field"
+                        hx-trigger="change"
+                        hx-include="[name='class_level'], [name='subject'], [name='term']">
+                  <option value="">-- Select Subject --</option>
+                  {% for subj in form.subject.field.queryset %}
+                    <option value="{{ subj.pk }}" {% if form.subject.value|stringformat:"s" == subj.pk|stringformat:"s" %}selected{% endif %}>
+                      {{ subj.title }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
 
-        {% if route == "curriculum" %}
-          <div class="col-md-6" id="strand-field">
-            <label for="id_strand" class="form-label fw-semibold">{{ form.strand.label }}</label>
-            <select name="strand" id="id_strand"
-                    class="form-select"
-                    hx-get="{% url 'ajax_load_substrands' %}"
-                    hx-target="#substrand-field"
-                    hx-trigger="change"
-                    hx-swap="innerHTML"
-                    hx-include="[name='strand']">
-              <option value="">-- Select Strand --</option>
-              {% for s in form.strand.field.queryset %}
-                <option value="{{ s.pk }}" {% if form.strand.value|stringformat:"s" == s.pk|stringformat:"s" %}selected{% endif %}>
-                  {{ s.title }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
+              <!-- Strand -->
+              <div id="strand-field">
+                <label for="id_strand" class="form-label fw-semibold">{{ form.strand.label }}</label>
+                <select name="strand" id="id_strand"
+                        class="form-select"
+                        hx-get="{% url 'ajax_load_substrands' %}"
+                        hx-target="#substrand-field"
+                        hx-trigger="change"
+                        hx-swap="innerHTML"
+                        hx-include="[name='strand']">
+                  <option value="">-- Select Strand --</option>
+                  {% for s in form.strand.field.queryset %}
+                    <option value="{{ s.pk }}" {% if form.strand.value|stringformat:"s" == s.pk|stringformat:"s" %}selected{% endif %}>
+                      {{ s.title }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
 
-          <div class="col-md-6" id="substrand-field">
-            <label for="id_substrand" class="form-label fw-semibold">{{ form.substrand.label }}</label>
-            <select name="substrand" id="id_substrand" class="form-select">
-              <option value="">-- Select Sub-strand --</option>
-              {% for ss in form.substrand.field.queryset %}
-                <option value="{{ ss.pk }}" {% if form.substrand.value|stringformat:"s" == ss.pk|stringformat:"s" %}selected{% endif %}>
-                  {{ ss.title }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
+              <!-- Sub-strand -->
+              <div id="substrand-field">
+                <label for="id_substrand" class="form-label fw-semibold">{{ form.substrand.label }}</label>
+                <select name="substrand" id="id_substrand" class="form-select">
+                  <option value="">-- Select Sub-strand --</option>
+                  {% for ss in form.substrand.field.queryset %}
+                    <option value="{{ ss.pk }}" {% if form.substrand.value|stringformat:"s" == ss.pk|stringformat:"s" %}selected{% endif %}>
+                      {{ ss.title }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
 
-        {% elif route == "key_area" %}
-          <div class="col-md-6">
-            <label class="form-label fw-semibold">{{ form.key_area.label }}</label>
-            {{ form.key_area }}
-          </div>
-        {% elif route == "competency" %}
-          <div class="col-md-6">
-            <label class="form-label fw-semibold">{{ form.competency.label }}</label>
-            {{ form.competency }}
-          </div>
-        {% elif route == "theme" %}
-          <div class="col-md-6">
-            <label class="form-label fw-semibold">{{ form.theme.label }}</label>
-            {{ form.theme }}
-          </div>
-        {% elif route == "goal" %}
-          <div class="col-md-6">
-            <label class="form-label fw-semibold">{{ form.goal.label }}</label>
-            {{ form.goal }}
-          </div>
-        {% elif route == "resource" %}
-          <div class="col-md-6">
-            <label class="form-label fw-semibold">{{ form.resource_type.label }}</label>
-            {{ form.resource_type }}
+              <!-- Standard -->
+              <div>
+                <label for="id_standard" class="form-label fw-semibold">{{ form.standard.label }}</label>
+                {{ form.standard }}
+              </div>
+            </div>
+
+            <!-- Indicator (full width) -->
+            <div class="mt-3">
+              <label for="id_indicator" class="form-label fw-semibold">{{ form.indicator.label }}</label>
+              {{ form.indicator }}
+            </div>
           </div>
         {% endif %}
-      </div>
 
-      <hr class="my-5">
+        <!-- Other Route Sections -->
+        {% if "key_area" in routes or route == "key_area" %}
+          <div class="form-section">
+            <h5 class="section-title">
+              <div class="section-icon"><i class="fas fa-key"></i></div>
+              Key Learning Areas
+            </h5>
+            <div>
+              <label class="form-label fw-semibold">{{ form.key_area.label }}</label>
+              {{ form.key_area }}
+            </div>
+          </div>
+        {% endif %}
 
-      <button class="btn btn-link text-decoration-none fst-italic mb-3 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#extraFilters">
-        ⚙️ Advanced Filters
-      </button>
+        {% if "competency" in routes or route == "competency" %}
+          <div class="form-section">
+            <h5 class="section-title">
+              <div class="section-icon"><i class="fas fa-brain"></i></div>
+              Core Competencies
+            </h5>
+            <div>
+              <label class="form-label fw-semibold">{{ form.competency.label }}</label>
+              {{ form.competency }}
+            </div>
+          </div>
+        {% endif %}
 
-      <div class="collapse" id="extraFilters">
-        <div class="row g-4">
-          <div class="col-md-6">{{ form.intended_use.label_tag }} {{ form.intended_use }}</div>
-          <div class="col-md-6">{{ form.time_available.label_tag }} {{ form.time_available }}</div>
-          <div class="col-md-6">{{ form.class_size.label_tag }} {{ form.class_size }}</div>
-          <div class="col-md-6">{{ form.bloom_level.label_tag }} {{ form.bloom_level }}</div>
-          <div class="col-md-6">{{ form.budget_band.label_tag }} {{ form.budget_band }}</div>
-          <div class="col-md-6">{{ form.learner_type.label_tag }} {{ form.learner_type }}</div>
-          <div class="col-md-12">{{ form.materials_available.label_tag }} {{ form.materials_available }}</div>
-          <div class="col-md-12">{{ form.preferred_format.label_tag }} {{ form.preferred_format }}</div>
-          <div class="col-md-12">{{ form.classroom_setup.label_tag }} {{ form.classroom_setup }}</div>
-          <div class="col-md-12">{{ form.outcome.label_tag }} {{ form.outcome }}</div>
+        {% if "theme" in routes or route == "theme" %}
+          <div class="form-section">
+            <h5 class="section-title">
+              <div class="section-icon"><i class="fas fa-palette"></i></div>
+              Educational Themes
+            </h5>
+            <div>
+              <label class="form-label fw-semibold">{{ form.theme.label }}</label>
+              {{ form.theme }}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if "resource" in routes or route == "resource" %}
+          <div class="form-section">
+            <h5 class="section-title">
+              <div class="section-icon"><i class="fas fa-tools"></i></div>
+              Resource Types
+            </h5>
+            <div>
+              <label class="form-label fw-semibold">{{ form.resource_type.label }}</label>
+              {{ form.resource_type }}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if "goal" in routes or route == "goal" %}
+          <div class="form-section">
+            <h5 class="section-title">
+              <div class="section-icon"><i class="fas fa-target"></i></div>
+              Lesson Goals
+            </h5>
+            <div>
+              <label class="form-label fw-semibold">{{ form.goal.label }}</label>
+              {{ form.goal }}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Section Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Advanced Filters Toggle (Your Original Design!) -->
+        <div class="advanced-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#extraFilters" aria-expanded="false">
+          <div class="advanced-content">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="mb-1 fw-bold">⚙️ Advanced Filters</h5>
+                <p class="mb-0 text-muted">Fine-tune your search with additional criteria</p>
+              </div>
+              <div class="collapse-indicator">
+                <i class="fas fa-chevron-down fa-lg"></i>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <button class="btn btn-nile btn-lg w-100 mt-5">
-        <i class="bi bi-search"></i> Search for TLRs
-      </button>
-    </form>
+        <!-- Advanced Filters Content (Your Original Layout!) -->
+        <div class="collapse" id="extraFilters">
+          <div class="form-section">
+            <div class="filter-grid">
+              <div>
+                <label class="form-label fw-semibold">{{ form.intended_use.label }}</label>
+                {{ form.intended_use }}
+              </div>
+              <div>
+                <label class="form-label fw-semibold">{{ form.time_needed.label }}</label>
+                {{ form.time_needed }}
+              </div>
+              <div>
+                <label class="form-label fw-semibold">{{ form.class_size.label }}</label>
+                {{ form.class_size }}
+              </div>
+              <div>
+                <label class="form-label fw-semibold">{{ form.bloom_level.label }}</label>
+                {{ form.bloom_level }}
+              </div>
+              <div>
+                <label class="form-label fw-semibold">{{ form.budget_band.label }}</label>
+                {{ form.budget_band }}
+              </div>
+              <div>
+                <label class="form-label fw-semibold">{{ form.learner_type.label }}</label>
+                {{ form.learner_type }}
+              </div>
+            </div>
 
+            <!-- Full width fields -->
+            <div class="row g-3 mt-3">
+              <div class="col-12">
+                <label class="form-label fw-semibold">{{ form.materials_available.label }}</label>
+                {{ form.materials_available }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">{{ form.preferred_format.label }}</label>
+                {{ form.preferred_format }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">{{ form.classroom_setup.label }}</label>
+                {{ form.classroom_setup }}
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">{{ form.outcome.label }}</label>
+                {{ form.outcome }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Search Button -->
+        <div class="text-center mt-4">
+          <button class="btn btn-nile btn-lg" type="submit">
+            <i class="bi bi-search me-2"></i> 
+            Search for TLRs
+          </button>
+          <div class="mt-3">
+            <small class="text-muted">
+              <i class="fas fa-lightbulb text-warning me-1"></i>
+              <strong>Tip:</strong> Leave fields empty for broader results, or specify criteria to narrow your search
+            </small>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
+
+<!-- Enhanced JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Enhanced collapse animation
+    const advancedToggle = document.querySelector('.advanced-toggle');
+    const collapseIndicator = document.querySelector('.collapse-indicator');
+    
+    document.getElementById('extraFilters').addEventListener('show.bs.collapse', function() {
+        advancedToggle.classList.remove('collapsed');
+    });
+    
+    document.getElementById('extraFilters').addEventListener('hide.bs.collapse', function() {
+        advancedToggle.classList.add('collapsed');
+    });
+    
+    // Professional form submission with loading states
+    const form = document.querySelector('.needs-validation');
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const originalBtnContent = submitBtn.innerHTML;
+    
+    form.addEventListener('submit', function(e) {
+        // Add professional loading state
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Searching TLRs...';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.8';
+        
+        // Add loading class to form
+        form.classList.add('loading');
+        
+        // Re-enable after timeout (error handling)
+        setTimeout(() => {
+            submitBtn.innerHTML = originalBtnContent;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            form.classList.remove('loading');
+        }, 5000);
+    });
+    
+    // Enhanced HTMX loading indicators
+    document.addEventListener('htmx:beforeRequest', function(e) {
+        const target = e.target;
+        if (target.tagName === 'SELECT') {
+            target.classList.add('loading');
+        }
+    });
+    
+    document.addEventListener('htmx:afterRequest', function(e) {
+        const target = e.target;
+        if (target.tagName === 'SELECT') {
+            target.classList.remove('loading');
+        }
+    });
+    
+    // Smooth section focusing
+    document.querySelectorAll('.form-section').forEach(section => {
+        section.addEventListener('click', function(e) {
+            if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            const firstInput = this.querySelector('select, input, textarea');
+            if (firstInput && !firstInput.disabled) {
+                firstInput.focus();
+                firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    });
+    
+    // Professional hover effects
+    document.querySelectorAll('.form-select, .form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.closest('.form-section')?.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.closest('.form-section')?.classList.remove('focused');
+        });
+    });
+});
+</script>
 {% endblock %}

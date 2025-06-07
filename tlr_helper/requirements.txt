@@ -19,3 +19,6 @@ pillow
 django-widget-tweaks
 reportlab
 weasyprint
+openai
+annotated-types
+bytesbufio

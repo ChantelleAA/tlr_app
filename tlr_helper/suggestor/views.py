@@ -228,16 +228,7 @@ def suggest(request):
     return render(request, "filter_form.html",
                   {"filter_form": form, "route": route})
 
-def route_select(request):
-    if request.method == "POST":
-        form = RouteSelectForm(request.POST)
-        if form.is_valid():
-            route = form.cleaned_data["route"]
-            return redirect(f"/filters/?route={route}")
-    else:
-        form = RouteSelectForm()
 
-    return render(request, "route_select.html", {"form": form})
 
 
 def about_page(request):
@@ -262,81 +253,35 @@ def serialize_filters(data):
 
 @login_required
 def filter_page(request):
-    route = request.GET.get("route")
-    if not route:
-        return redirect("route_select")  
+    # Get routes from session (could be list or single route)
+    routes = request.session.get("routes", [])
+    route = request.session.get("route")  # Legacy single route
+    
+    # Handle both cases: new multi-route and old single route
+    if not routes and route:
+        routes = [route]  # Convert single route to list
+    elif not routes and not route:
+        return redirect("route_select")
 
     if request.method == "POST":
         form = FilterForm(request.POST)
         if form.is_valid():
-            request.session["filters"] = serialize_filters(form.cleaned_data)   # stash in session
-            request.session["route"]   = route
+            request.session["filters"] = serialize_filters(form.cleaned_data)
+            request.session["search_type"] = "advanced"
+            # Store both for compatibility
+            request.session["routes"] = routes
+            if len(routes) == 1:
+                request.session["route"] = routes[0]
             return redirect("results_page")
     else:
         form = FilterForm()
 
-    return render(request, "filter_form.html",
-                  {"form": form, "route": route})
-
-@login_required
-def results_page(request):
-    filters = request.session.get("filters")
-    route   = request.session.get("route")
-    if not filters or not route:
-        return redirect("route_select")
-
-    suggestions = find_matches(filters, route)
-
-    def normalize(text):
-        if not isinstance(text, str):
-            text = str(text)
-        text = unicodedata.normalize('NFKD', text).lower()
-        return re.sub(r'[^a-z0-9 ]+', '', text)
-
-    # Collect all keywords from filters and suggestions
-    keywords = set()
-
-    for key in ["class_level", "subject", "strand", "substrand", "intended_use"]:
-        val = filters.get(key)
-        if val:
-            text = getattr(val, "title", None) or getattr(val, "name", None) or str(val)
-            stopwords = {"the", "and", "or", "for", "to", "in", "on", "of", "with", "by", "at", "a", "an", "from"}
-            words = [w for w in normalize(text).split() if w not in stopwords]
-            keywords.update(words)
-
-
-    for tlr in suggestions:
-        for tag_group in [
-            tlr.themes.all(),
-            tlr.key_learning_areas.all(),
-            tlr.resource_types.all(),
-            tlr.competencies.all(),
-            tlr.special_needs.all(),
-            tlr.learning_styles.all()
-        ]:
-            for tag in tag_group:
-                keywords.update(normalize(str(tag)).split())
-
-    # Match all boards that overlap with any keyword
-    stopwords = {"the", "and", "or", "for", "to", "in", "on", "of", "with", "by", "at", "a", "an", "from"}
-
-    matched_boards = []
-    for board in PINTEREST_BOARDS:
-        title_words = set(normalize(board["title"]).split())
-        match = keywords & title_words
-        filtered_match = [w for w in match if w not in stopwords]
-        if filtered_match:
-            matched_boards.append({
-                "url": board["url"],
-                "title": board["title"],
-                "matched_words": ", ".join(filtered_match)
-            })
-
-
-    return render(request, "results.html", {
-        "suggestions": suggestions,
-        "pinterest_boards": matched_boards,
+    return render(request, "filter_form.html", {
+        "form": form, 
+        "routes": routes,  # Pass as list
+        "route": routes[0] if len(routes) == 1 else None  # Pass single route for backward compatibility
     })
+
 
 
 @login_required
@@ -454,3 +399,265 @@ def tlr_detail_page(request, slug):
     # tlr.save(update_fields=['view_count'])
     
     return render(request, "tlr_detail.html", {"tlr": tlr})
+
+# Add this import at the top
+from .forms import EnhancedRouteSelectForm
+from django.db.models import Q
+
+# Add this import at the top
+from .forms import EnhancedRouteSelectForm
+from django.db.models import Model
+
+# Add this import at the top of views.py
+from .forms import EnhancedRouteSelectForm
+
+def route_select(request):
+    if request.method == "POST":
+        form = EnhancedRouteSelectForm(request.POST)
+        if form.is_valid():
+            search_type = request.POST.get('search_type')
+            
+            if search_type == 'keyword':
+                # Handle keyword search
+                keywords = form.cleaned_data.get('keywords', '').strip()
+                if keywords:
+                    # Serialize the quick filters properly
+                    quick_filters = {}
+                    
+                    # Handle ClassLevel object
+                    if form.cleaned_data.get('class_level'):
+                        quick_filters['class_level'] = form.cleaned_data['class_level'].pk
+                    
+                    # Handle other simple fields
+                    if form.cleaned_data.get('time_needed'):
+                        quick_filters['time_needed'] = form.cleaned_data['time_needed']
+                    
+                    if form.cleaned_data.get('budget_band'):
+                        quick_filters['budget_band'] = form.cleaned_data['budget_band']
+                    
+                    # Store in session
+                    request.session["search_type"] = "keyword"
+                    request.session["keywords"] = keywords
+                    request.session["quick_filters"] = quick_filters
+                    return redirect("results_page")
+            
+            elif search_type == 'advanced':
+                # Handle advanced route search
+                routes = form.cleaned_data.get('routes', [])
+                if routes:
+                    request.session["search_type"] = "advanced"
+                    request.session["routes"] = list(routes)  # Store as list
+                    return redirect("filter_page")
+            
+            # Fallback: if no search type specified, treat as old single route
+            route = form.cleaned_data.get('route')  # This might exist if using old form
+            if route:
+                request.session["routes"] = [route]
+                return redirect("filter_page")
+    else:
+        form = EnhancedRouteSelectForm()
+
+    return render(request, "route_select.html", {"form": form})
+
+
+@login_required
+def results_page(request):
+    search_type = request.session.get("search_type")
+    
+    if search_type == "keyword":
+        # Handle keyword search results
+        keywords = request.session.get("keywords", "")
+        quick_filters_raw = request.session.get("quick_filters", {})
+        
+        # Reconstruct the quick filters with proper objects
+        quick_filters = {}
+        
+        # Convert class_level pk back to object
+        if quick_filters_raw.get('class_level'):
+            try:
+                from .models import ClassLevel
+                quick_filters['class_level'] = ClassLevel.objects.get(pk=quick_filters_raw['class_level'])
+            except ClassLevel.DoesNotExist:
+                pass
+        
+        # Copy other simple fields
+        if quick_filters_raw.get('time_needed'):
+            quick_filters['time_needed'] = quick_filters_raw['time_needed']
+        
+        if quick_filters_raw.get('budget_band'):
+            quick_filters['budget_band'] = quick_filters_raw['budget_band']
+        
+        # Use enhanced find_matches
+        from .tlr_engine import find_matches
+        suggestions = find_matches(quick_filters, keywords=keywords)
+        
+        context = {
+            "suggestions": suggestions,
+            "search_type": "keyword",
+            "keywords": keywords,
+            "result_count": len(suggestions)
+        }
+        
+    else:
+        # Handle route-based search results (existing logic)
+        filters = request.session.get("filters")
+        route = request.session.get("route")
+        routes = request.session.get("routes", [])
+        
+        if not filters and not routes:
+            return redirect("route_select")
+        
+        # Use enhanced engine for multiple routes
+        from .tlr_engine import find_matches
+        if routes:
+            suggestions = find_matches(filters or {}, routes=routes)
+        else:
+            suggestions = find_matches(filters, routes=[route] if route else [])
+        
+        context = {
+            "suggestions": suggestions,
+            "search_type": "advanced",
+            "routes": routes or [route],
+            "result_count": len(suggestions)
+        }
+    
+    # Add Pinterest boards logic (existing code)
+    keywords = set()
+    for tlr in context["suggestions"]:
+        for tag_group in [
+            tlr.themes.all(),
+            tlr.key_learning_areas.all(),
+            tlr.resource_types.all(),
+            tlr.competencies.all(),
+            tlr.special_needs.all(),
+            tlr.learning_styles.all()
+        ]:
+            for tag in tag_group:
+                keywords.update(normalize(str(tag)).split())
+
+    matched_boards = []
+    stopwords = {"the", "and", "or", "for", "to", "in", "on", "of", "with", "by", "at", "a", "an", "from"}
+    for board in PINTEREST_BOARDS:
+        title_words = set(normalize(board["title"]).split())
+        match = keywords & title_words
+        filtered_match = [w for w in match if w not in stopwords]
+        if filtered_match:
+            matched_boards.append({
+                "url": board["url"],
+                "title": board["title"],
+                "matched_words": ", ".join(filtered_match)
+            })
+    
+    context["pinterest_boards"] = matched_boards
+    return render(request, "results.html", context)
+
+@login_required
+def filter_page(request):
+    routes = request.session.get("routes", [])
+    if not routes:
+        return redirect("route_select")
+
+    if request.method == "POST":
+        form = FilterForm(request.POST)
+        if form.is_valid():
+            request.session["filters"] = serialize_filters(form.cleaned_data)
+            request.session["search_type"] = "advanced"
+            return redirect("results_page")
+    else:
+        form = FilterForm()
+
+    # Determine which fields to show based on selected routes
+    visible_fields = get_visible_fields(routes)
+
+    return render(request, "filter_form.html", {
+        "form": form, 
+        "routes": routes,
+        "visible_fields": visible_fields
+    })
+
+def get_visible_fields(routes):
+    """Determine which form fields to show based on selected routes."""
+    fields = set()
+
+    for route in routes:
+        if route == "curriculum":
+            fields.update(['class_level', 'subject', 'term', 'strand', 'substrand', 'standard', 'indicator'])
+        elif route == "key_area":
+            fields.add('key_area')
+        elif route == "competency":
+            fields.add('competency')
+        elif route == "theme":
+            fields.add('theme')
+        elif route == "resource":
+            fields.add('resource_type')
+        elif route == "goal":
+            fields.add('goal')
+
+    # Always include common filters
+    fields.update(['intended_use', 'time_needed', 'budget_band', 'bloom_level', 
+                    'class_size', 'learning_styles', 'special_needs', 'materials_available'])
+
+    return fields
+
+# Add this to your views.py
+import openai
+import os
+
+def get_search_suggestions(keywords):
+    """Use OpenAI to suggest better search terms for TLR discovery."""
+    try:
+        openai.api_key = os.getenv('OPENAI_API_KEY')
+        
+        prompt = f"""
+        A teacher is searching for Teaching and Learning Resources (TLRs) using these keywords: "{keywords}"
+        
+        Suggest 3-5 alternative or related search terms that might help them find relevant educational resources for Ghana's early childhood curriculum (Creche to Class 3).
+        
+        Focus on:
+        - Learning activities
+        - Educational materials  
+        - Teaching methods
+        - Curriculum topics
+        
+        Return only the search terms, separated by commas.
+        """
+        
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=100,
+            temperature=0.7
+        )
+        
+        suggestions = response.choices[0].message.content.strip().split(',')
+        return [s.strip() for s in suggestions[:5]]
+        
+    except Exception as e:
+        print(f"OpenAI suggestion error: {e}")
+        return []
+
+# Add AJAX endpoint for live suggestions
+def ajax_search_suggestions(request):
+    keywords = request.GET.get('q', '')
+    if len(keywords) > 3:
+        suggestions = get_search_suggestions(keywords)
+        return JsonResponse({'suggestions': suggestions})
+    return JsonResponse({'suggestions': []})
+
+# Add this helper function to your views.py
+def serialize_for_session(data):
+    """Convert Django objects to JSON-serializable format for session storage."""
+    serialized = {}
+    for key, value in data.items():
+        if isinstance(value, Model):
+            serialized[key] = value.pk
+        elif hasattr(value, "__iter__") and not isinstance(value, str):
+            serialized[key] = [obj.pk if isinstance(obj, Model) else obj for obj in value]
+        else:
+            serialized[key] = value
+    return serialized
+
+def deserialize_from_session(data):
+    """Convert session data back to Django objects."""
+    # This would require knowing the model types, so the specific approach above is better
+    pass
