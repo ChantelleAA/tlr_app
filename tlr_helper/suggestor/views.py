@@ -19,6 +19,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import inch
 from io import BytesIO
+from django.db.models import F
 import re
 
 PINTEREST_BOARDS = [
@@ -69,6 +70,9 @@ def normalize(text):
 @login_required
 def download_view(request, pk):
     tlr = get_object_or_404(Tlr, pk=pk)
+    
+    from django.db.models import F
+    Tlr.objects.filter(pk=pk).update(download_count=F('download_count') + 1)
     
     # Create a file-like buffer to receive PDF data
     buffer = BytesIO()
@@ -440,3 +444,13 @@ def contact_page(request):
         form = ContactForm()
     
     return render(request, 'contact.html', {'form': form})
+
+@login_required
+def tlr_detail_page(request, slug):
+    tlr = get_object_or_404(Tlr, slug=slug, is_published=True)
+    
+    # Optional: Track views
+    # tlr.view_count = F('view_count') + 1
+    # tlr.save(update_fields=['view_count'])
+    
+    return render(request, "tlr_detail.html", {"tlr": tlr})

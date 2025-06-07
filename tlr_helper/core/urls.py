@@ -21,37 +21,6 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-# urlpatterns = [
-#     # Authentication
-#     path("login/", auth_views.LoginView.as_view(template_name="login.html"), name="login"),
-#     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
-
-#     path("admin/",      admin.site.urls),
-#     path("chained-filter/", v.chained_filter, name="chained_filter"),
-
-#     # Welcome page (new)
-#     path("",            v.welcome_page, name="welcome"),           # NEW: Landing page
-    
-#     # 3-step flow (updated paths)
-#     path("search/",     v.route_select, name="route_select"),     # step-1: Choose route
-#     path("filters/",    v.filter_page,  name="filter_page"),      # step-2: Set filters  
-#     path("results/",    v.results_page, name="results_page"),     # step-3: View results
-
-#     # downloads
-#     path("download/<int:pk>/", v.download_view, name="download_tlr"),
-
-#     # AJAX endpoints
-#     path("ajax/subjects/",     v.load_subjects,     name="ajax_load_subjects"),
-#     path("ajax/strands/",      v.load_strands,      name="ajax_load_strands"),
-#     path("ajax/substrands/",   v.load_substrands,   name="ajax_load_substrands"),
-
-#     # Extras
-#     path("about/", v.about_page, name="about"),
-#     path("print/<int:pk>/", v.print_view, name="print_tlr"),
-#     path("signup/", v.signup_view, name="signup"),
-# ]
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 urlpatterns = [
     # Authentication
     path("login/", auth_views.LoginView.as_view(template_name="login.html"), name="login"),
@@ -81,5 +50,7 @@ urlpatterns = [
     path("contact/", v.contact_page, name="contact"),  # NEW
     path("print/<int:pk>/", v.print_view, name="print_tlr"),
     path("signup/", v.signup_view, name="signup"),
+    path("tlr/<slug:slug>/", v.tlr_detail_page, name="tlr_detail"),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

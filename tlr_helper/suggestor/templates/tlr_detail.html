@@ -1,0 +1,507 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ tlr.title }} - TLR Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <!-- Breadcrumb Navigation -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'welcome' %}" class="text-decoration-none">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'results_page' %}" class="text-decoration-none">Results</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ tlr.title|truncatechars:30 }}</li>
+    </ol>
+  </nav>
+
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card bg-gradient shadow-sm rounded-4 border-0">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <h1 class="h2 text-white mb-2">
+                {% if tlr.subject %}
+                  <strong>{{ tlr.subject }}:</strong> {{ tlr.title }}
+                {% else %}
+                  {{ tlr.title }}
+                {% endif %}
+              </h1>
+              <p class="text-white-50 mb-0">{{ tlr.class_level }} • {{ tlr.get_time_needed_display }}</p>
+            </div>
+            <div class="text-end">
+              <span class="badge bg-white text-primary fs-6 px-3 py-2">
+                📈 {{ tlr.download_count|default:"0" }} downloads
+              </span>
+            </div>
+          </div>
+          
+          <!-- Quick Action Buttons -->
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'download_tlr' tlr.pk %}" class="btn btn-light btn-lg">
+              <i class="bi bi-download"></i> Download TLR
+            </a>
+            <a href="{% url 'print_tlr' tlr.pk %}" class="btn btn-outline-light" target="_blank">
+              <i class="bi bi-printer"></i> Print View
+            </a>
+            <button class="btn btn-outline-light" onclick="window.history.back()">
+              <i class="bi bi-arrow-left"></i> Back to Results
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Main Content Column -->
+    <div class="col-xl-8 col-lg-7">
+      
+      <!-- Description Section -->
+      <div class="card mb-4 shadow-sm rounded-4">
+        <div class="card-header bg-transparent border-0 pb-0">
+          <h3 class="h5 mb-0"><i class="fas fa-info-circle text-primary me-2"></i>Description</h3>
+        </div>
+        <div class="card-body">
+          <p class="lead">{{ tlr.brief_description }}</p>
+          
+          {% if tlr.learning_outcome %}
+            <div class="alert alert-light border-start border-4 border-success">
+              <h6 class="fw-semibold mb-2">🌟 Learning Outcome</h6>
+              <p class="mb-0">{{ tlr.learning_outcome }}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Materials & Requirements -->
+      <div class="card mb-4 shadow-sm rounded-4">
+        <div class="card-header bg-transparent border-0 pb-0">
+          <h3 class="h5 mb-0"><i class="fas fa-tools text-primary me-2"></i>Materials & Requirements</h3>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <h6 class="fw-semibold">📌 Materials Needed</h6>
+              {% if tlr.materials.all %}
+                <ul class="list-unstyled">
+                  {% for material in tlr.materials.all %}
+                    <li class="mb-1"><i class="fas fa-check-circle text-success me-2"></i>{{ material }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-muted">No specific materials listed</p>
+              {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+              <h6 class="fw-semibold">📊 Quick Info</h6>
+              <div class="d-flex flex-column gap-2">
+                <span class="badge bg-primary-subtle text-primary">⌛ {{ tlr.get_time_needed_display }}</span>
+                <span class="badge bg-success-subtle text-success">💰 {{ tlr.get_budget_band_display }}</span>
+                <span class="badge bg-warning-subtle text-warning">🧠 {{ tlr.get_bloom_level_display }}</span>
+                {% if tlr.intended_use %}
+                  <span class="badge bg-info-subtle text-info">🗂️ {{ tlr.get_intended_use_display }}</span>
+                {% endif %}
+                {% if tlr.class_size %}
+                  <span class="badge bg-secondary-subtle text-secondary">👥 Class Size: {{ tlr.get_class_size_display }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steps to Make -->
+      {% if tlr.steps_to_make %}
+        <div class="card mb-4 shadow-sm rounded-4">
+          <div class="card-header bg-transparent border-0 pb-0">
+            <h3 class="h5 mb-0"><i class="fas fa-list-ol text-primary me-2"></i>Steps to Make</h3>
+          </div>
+          <div class="card-body">
+            <div class="steps-content">
+              {{ tlr.steps_to_make|linebreaks }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Tips for Classroom Use -->
+      {% if tlr.tips_for_use %}
+        <div class="card mb-4 shadow-sm rounded-4">
+          <div class="card-header bg-transparent border-0 pb-0">
+            <h3 class="h5 mb-0"><i class="fas fa-lightbulb text-primary me-2"></i>Tips for Classroom Use</h3>
+          </div>
+          <div class="card-body">
+            <div class="tips-content">
+              {{ tlr.tips_for_use|linebreaks }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Curriculum Alignment -->
+      {% if tlr.standard or tlr.indicator %}
+        <div class="card mb-4 shadow-sm rounded-4">
+          <div class="card-header bg-transparent border-0 pb-0">
+            <h3 class="h5 mb-0"><i class="fas fa-graduation-cap text-primary me-2"></i>Curriculum Alignment</h3>
+          </div>
+          <div class="card-body">
+            {% if tlr.standard %}
+              <div class="mb-3">
+                <h6 class="fw-semibold">Content Standard</h6>
+                <p class="mb-1"><strong>{{ tlr.standard.code }}</strong></p>
+                <p class="text-muted">{{ tlr.standard.description }}</p>
+              </div>
+            {% endif %}
+            
+            {% if tlr.indicator %}
+              <div class="mb-3">
+                <h6 class="fw-semibold">Indicator</h6>
+                <p class="mb-1"><strong>{{ tlr.indicator.code }}</strong></p>
+                <p class="text-muted">{{ tlr.indicator.description }}</p>
+              </div>
+            {% endif %}
+            
+            {% if tlr.strand %}
+              <div class="mb-3">
+                <h6 class="fw-semibold">Strand</h6>
+                <p class="text-muted">{{ tlr.strand.title }}</p>
+              </div>
+            {% endif %}
+            
+            {% if tlr.substrand %}
+              <div class="mb-3">
+                <h6 class="fw-semibold">Sub-strand</h6>
+                <p class="text-muted">{{ tlr.substrand.title }}</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Tags and Categories -->
+      <div class="card mb-4 shadow-sm rounded-4">
+        <div class="card-header bg-transparent border-0 pb-0">
+          <h3 class="h5 mb-0"><i class="fas fa-tags text-primary me-2"></i>Tags & Categories</h3>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            {% if tlr.themes.all %}
+              <div class="col-md-6">
+                <h6 class="fw-semibold">🌱 Themes</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  {% for tag in tlr.themes.all %}
+                    <span class="badge bg-success-subtle text-success border">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if tlr.key_learning_areas.all %}
+              <div class="col-md-6">
+                <h6 class="fw-semibold">📚 Learning Areas</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  {% for tag in tlr.key_learning_areas.all %}
+                    <span class="badge bg-primary-subtle text-primary border">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if tlr.competencies.all %}
+              <div class="col-md-6">
+                <h6 class="fw-semibold">🧠 Competencies</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  {% for tag in tlr.competencies.all %}
+                    <span class="badge bg-warning-subtle text-warning border">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if tlr.resource_types.all %}
+              <div class="col-md-6">
+                <h6 class="fw-semibold">🧩 Resource Types</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  {% for tag in tlr.resource_types.all %}
+                    <span class="badge bg-secondary-subtle text-secondary border">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if tlr.special_needs.all %}
+              <div class="col-md-6">
+                <h6 class="fw-semibold">♿ Special Needs Support</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  {% for tag in tlr.special_needs.all %}
+                    <span class="badge bg-danger-subtle text-danger border">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if tlr.learning_styles.all %}
+              <div class="col-md-6">
+                <h6 class="fw-semibold">🎨 Learning Styles</h6>
+                <div class="d-flex flex-wrap gap-1">
+                  {% for tag in tlr.learning_styles.all %}
+                    <span class="badge bg-info-subtle text-info border">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Media Sidebar -->
+    <div class="col-xl-4 col-lg-5">
+      <div class="sticky-top" style="top: 1rem;">
+        
+        <!-- Images Section -->
+        {% if tlr.images.all %}
+          <div class="card mb-4 shadow-sm rounded-4">
+            <div class="card-header bg-transparent border-0 pb-0">
+              <h3 class="h5 mb-0">
+                <i class="fas fa-images text-primary me-2"></i>
+                Images ({{ tlr.images.count }})
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="row g-2">
+                {% for img in tlr.images.all %}
+                  <div class="col-6">
+                    <div class="image-container">
+                      <img src="{{ img.image.url }}" 
+                           alt="{{ img.caption|default:'TLR Image' }}" 
+                           class="img-fluid rounded shadow-sm clickable-image"
+                           style="height: 120px; width: 100%; object-fit: cover; cursor: pointer;"
+                           data-bs-toggle="modal" 
+                           data-bs-target="#imageModal{{ forloop.counter }}">
+                      {% if img.caption %}
+                        <small class="d-block text-muted mt-1 text-center">{{ img.caption|truncatechars:20 }}</small>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <!-- Image Modal -->
+                  <div class="modal fade" id="imageModal{{ forloop.counter }}" tabindex="-1">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h5 class="modal-title">{{ img.caption|default:"TLR Image" }}</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-center p-0">
+                          <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="img-fluid">
+                        </div>
+                        {% if img.caption %}
+                          <div class="modal-footer border-0 justify-content-center">
+                            <p class="text-muted mb-0">{{ img.caption }}</p>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Videos Section -->
+        {% if tlr.videos.all %}
+          <div class="card mb-4 shadow-sm rounded-4">
+            <div class="card-header bg-transparent border-0 pb-0">
+              <h3 class="h5 mb-0">
+                <i class="fas fa-video text-primary me-2"></i>
+                Videos ({{ tlr.videos.count }})
+              </h3>
+            </div>
+            <div class="card-body">
+              {% for video in tlr.videos.all %}
+                <div class="video-container mb-3">
+                  {% if video.caption %}
+                    <h6 class="fw-semibold mb-2">{{ video.caption }}</h6>
+                  {% endif %}
+                  
+                  <div class="ratio ratio-16x9 rounded overflow-hidden">
+                    {% if 'youtube.com' in video.url or 'youtu.be' in video.url %}
+                      <!-- Convert YouTube URL to embed format -->
+                      {% if 'watch?v=' in video.url %}
+                        <iframe src="{{ video.url|slice:'0:-11'|add:'embed/'|add:video.url|slice:'-11:' }}" 
+                                title="{{ video.caption|default:'YouTube Video' }}" 
+                                allowfullscreen 
+                                class="rounded"></iframe>
+                      {% elif 'youtu.be/' in video.url %}
+                        <iframe src="https://www.youtube.com/embed/{{ video.url|slice:'-11:' }}" 
+                                title="{{ video.caption|default:'YouTube Video' }}" 
+                                allowfullscreen 
+                                class="rounded"></iframe>
+                      {% else %}
+                        <iframe src="{{ video.url }}" 
+                                title="{{ video.caption|default:'Video' }}" 
+                                allowfullscreen 
+                                class="rounded"></iframe>
+                      {% endif %}
+                    {% else %}
+                      <!-- Generic iframe for other video services -->
+                      <iframe src="{{ video.url }}" 
+                              title="{{ video.caption|default:'Video' }}" 
+                              allowfullscreen 
+                              class="rounded"></iframe>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="mt-2">
+                    <a href="{{ video.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                      <i class="fas fa-external-link-alt"></i> Open in New Tab
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Download Card -->
+        <div class="card bg-primary text-white shadow-sm rounded-4">
+          <div class="card-body text-center">
+            <i class="fas fa-download fa-2x mb-3"></i>
+            <h5 class="card-title">Ready to Use?</h5>
+            <p class="card-text">Download this TLR as a PDF with all the details you need for your classroom.</p>
+            <a href="{% url 'download_tlr' tlr.pk %}" class="btn btn-light btn-lg">
+              <i class="bi bi-download"></i> Download PDF
+            </a>
+          </div>
+        </div>
+
+        <!-- Additional Info Card -->
+        {% if tlr.created_by or tlr.last_updated %}
+          <div class="card mt-4 shadow-sm rounded-4">
+            <div class="card-body text-center">
+              <h6 class="card-title">Resource Info</h6>
+              {% if tlr.created_by %}
+                <p class="text-muted mb-1">
+                  <i class="fas fa-user me-1"></i>
+                  Created by {{ tlr.created_by.get_full_name|default:tlr.created_by.username }}
+                </p>
+              {% endif %}
+              {% if tlr.last_updated %}
+                <p class="text-muted mb-0">
+                  <i class="fas fa-clock me-1"></i>
+                  Updated {{ tlr.last_updated|date:"M d, Y" }}
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+.bg-gradient {
+  background: linear-gradient(135deg, #6f42c1 0%, #5a3a9a 100%);
+}
+
+.clickable-image {
+  transition: all 0.3s ease;
+}
+
+.clickable-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.steps-content, .tips-content {
+  line-height: 1.7;
+}
+
+.steps-content p, .tips-content p {
+  margin-bottom: 1rem;
+}
+
+.card {
+  border: 1px solid #dee2e6;
+}
+
+.card-header {
+  background: rgba(111, 66, 193, 0.05);
+}
+
+.badge {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.sticky-top {
+  z-index: 1020;
+}
+
+/* Video container styling */
+.video-container {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+}
+
+.video-container:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sticky-top {
+    position: relative !important;
+  }
+  
+  .col-xl-4, .col-lg-5 {
+    margin-top: 2rem;
+  }
+  
+  .clickable-image {
+    height: 100px !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .btn, .modal, .sticky-top {
+    display: none !important;
+  }
+}
+</style>
+
+<!-- Bootstrap JS for modals -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add smooth scrolling to anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+  
+  // Track image clicks for analytics (optional)
+  document.querySelectorAll('.clickable-image').forEach(img => {
+    img.addEventListener('click', function() {
+      console.log('Image clicked:', this.alt);
+      // You can add analytics tracking here
+    });
+  });
+});
+</script>
+{% endblock %}
