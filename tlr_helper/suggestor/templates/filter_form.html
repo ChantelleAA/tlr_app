@@ -306,6 +306,7 @@
 
 {% block content %}
 <div class="container my-5">
+  
   <div class="card shadow-lg card-theme-adaptive main-card">
     
     <!-- Professional Header -->
@@ -360,12 +361,10 @@
               <!-- Class Level -->
               <div>
                 <label for="id_class_level" class="form-label fw-semibold">{{ form.class_level.label }}</label>
-                <select name="class_level" id="id_class_level"
-                        class="form-select"
-                        hx-get="{% url 'ajax_load_subjects' %}"
+                <select name="class_level" id="id_class_level" class="form-select"
+                        hx-get="/ajax/subjects/"
                         hx-target="#subject-field"
-                        hx-trigger="change"
-                        hx-indicator=".loading-indicator">
+                        hx-trigger="change">
                   <option value="">-- Select Class Level --</option>
                   {% for cl in form.class_level.field.queryset %}
                     <option value="{{ cl.pk }}"
@@ -379,9 +378,8 @@
               <!-- Term -->
               <div>
                 <label for="id_term" class="form-label fw-semibold">{{ form.term.label }}</label>
-                <select name="term" id="id_term"
-                        class="form-select"
-                        hx-get="{% url 'ajax_load_strands' %}"
+                <select name="term" id="id_term" class="form-select"
+                        hx-get="/ajax/strands/"
                         hx-target="#strand-field"
                         hx-trigger="change"
                         hx-include="[name='class_level'], [name='subject'], [name='term']">
@@ -396,21 +394,22 @@
               </div>
 
               <!-- Subject -->
-              <div id="subject-field">
+              <div>
                 <label for="id_subject" class="form-label fw-semibold">{{ form.subject.label }}</label>
-                <select name="subject" id="id_subject"
-                        class="form-select"
-                        hx-get="{% url 'ajax_load_strands' %}"
-                        hx-target="#strand-field"
-                        hx-trigger="change"
-                        hx-include="[name='class_level'], [name='subject'], [name='term']">
-                  <option value="">-- Select Subject --</option>
-                  {% for subj in form.subject.field.queryset %}
-                    <option value="{{ subj.pk }}" {% if form.subject.value|stringformat:"s" == subj.pk|stringformat:"s" %}selected{% endif %}>
-                      {{ subj.title }}
-                    </option>
-                  {% endfor %}
-                </select>
+                <div id="subject-field">
+                  <select name="subject" id="id_subject" class="form-select"
+                          hx-get="/ajax/strands/"
+                          hx-target="#strand-field"
+                          hx-trigger="change"
+                          hx-include="[name='class_level'], [name='subject'], [name='term']">
+                    <option value="">-- Select Subject --</option>
+                    {% for subj in form.subject.field.queryset %}
+                      <option value="{{ subj.pk }}" {% if form.subject.value|stringformat:"s" == subj.pk|stringformat:"s" %}selected{% endif %}>
+                        {{ subj.title }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
               </div>
 
               <!-- Strand -->
@@ -654,6 +653,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Enhanced HTMX loading indicators
     document.addEventListener('htmx:beforeRequest', function(e) {
+        console.log('HTMX: Before request to', e.detail.xhr.responseURL || 'unknown URL');
+        console.log('HTMX: Request details', e.detail);
         const target = e.target;
         if (target.tagName === 'SELECT') {
             target.classList.add('loading');
@@ -661,35 +662,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.addEventListener('htmx:afterRequest', function(e) {
+        console.log('HTMX: After request', e.detail.xhr.status, e.detail.xhr.responseText);
         const target = e.target;
         if (target.tagName === 'SELECT') {
             target.classList.remove('loading');
         }
     });
     
-    // Smooth section focusing
-    document.querySelectorAll('.form-section').forEach(section => {
-        section.addEventListener('click', function(e) {
-            if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-            
-            const firstInput = this.querySelector('select, input, textarea');
-            if (firstInput && !firstInput.disabled) {
-                firstInput.focus();
-                firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        });
+    document.addEventListener('htmx:responseError', function(e) {
+        console.error('HTMX: Response error', e.detail);
     });
-    
-    // Professional hover effects
-    document.querySelectorAll('.form-select, .form-control').forEach(input => {
-        input.addEventListener('focus', function() {
-            this.closest('.form-section')?.classList.add('focused');
+
+    // Class level change debug
+    const classLevelField = document.getElementById('id_class_level');
+    if (classLevelField) {
+        classLevelField.addEventListener('change', function(e) {
+            console.log('Class level changed to:', e.target.value);
         });
-        
-        input.addEventListener('blur', function() {
-            this.closest('.form-section')?.classList.remove('focused');
-        });
-    });
+    }
 });
 </script>
 {% endblock %}

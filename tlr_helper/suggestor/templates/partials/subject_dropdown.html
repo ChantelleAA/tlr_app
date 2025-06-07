@@ -1,9 +1,11 @@
-<div class="mb-3">
-  <label for="{{ form.subject.id_for_label }}" class="form-label fw-semibold">{{ form.subject.label }}</label>
-  {{ form.subject }}
-  {% if form.subject.errors %}
-    <div class="text-danger small">
-      {{ form.subject.errors.as_text }}
-    </div>
-  {% endif %}
-</div>
+<select name="subject" id="id_subject"
+        class="form-select"
+        hx-get="{% url 'ajax_load_strands' %}"
+        hx-target="#strand-field"
+        hx-trigger="change"
+        hx-include="[name='class_level'], [name='subject'], [name='term']">
+  <option value="">-- Select Subject --</option>
+  {% for subj in subjects %}
+    <option value="{{ subj.pk }}">{{ subj.title }}</option>
+  {% endfor %}
+</select>

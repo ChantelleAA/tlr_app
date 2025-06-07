@@ -38,8 +38,9 @@ class RouteSelectForm(forms.Form):
 class FilterForm(forms.Form):
     class_level = forms.ModelChoiceField(
         queryset=ClassLevel.objects.all(),
+        required=False,  # ← FIXED: Added this line
         label="Class",
-        widget=forms.Select(attrs={'class': 'form-select'})   # ← no “select2”
+        widget=forms.Select(attrs={'class': 'form-select'})   # ← no "select2"
     )
 
     # single-choice fields: keep Bootstrap look
@@ -47,19 +48,19 @@ class FilterForm(forms.Form):
         queryset=Subject.objects.none(),
         required=False,
         label="Subject",
-        widget=forms.Select(attrs={'class': 'form-select'})   # ← no “select2”
+        widget=forms.Select(attrs={'class': 'form-select'})   # ← no "select2"
     )
     strand = forms.ModelChoiceField(
         queryset=Strand.objects.none(),
         required=False,
         label="Strand",
-        widget=forms.Select(attrs={'class': 'form-select'})   # ← no “select2”
+        widget=forms.Select(attrs={'class': 'form-select'})   # ← no "select2"
     )
     substrand = forms.ModelChoiceField(
         queryset=SubStrand.objects.none(),
         required=False,
         label="Sub-strand",
-        widget=forms.Select(attrs={'class': 'form-select'})   # ← no “select2”
+        widget=forms.Select(attrs={'class': 'form-select'})   # ← no "select2"
     )
 
     term = forms.ChoiceField(

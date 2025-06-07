@@ -250,39 +250,42 @@ def serialize_filters(data):
         else:
             safe[key] = value
     return safe
-
 @login_required
 def filter_page(request):
-    # Get routes from session (could be list or single route)
     routes = request.session.get("routes", [])
-    route = request.session.get("route")  # Legacy single route
+    route = request.session.get("route")
     
-    # Handle both cases: new multi-route and old single route
     if not routes and route:
-        routes = [route]  # Convert single route to list
+        routes = [route]
     elif not routes and not route:
         return redirect("route_select")
 
     if request.method == "POST":
         form = FilterForm(request.POST)
+        print(f"DEBUG filter_page POST: form valid={form.is_valid()}")
+        print(f"DEBUG filter_page POST: raw form data={dict(request.POST)}")
+        
         if form.is_valid():
+            print(f"DEBUG filter_page POST: cleaned_data={form.cleaned_data}")
+            print(f"DEBUG filter_page POST: class_level value={form.cleaned_data.get('class_level')}")
+            print(f"DEBUG filter_page POST: class_level type={type(form.cleaned_data.get('class_level'))}")
+            
             request.session["filters"] = serialize_filters(form.cleaned_data)
             request.session["search_type"] = "advanced"
-            # Store both for compatibility
             request.session["routes"] = routes
             if len(routes) == 1:
                 request.session["route"] = routes[0]
             return redirect("results_page")
+        else:
+            print(f"DEBUG filter_page POST: form errors={form.errors}")
     else:
         form = FilterForm()
 
     return render(request, "filter_form.html", {
         "form": form, 
-        "routes": routes,  # Pass as list
-        "route": routes[0] if len(routes) == 1 else None  # Pass single route for backward compatibility
+        "routes": routes,
+        "route": routes[0] if len(routes) == 1 else None
     })
-
-
 
 @login_required
 def chained_filter(request):
@@ -301,16 +304,29 @@ def signup_view(request):
         form = SignUpForm()
     return render(request, "signup.html", {"form": form})
 
+# def ajax_load_subjects(request):
+#     class_level_id = request.GET.get("class_level")
+#     form = FilterForm()
+#     if class_level_id:
+#         form.fields["subject"].queryset = Subject.objects.filter(class_level_id=class_level_id)
+#     else:
+#         form.fields["subject"].queryset = Subject.objects.none()
+    
+#     # Use existing template instead of missing one
+#     return render(request, "partials/subject_dropdown.html", {"subjects": form.fields["subject"].queryset})
+
 def ajax_load_subjects(request):
     class_level_id = request.GET.get("class_level")
-    form = FilterForm()
-    if class_level_id:
-        form.fields["subject"].queryset = Subject.objects.filter(class_level_id=class_level_id)
-    else:
-        form.fields["subject"].queryset = Subject.objects.none()
+    print(f"DEBUG ajax_load_subjects: class_level_id={class_level_id}")
     
-    # Use existing template instead of missing one
-    return render(request, "partials/form_field_wrapper.html", {"field": form["subject"]})
+    if class_level_id:
+        subjects = Subject.objects.filter(class_level_id=class_level_id)
+        print(f"DEBUG ajax_load_subjects: found {subjects.count()} subjects: {list(subjects)}")
+    else:
+        subjects = Subject.objects.none()
+        print(f"DEBUG ajax_load_subjects: no class_level_id provided")
+    
+    return render(request, "partials/subject_dropdown.html", {"subjects": subjects})
 
 def ajax_load_strands(request):
     class_level_id = request.GET.get("class_level")
@@ -551,29 +567,7 @@ def results_page(request):
     context["pinterest_boards"] = matched_boards
     return render(request, "results.html", context)
 
-@login_required
-def filter_page(request):
-    routes = request.session.get("routes", [])
-    if not routes:
-        return redirect("route_select")
 
-    if request.method == "POST":
-        form = FilterForm(request.POST)
-        if form.is_valid():
-            request.session["filters"] = serialize_filters(form.cleaned_data)
-            request.session["search_type"] = "advanced"
-            return redirect("results_page")
-    else:
-        form = FilterForm()
-
-    # Determine which fields to show based on selected routes
-    visible_fields = get_visible_fields(routes)
-
-    return render(request, "filter_form.html", {
-        "form": form, 
-        "routes": routes,
-        "visible_fields": visible_fields
-    })
 
 def get_visible_fields(routes):
     """Determine which form fields to show based on selected routes."""
