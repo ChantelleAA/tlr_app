@@ -169,7 +169,7 @@
                 </div>
                 
                 <!-- Show first video thumbnail -->
-                {% for vid in tlr.videos.all|slice:":1" %}
+                {% for vid in tlr.videos.all|slice:":3" %}
                   <div class="video-thumbnail rounded overflow-hidden mb-2 position-relative" 
                        style="cursor: pointer; height: 120px;"
                        onclick="event.stopPropagation(); window.location.href='{% url 'tlr_detail' tlr.slug %}'">

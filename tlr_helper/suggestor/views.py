@@ -21,6 +21,13 @@ from reportlab.lib.units import inch
 from io import BytesIO
 from django.db.models import F
 import re
+from .forms import EnhancedRouteSelectForm
+from django.db.models import Q
+from .forms import EnhancedRouteSelectForm
+from django.db.models import Model
+from .forms import EnhancedRouteSelectForm
+import openai
+import os
 
 PINTEREST_BOARDS = [
     {
@@ -74,16 +81,12 @@ def download_view(request, pk):
     from django.db.models import F
     Tlr.objects.filter(pk=pk).update(download_count=F('download_count') + 1)
     
-    # Create a file-like buffer to receive PDF data
     buffer = BytesIO()
     
-    # Create the PDF object, using the buffer as its "file"
     doc = SimpleDocTemplate(buffer, pagesize=A4)
     
-    # Container for the 'Flowable' objects
     elements = []
     
-    # Define styles
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle(
         'CustomTitle',
@@ -192,6 +195,7 @@ def load_subjects(request):
 
     return render(request, "partials/form_field_wrapper.html", {"field": form["subject"]})
 
+@login_required
 def pick_route(request):
     form = RouteSelectForm()
     return render(request, "route_select.html", {"route_form": form})
@@ -228,9 +232,6 @@ def suggest(request):
     return render(request, "filter_form.html",
                   {"filter_form": form, "route": route})
 
-
-
-
 def about_page(request):
     return render(request, "about.html")
 
@@ -250,6 +251,7 @@ def serialize_filters(data):
         else:
             safe[key] = value
     return safe
+
 @login_required
 def filter_page(request):
     routes = request.session.get("routes", [])
@@ -303,17 +305,6 @@ def signup_view(request):
     else:
         form = SignUpForm()
     return render(request, "signup.html", {"form": form})
-
-# def ajax_load_subjects(request):
-#     class_level_id = request.GET.get("class_level")
-#     form = FilterForm()
-#     if class_level_id:
-#         form.fields["subject"].queryset = Subject.objects.filter(class_level_id=class_level_id)
-#     else:
-#         form.fields["subject"].queryset = Subject.objects.none()
-    
-#     # Use existing template instead of missing one
-#     return render(request, "partials/subject_dropdown.html", {"subjects": form.fields["subject"].queryset})
 
 def ajax_load_subjects(request):
     class_level_id = request.GET.get("class_level")
@@ -390,7 +381,7 @@ def contact_page(request):
                     f"Organization: {form.cleaned_data.get('organization', '')}\n\n"
                     f"Message:\n{message}"
                 ),
-                from_email='your_email@gmail.com',  # Or use DEFAULT_FROM_EMAIL
+                from_email='chantelleope@gmail.com',
                 recipient_list=['teddghana@gmail.com', 'support@nileedge.com'],  # Adjust as needed
                 fail_silently=False,
             )
@@ -416,17 +407,7 @@ def tlr_detail_page(request, slug):
     
     return render(request, "tlr_detail.html", {"tlr": tlr})
 
-# Add this import at the top
-from .forms import EnhancedRouteSelectForm
-from django.db.models import Q
-
-# Add this import at the top
-from .forms import EnhancedRouteSelectForm
-from django.db.models import Model
-
-# Add this import at the top of views.py
-from .forms import EnhancedRouteSelectForm
-
+@login_required
 def route_select(request):
     if request.method == "POST":
         form = EnhancedRouteSelectForm(request.POST)
@@ -587,15 +568,12 @@ def get_visible_fields(routes):
         elif route == "goal":
             fields.add('goal')
 
-    # Always include common filters
     fields.update(['intended_use', 'time_needed', 'budget_band', 'bloom_level', 
                     'class_size', 'learning_styles', 'special_needs', 'materials_available'])
 
     return fields
 
-# Add this to your views.py
-import openai
-import os
+
 
 def get_search_suggestions(keywords):
     """Use OpenAI to suggest better search terms for TLR discovery."""
@@ -630,7 +608,6 @@ def get_search_suggestions(keywords):
         print(f"OpenAI suggestion error: {e}")
         return []
 
-# Add AJAX endpoint for live suggestions
 def ajax_search_suggestions(request):
     keywords = request.GET.get('q', '')
     if len(keywords) > 3:
@@ -638,7 +615,6 @@ def ajax_search_suggestions(request):
         return JsonResponse({'suggestions': suggestions})
     return JsonResponse({'suggestions': []})
 
-# Add this helper function to your views.py
 def serialize_for_session(data):
     """Convert Django objects to JSON-serializable format for session storage."""
     serialized = {}
