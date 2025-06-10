@@ -2,6 +2,7 @@
 
 **TLR Helper** is a Django web application that helps teachers find and use effective Teaching and Learning Resources (TLRs) that are aligned with Ghana’s Standards-Based Curriculum (SBC). It guides users through curriculum-based filtering to suggest resources appropriate for the class level, subject, and learning goals. The app also includes tools for filtering based on learning styles and special needs, making it more inclusive.
 
+![tlr helper](tlr_helper.gif)
 ---
 
 ## Project Overview
