@@ -6,7 +6,6 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from django.db.models import Model
 import unicodedata
 import re
 from django.contrib.auth import login
@@ -19,12 +18,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import inch
 from io import BytesIO
-from django.db.models import F
-import re
-from .forms import EnhancedRouteSelectForm
-from django.db.models import Q
-from .forms import EnhancedRouteSelectForm
-from django.db.models import Model
+from django.db.models import F, Q, Model
 from .forms import EnhancedRouteSelectForm
 import openai
 import os
