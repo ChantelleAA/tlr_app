@@ -12,7 +12,6 @@ from django.contrib.auth import login
 from django.core.mail import send_mail
 from django.contrib import messages
 from .forms import ContactForm 
-import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.pagesizes import A4
