@@ -32,32 +32,108 @@ except OperationalError as e:
     print(f'Database check error: {e}')
 "
 
-# Load initial data using our custom command
-echo "Loading initial curriculum data..."
+# Load initial data using our new management commands
+echo "Checking for existing curriculum data..."
 python manage.py shell -c "
-from suggestor.models import ClassLevel
-if ClassLevel.objects.count() == 0:
-    print('No initial data found. Loading from fixtures...')
-    exit_code = 1  # Signal that we need to load fixtures
+from suggestor.models import ClassLevel, Tlr, Material
+class_count = ClassLevel.objects.count()
+tlr_count = Tlr.objects.count()
+material_count = Material.objects.count()
+
+print(f'ClassLevels: {class_count}')
+print(f'TLRs: {tlr_count}')
+print(f'Materials: {material_count}')
+
+if class_count == 0 or material_count == 0:
+    print('NEED_BASIC_DATA')
+    exit(1)
+elif tlr_count < 5:  # If we have less than 5 TLRs, load more
+    print('NEED_MORE_TLRS')
+    exit(2)
 else:
-    print('Initial data already exists. Skipping fixture loading.')
-    exit_code = 0
-exit(exit_code)
+    print('DATA_EXISTS')
+    exit(0)
 "
 
-# Check the exit code and load fixtures if needed
-if [ $? -eq 1 ]; then
-    echo "Loading fixtures with custom command..."
-    python manage.py load_fixtures_safe
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -eq 1 ]; then
+    echo "Loading comprehensive nursery data..."
+    python manage.py populate_nursery_data
     
-    # Verify fixture loading was successful
+    # Verify basic data loading
     python manage.py shell -c "
-from suggestor.models import ClassLevel, Subject, Strand, Tlr
+from suggestor.models import ClassLevel, Subject, Material, Tlr
 print(f'ClassLevels loaded: {ClassLevel.objects.count()}')
 print(f'Subjects loaded: {Subject.objects.count()}')
-print(f'Strands loaded: {Strand.objects.count()}')
-print(f'TLRs loaded: {Tlr.objects.count()}')
+print(f'Materials loaded: {Material.objects.count()}')
+print(f'Basic TLRs loaded: {Tlr.objects.count()}')
     "
+    
+    echo "Loading interactive TLRs..."
+    python manage.py create_interactive_tlrs
+    
+elif [ $EXIT_CODE -eq 2 ]; then
+    echo "Basic data exists, loading additional interactive TLRs..."
+    python manage.py create_interactive_tlrs
+    
+else
+    echo "All curriculum data already exists, skipping data loading..."
+fi
+
+# Final verification of all data
+echo "Verifying complete data set..."
+python manage.py shell -c "
+from suggestor.models import *
+import sys
+
+# Count all major models
+counts = {
+    'ClassLevels': ClassLevel.objects.count(),
+    'Subjects': Subject.objects.count(),
+    'Materials': Material.objects.count(),
+    'Themes': Theme.objects.count(),
+    'Learning Styles': LearningStyle.objects.count(),
+    'Special Needs': SpecialNeed.objects.count(),
+    'TLRs': Tlr.objects.count(),
+    'Strands': Strand.objects.count(),
+}
+
+print('=== CURRICULUM DATA SUMMARY ===')
+for model, count in counts.items():
+    print(f'{model}: {count}')
+
+# Check for nursery-specific data
+nursery_tlrs = Tlr.objects.filter(class_level__name='Nursery').count()
+interactive_tlrs = Tlr.objects.filter(title__icontains='Interactive').count()
+
+print(f'Nursery TLRs: {nursery_tlrs}')
+print(f'Interactive TLRs: {interactive_tlrs}')
+
+# Verify we have minimum required data
+required_minimums = {
+    'ClassLevels': 2,  # At least Creche and Nursery
+    'Materials': 20,   # Comprehensive materials list
+    'TLRs': 10,       # Good collection of resources
+}
+
+missing_data = []
+for model, minimum in required_minimums.items():
+    if counts[model] < minimum:
+        missing_data.append(f'{model}: {counts[model]}/{minimum}')
+
+if missing_data:
+    print('WARNING: Insufficient data loaded:')
+    for item in missing_data:
+        print(f'  - {item}')
+    sys.exit(1)
+else:
+    print('✅ All curriculum data successfully loaded!')
+"
+
+if [ $? -ne 0 ]; then
+    echo "=== DEPLOYMENT FAILED - Curriculum data loading failed ==="
+    exit 1
 fi
 
 echo "Creating superuser..."
@@ -94,32 +170,63 @@ except Exception as e:
     "
 fi
 
+# Check if we can run the management commands (validate they exist)
+echo "Validating management commands..."
+python manage.py help | grep -E "(populate_nursery_data|create_interactive_tlrs)" > /dev/null
+if [ $? -eq 0 ]; then
+    echo "✅ Custom management commands available"
+else
+    echo "⚠️  Warning: Custom management commands not found - check directory structure"
+fi
+
 echo "Collecting static files..."
 python manage.py collectstatic --noinput --clear
 
-# Run a final health check
+# Run a comprehensive health check
 echo "Running deployment health check..."
 python manage.py shell -c "
 from django.db import connection
-from suggestor.models import ClassLevel
+from suggestor.models import *
+import sys
+
 try:
     # Test database connection
     with connection.cursor() as cursor:
         cursor.execute('SELECT 1')
+    print('✅ Database connection successful')
     
-    # Test model access
-    count = ClassLevel.objects.count()
-    print(f'Health check passed. Database accessible with {count} class levels.')
+    # Test model access and data integrity
+    class_levels = ClassLevel.objects.count()
+    subjects = Subject.objects.count()
+    tlrs = Tlr.objects.count()
+    materials = Material.objects.count()
     
-    if count == 0:
-        print('WARNING: No curriculum data loaded!')
-        exit(1)
+    print(f'✅ Models accessible:')
+    print(f'   - Class Levels: {class_levels}')
+    print(f'   - Subjects: {subjects}') 
+    print(f'   - TLRs: {tlrs}')
+    print(f'   - Materials: {materials}')
+    
+    # Test relationships
+    nursery_subjects = Subject.objects.filter(class_level__name='Nursery').count()
+    print(f'   - Nursery subjects: {nursery_subjects}')
+    
+    # Test TLR relationships
+    tlrs_with_materials = Tlr.objects.filter(materials__isnull=False).distinct().count()
+    print(f'   - TLRs with materials: {tlrs_with_materials}')
+    
+    if class_levels == 0:
+        print('❌ CRITICAL: No curriculum data loaded!')
+        sys.exit(1)
+    elif tlrs < 5:
+        print('⚠️  WARNING: Very few TLRs loaded')
+        sys.exit(1)
     else:
-        print('Curriculum data successfully loaded.')
+        print('✅ Comprehensive curriculum data successfully loaded!')
         
 except Exception as e:
-    print(f'Health check failed: {e}')
-    exit(1)
+    print(f'❌ Health check failed: {e}')
+    sys.exit(1)
 "
 
 if [ $? -ne 0 ]; then
@@ -127,8 +234,18 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "=== Deployment Complete Successfully ==="
-echo "Starting Gunicorn server..."
+echo "=== 🎉 Deployment Complete Successfully ==="
+echo "📊 Curriculum Summary:"
+python manage.py shell -c "
+from suggestor.models import Tlr, Material, ClassLevel
+print(f'   📚 {Tlr.objects.count()} Teaching & Learning Resources loaded')
+print(f'   🎨 {Material.objects.count()} Materials available')
+print(f'   🏫 {ClassLevel.objects.count()} Class levels configured')
+print(f'   🎯 {Tlr.objects.filter(class_level__name=\"Nursery\").count()} Nursery-specific TLRs')
+print(f'   ⚡ {Tlr.objects.filter(title__icontains=\"Interactive\").count()} Interactive TLRs')
+"
+
+echo "🚀 Starting Gunicorn server..."
 
 # Start Gunicorn with proper configuration for Render
 exec gunicorn core.wsgi:application \
