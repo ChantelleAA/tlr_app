@@ -1,6 +1,5 @@
-# management/commands/populate_nursery_data.py
+# management/commands/populate_kg_primary_data.py
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
 from suggestor.models import (
     ClassLevel, Subject, Theme, KeyLearningArea, CoreCompetency, 
     GoalTag, ResourceType, SpecialNeed, LearningStyle, Material,
@@ -8,816 +7,792 @@ from suggestor.models import (
 )
 
 class Command(BaseCommand):
-    help = 'Populate comprehensive nursery-level TLR data based on early childhood development'
+    help = 'Populate comprehensive TLR data for KG1, KG2, and Classes 1-3'
 
     def handle(self, *args, **options):
-        self.stdout.write('Creating comprehensive nursery data...')
+        self.stdout.write('Creating comprehensive KG and Primary data...')
         
-        # Create foundational data
-        self.create_class_levels_and_subjects()
-        self.create_themes()
-        self.create_key_learning_areas()
-        self.create_core_competencies()
-        self.create_goal_tags()
-        self.create_resource_types()
-        self.create_special_needs()
-        self.create_learning_styles()
-        self.create_materials()
+        # Create TLRs for each class level
+        self.create_kg1_tlrs()
+        self.create_kg2_tlrs()
+        self.create_class1_tlrs()
+        self.create_class2_tlrs()
+        self.create_class3_tlrs()
+        self.create_cross_curricular_kg_primary_tlrs()
         
-        # Create curriculum structure
-        self.create_nursery_curriculum()
+        self.stdout.write(self.style.SUCCESS('KG and Primary TLRs created successfully!'))
+
+    def create_kg1_tlrs(self):
+        """Create TLRs for KG1 (4-5 year olds) - Focus on school readiness"""
+        kg1 = ClassLevel.objects.get(name="KG1")
         
-        # Create comprehensive TLRs
-        self.create_language_literacy_tlrs()
-        self.create_numeracy_tlrs()
-        self.create_creative_arts_tlrs()
-        self.create_environmental_studies_tlrs()
-        self.create_physical_development_tlrs()
-        self.create_music_movement_tlrs()
-        self.create_additional_comprehensive_tlrs()
+        # Language and Literacy TLRs for KG1
+        lang_subject = Subject.objects.get(class_level=kg1, title="Language and Literacy")
         
-        self.stdout.write(self.style.SUCCESS('Comprehensive nursery data created successfully!'))
-
-    def create_class_levels_and_subjects(self):
-        # Early childhood class levels
-        class_data = [
-            ("1", "Creche", ["Language and Literacy", "Numeracy", "Creative Arts", "Environmental Studies", "Physical Development", "Music and Movement"]),
-            ("2", "Nursery", ["Language and Literacy", "Numeracy", "Creative Arts", "Environmental Studies", "Physical Development", "Music and Movement"]),
-            ("3", "KG1", ["Language and Literacy", "Numeracy", "Our World Our People", "Creative Arts", "Physical Development", "Religious and Moral Education"]),
-            ("4", "KG2", ["Language and Literacy", "Numeracy", "Our World Our People", "Creative Arts", "Physical Development", "Religious and Moral Education"])
-        ]
-
-        for code, name, subjects in class_data:
-            cl, created = ClassLevel.objects.get_or_create(code=code, defaults={'name': name})
-            if created:
-                self.stdout.write(f'Created class level: {name}')
-            
-            for subject_title in subjects:
-                subj, created = Subject.objects.get_or_create(class_level=cl, title=subject_title)
-                if created:
-                    self.stdout.write(f'  Created subject: {subject_title}')
-
-    def create_themes(self):
-        themes = [
-            "All About Me", "My Family", "My Body", "My Feelings", 
-            "My Home", "My School", "Animals Around Me", "Plants and Nature",
-            "Weather and Seasons", "Community Helpers", "Transportation",
-            "Food and Nutrition", "Safety", "Festivals and Celebrations"
-        ]
-        for theme in themes:
-            obj, created = Theme.objects.get_or_create(title=theme)
-            if created:
-                self.stdout.write(f'Created theme: {theme}')
-
-    def create_key_learning_areas(self):
-        klas = [
-            "Language Development", "Pre-Math Skills", "Social-Emotional Development", 
-            "Physical Motor Skills", "Creative Expression", "Scientific Thinking",
-            "Cultural Awareness", "Life Skills"
-        ]
-        for kla in klas:
-            obj, created = KeyLearningArea.objects.get_or_create(title=kla)
-            if created:
-                self.stdout.write(f'Created KLA: {kla}')
-
-    def create_core_competencies(self):
-        competencies = [
-            "Communication", "Problem Solving", "Self-Expression", 
-            "Social Interaction", "Motor Coordination", "Observation Skills",
-            "Following Instructions", "Independence"
-        ]
-        for comp in competencies:
-            obj, created = CoreCompetency.objects.get_or_create(title=comp)
-            if created:
-                self.stdout.write(f'Created competency: {comp}')
-
-    def create_goal_tags(self):
-        goals = ["Introduce", "Practice", "Reinforce", "Assess", "Review", "Extend"]
-        for goal in goals:
-            obj, created = GoalTag.objects.get_or_create(title=goal)
-            if created:
-                self.stdout.write(f'Created goal tag: {goal}')
-
-    def create_resource_types(self):
-        types = [
-            "Sensory Materials", "Picture Cards", "Story Props", "Manipulatives", 
-            "Art Supplies", "Musical Instruments", "Puzzles", "Building Blocks",
-            "Dress-up Items", "Nature Materials", "Interactive Charts", "Game Materials"
-        ]
-        for rt in types:
-            obj, created = ResourceType.objects.get_or_create(title=rt)
-            if created:
-                self.stdout.write(f'Created resource type: {rt}')
-
-    def create_special_needs(self):
-        needs = [
-            ("Speech Delay", "Children who need extra support with verbal communication"),
-            ("Sensory Processing", "Children who are over or under-sensitive to sensory input"),
-            ("Attention Difficulties", "Children who have trouble focusing or sitting still"),
-            ("Motor Delays", "Children who need extra support with physical movements"),
-            ("Social Anxiety", "Children who are very shy or have difficulty with social interactions"),
-            ("Hearing Impairment", "Children with partial or complete hearing loss"),
-            ("Visual Impairment", "Children with vision difficulties"),
-            ("Developmental Delays", "Children who may be developing more slowly in various areas")
-        ]
-        for name, desc in needs:
-            obj, created = SpecialNeed.objects.get_or_create(name=name, defaults={"description": desc})
-            if created:
-                self.stdout.write(f'Created special need: {name}')
-
-    def create_learning_styles(self):
-        styles = [
-            ("Visual Learner", "Learns best through pictures, colors, and visual demonstrations"),
-            ("Auditory Learner", "Learns best through songs, stories, and verbal instructions"),
-            ("Kinesthetic Learner", "Learns best through movement, touch, and hands-on activities"),
-            ("Social Learner", "Learns best in group settings and through interaction with others"),
-            ("Solitary Learner", "Learns best in quiet, individual settings"),
-            ("Nature Learner", "Learns best through outdoor activities and natural materials")
-        ]
-        for name, desc in styles:
-            obj, created = LearningStyle.objects.get_or_create(name=name, defaults={"description": desc})
-            if created:
-                self.stdout.write(f'Created learning style: {name}')
-
-    def create_materials(self):
-        materials = [
-            # Basic craft materials
-            "EVA foam sheet", "Glitter EVA foam sheet", "Pipe cleaners", "Double sided tape", 
-            "Paper glue", "Glue sticks", "Cartridge paper", "A4 sheets", "Manila cards", 
-            "Coloured sheets", "Crepe paper", "Markers", "Washable markers", "Pencils", 
-            "Crayons", "Paints", "Finger paints", "Paintbrushes", "Rulers", "Safety scissors",
-            
-            # Specialized tools
-            "Craft punches", "Punch outs", "Cricut machine",
-            
-            # Recyclable materials
-            "Cardboard boxes", "Empty cereal boxes", "Toilet paper rolls", "Empty tissue rolls",
-            "Plastic bottles", "Bottle caps", "Plastic lids", "Egg cartons", "Yogurt containers", 
-            "Small plastic containers", "Paper plates", "Plastic spoons", "Old newspapers", 
-            "Magazines", "Straws",
-            
-            # Natural and sensory materials
-            "Leaves", "Stones", "Shells", "Twigs", "Seeds", "Flowers", "Feathers", 
-            "Sand", "Rice", "Beans", "Water", "Cotton balls", "Cotton wool", "Sponge pieces",
-            
-            # Fabric and textiles
-            "Felt pieces", "Fabric scraps", "Scrap fabric", "Kente offcuts", "Yarn", "Wool", 
-            "Ribbon", "Buttons", "Beads", "Popsicle sticks", "Craft sticks",
-            
-            # Storage and organization
-            "Ziploc bags", "Small containers", "Transparent sheets", "Laminating pouches", 
-            "Clear contact paper", "Velcro strips", "Velcro dots",
-            
-            # Educational materials
-            "Alphabet cards", "Number cards", "Picture books", "Puzzles", "Building blocks",
-            "Counting bears", "Shape cutouts", "Color wheels", "Small mirrors", "Acrylic mirrors",
-            "Magnifying glasses", "Printed images", "Stickers", "Mini pegs", "Clothespins",
-            
-            # Art and decoration
-            "Googly eyes", "Foil paper", "Metallic sheets", "Embossed papers", "Textured papers",
-            "Masking tape", "Washi tape", "Balloons", "Chalk", "Mini blackboards", "Styrofoam",
-            
-            # Music and movement
-            "Shakers", "Drums", "Bells", "Scarves", "Bean bags", "Hula hoops", "Balls"
-        ]
-        for material in materials:
-            obj, created = Material.objects.get_or_create(name=material)
-            if created:
-                self.stdout.write(f'Created material: {material}')
-
-    def create_nursery_curriculum(self):
-        nursery = ClassLevel.objects.get(name="Nursery")
-        
-        # Language and Literacy Strands
-        lang_subject = Subject.objects.get(class_level=nursery, title="Language and Literacy")
-        
-        strands = [
-            ("Listening and Speaking", ["Vocabulary Building", "Story Comprehension", "Following Instructions"]),
-            ("Pre-Reading Skills", ["Letter Recognition", "Phonemic Awareness", "Print Awareness"]),
-            ("Pre-Writing Skills", ["Fine Motor Development", "Mark Making", "Shape Recognition"])
-        ]
-        
-        for strand_title, substrands in strands:
-            strand, created = Strand.objects.get_or_create(
-                class_level=nursery,
-                subject=lang_subject,
-                term=1,
-                title=strand_title,
-                defaults={'slug': strand_title.lower().replace(' ', '-')}
-            )
-            if created:
-                self.stdout.write(f'Created strand: {strand_title}')
-                
-            for substrand_title in substrands:
-                substrand, created = SubStrand.objects.get_or_create(
-                    strand=strand,
-                    title=substrand_title,
-                    defaults={'slug': substrand_title.lower().replace(' ', '-')}
-                )
-                if created:
-                    self.stdout.write(f'  Created substrand: {substrand_title}')
-
-    def create_language_literacy_tlrs(self):
-        nursery = ClassLevel.objects.get(name="Nursery")
-        lang_subject = Subject.objects.get(class_level=nursery, title="Language and Literacy")
-        
-        tlrs = [
+        kg1_lang_tlrs = [
             {
-                'title': 'Animal Sound Matching Cards',
-                'brief_description': 'Picture cards featuring farm animals with corresponding sound words to develop phonemic awareness and vocabulary.',
-                'steps_to_make': '''1. Print or draw pictures of 10 common animals (cow, sheep, duck, pig, cat, dog, chicken, horse, bee, bird)
-2. Create separate cards with sound words (moo, baa, quack, oink, meow, woof, cluck, neigh, buzz, tweet)
-3. Laminate all cards for durability
-4. Store in a colorful container or bag''',
-                'tips_for_use': '''- Start with 3-4 familiar animals, gradually add more
-- Make the sounds yourself first, then encourage children to join in
-- Play memory games: "What sound does the cow make?"
-- Use during circle time or small group activities
-- Encourage children to act out the animals while making sounds''',
-                'materials': ['Colored paper', 'Washable markers', 'Safety scissors', 'Non-toxic glue'],
-                'time_needed': 'short',
-                'intended_use': 'aid',
-                'tlr_type': 'flashcard',
-                'class_size': 'small',
-                'bloom_level': 'remember',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will identify 6-8 animal sounds and match them to corresponding animals, developing phonemic awareness and vocabulary.',
-                'learning_styles': ['Auditory Learner', 'Visual Learner'],
-                'special_needs': ['Speech Delay'],
-                'themes': ['Animals Around Me']
-            },
-            {
-                'title': 'My Name Recognition Puzzle',
-                'brief_description': 'Personalized puzzles featuring each child\'s name to promote letter recognition and self-identity.',
-                'steps_to_make': '''1. Write each child's name in large, clear letters on cardboard
-2. Decorate around the name with pictures representing the child (favorite color, animal, etc.)
-3. Cut between each letter to create puzzle pieces
-4. Store each puzzle in a labeled envelope or bag
-5. Consider making extras for children with longer names''',
-                'tips_for_use': '''- Start by showing the completed puzzle, then mixing pieces
-- Help children identify the first letter of their name
-- Encourage children to trace letters with their finger
-- Use during arrival time as a settling activity
-- Create group activities where children help each other''',
-                'materials': ['Cardboard', 'Washable markers', 'Safety scissors', 'Colored paper'],
-                'time_needed': 'short',
+                'title': 'Interactive Phonics Sound Box Adventure',
+                'brief_description': 'Multi-compartment sound box with objects and cards for each phonics sound, promoting systematic phonics learning.',
+                'steps_to_make': '''1. Create compartmentalized box with 26 sections (one per letter)
+2. For each letter, include:
+   - 3-4 real objects starting with that sound
+   - Picture cards showing more examples
+   - Action cards showing Jolly Phonics movements
+   - Letter formation tracing cards with arrows
+3. Add sound recording buttons for each letter
+4. Include instruction cards for various games
+5. Create assessment check-off sheets''',
+                'tips_for_use': '''- Introduce 2-3 sounds per week systematically
+- Let children find objects and sort them into correct compartments
+- Practice letter formation while saying sounds
+- Use for small group rotations and individual practice
+- Encourage children to teach sounds to others
+- Connect sounds to children\'s names and familiar words''',
+                'materials': ['Cardboard boxes', 'Real objects', 'Picture cards', 'Sound buttons', 'Tracing cards', 'Assessment sheets'],
+                'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'small',
                 'bloom_level': 'understand',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will recognize their own name in print and identify at least the first letter of their name.',
-                'learning_styles': ['Visual Learner', 'Kinesthetic Learner'],
-                'special_needs': ['Attention Difficulties'],
-                'themes': ['All About Me']
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will identify all 26 letter sounds, form letters correctly, and demonstrate phonemic awareness through sorting and blending activities.',
+                'learning_styles': ['Visual Learner', 'Kinesthetic Learner', 'Auditory Learner'],
+                'special_needs': ['Speech Delay', 'Attention Difficulties'],
+                'themes': ['My School']
             },
             {
-                'title': 'Story Retelling Props Bag',
-                'brief_description': 'Collection of simple props to help children retell familiar stories and develop narrative skills.',
-                'steps_to_make': '''1. Choose 3-4 simple stories (Three Little Pigs, Goldilocks, etc.)
-2. Create or collect simple props for each story:
-   - Three Little Pigs: 3 small houses (straw, sticks, brick), pig and wolf figures
-   - Goldilocks: 3 bowls, 3 chairs, 3 beds (different sizes), girl and bear figures
-3. Store each story's props in a separate bag with the book
-4. Include picture sequence cards showing story events''',
-                'tips_for_use': '''- Read the story first, then bring out props
-- Encourage children to use props while you retell the story
-- Let children take turns using different props
-- Ask simple questions: "What happened next?" "How did the pig feel?"
-- Allow creative variations of the familiar stories''',
-                'materials': ['Fabric scraps', 'Cardboard', 'Picture books', 'Small containers'],
+                'title': 'Sight Word Building and Reading Center',
+                'brief_description': 'Interactive center with moveable letters, word cards, and activities for building and reading common sight words.',
+                'steps_to_make': '''1. Create magnetic letter board with colorful backing
+2. Design sight word cards with:
+   - Target word in large letters
+   - Picture clue if applicable
+   - Sentence using the word
+   - Space for children to build word with magnetic letters
+3. Include different difficulty levels (10, 20, 50 sight words)
+4. Add word family sorting mats
+5. Create sight word bingo games and flash cards
+6. Include reading books featuring sight words''',
+                'tips_for_use': '''- Start with most common words: the, and, is, it, in
+- Practice building words with magnetic letters daily
+- Use sight words in context through simple sentences
+- Play sight word games during transition times
+- Encourage children to spot sight words in books
+- Create personal sight word dictionaries for each child''',
+                'materials': ['Magnetic letters', 'Word cards', 'Reading books', 'Bingo games', 'Sorting mats', 'Mini dictionaries'],
+                'time_needed': 'core',
+                'intended_use': 'aid',
+                'tlr_type': 'manipulative',
+                'class_size': 'small',
+                'bloom_level': 'remember',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will recognize and read 25-50 sight words automatically and use them to build simple sentences.',
+                'learning_styles': ['Visual Learner', 'Kinesthetic Learner'],
+                'special_needs': ['Attention Difficulties', 'Visual Impairment'],
+                'themes': ['My School']
+            },
+            {
+                'title': 'Story Sequencing and Comprehension Theater',
+                'brief_description': 'Interactive theater with story sequence cards, character puppets, and comprehension activities.',
+                'steps_to_make': '''1. Build simple puppet theater from large cardboard box
+2. Create story sequence cards for 5-6 familiar stories
+3. Design character puppets for each story
+4. Make comprehension question cards:
+   - Who was in the story?
+   - What happened first/next/last?
+   - Where did the story happen?
+   - How did the character feel?
+5. Include story prediction cards and alternative ending suggestions
+6. Add story creation spinner with characters, settings, problems''',
+                'tips_for_use': '''- Read story first, then use theater to retell
+- Let children arrange sequence cards in correct order
+- Ask comprehension questions during puppet show
+- Encourage children to create new endings
+- Use theater for small group reading comprehension
+- Have children take turns being "director" and asking questions''',
+                'materials': ['Cardboard theater', 'Sequence cards', 'Character puppets', 'Question cards', 'Story spinner', 'Books'],
                 'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'medium',
                 'bloom_level': 'understand',
                 'budget_band': 'medium',
-                'learning_outcome': 'Children will retell simple stories using props and demonstrate understanding of story sequence.',
-                'learning_styles': ['Visual Learner', 'Kinesthetic Learner', 'Social Learner'],
+                'learning_outcome': 'Children will sequence story events correctly, answer comprehension questions, and demonstrate understanding of story elements.',
+                'learning_styles': ['Visual Learner', 'Social Learner', 'Kinesthetic Learner'],
                 'special_needs': ['Speech Delay', 'Social Anxiety'],
-                'themes': ['My School']
+                'themes': ['My School', 'Festivals and Celebrations']
             }
         ]
         
-        for tlr_data in tlrs:
-            self.create_tlr(tlr_data, nursery, lang_subject)
+        for tlr_data in kg1_lang_tlrs:
+            self.create_tlr(tlr_data, kg1, lang_subject)
 
-    def create_numeracy_tlrs(self):
-        nursery = ClassLevel.objects.get(name="Nursery")
-        num_subject = Subject.objects.get(class_level=nursery, title="Numeracy")
+        # Numeracy TLRs for KG1
+        num_subject = Subject.objects.get(class_level=kg1, title="Numeracy")
         
-        tlrs = [
+        kg1_num_tlrs = [
             {
-                'title': 'Counting Teddy Bears in Cups',
-                'brief_description': 'Small teddy bear counters and numbered cups for hands-on counting practice from 1-5.',
-                'steps_to_make': '''1. Collect or purchase 15 small teddy bear counters
-2. Decorate 5 plastic cups with numbers 1-5
-3. Add corresponding dot patterns under each number
-4. Create instruction cards showing how many bears go in each cup
-5. Store all materials in a basket''',
-                'tips_for_use': '''- Start with cups 1-3, gradually add 4 and 5
-- Count aloud together as children place bears
-- Encourage one-to-one correspondence
-- Ask "How many bears are in cup number 3?"
-- Let children check their work by counting again''',
-                'materials': ['Counting bears', 'Plastic bottles', 'Washable markers', 'Number cards'],
-                'time_needed': 'short',
+                'title': 'Number Recognition and Formation Workshop',
+                'brief_description': 'Multi-sensory workshop for learning numbers 1-20 with formation practice, counting, and number concepts.',
+                'steps_to_make': '''1. Create number formation trays with different textures:
+   - Sand trays for finger tracing
+   - Playdough mats for forming numbers
+   - Textured number cards for tactile exploration
+2. Include counting collections for each number (1-20)
+3. Add number line activities and games
+4. Create "number of the day" investigation cards
+5. Include simple addition and subtraction manipulatives
+6. Add number recognition assessment tools''',
+                'tips_for_use': '''- Practice one number formation daily using different methods
+- Count real objects to match written numbers
+- Use number line for simple addition (counting on)
+- Encourage children to find numbers in environment
+- Practice writing numbers in different media
+- Connect numbers to real-life situations: ages, addresses, phone numbers''',
+                'materials': ['Sand trays', 'Playdough', 'Textured cards', 'Counting objects', 'Number lines', 'Assessment tools'],
+                'time_needed': 'core',
+                'intended_use': 'aid',
+                'tlr_type': 'manipulative',
+                'class_size': 'small',
+                'bloom_level': 'remember',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will recognize, write, and understand quantities for numbers 1-20, and perform simple addition and subtraction.',
+                'learning_styles': ['Kinesthetic Learner', 'Visual Learner'],
+                'special_needs': ['Motor Delays', 'Attention Difficulties'],
+                'themes': ['My School']
+            },
+            {
+                'title': 'Measurement and Comparison Laboratory',
+                'brief_description': 'Hands-on laboratory with tools and activities for exploring length, weight, capacity, and comparison concepts.',
+                'steps_to_make': '''1. Set up measurement stations:
+   - Length: rulers, measuring tapes, string, blocks
+   - Weight: balance scales, various objects to weigh
+   - Capacity: containers of different sizes, water, rice
+   - Time: clocks, timers, daily schedule cards
+2. Create recording sheets for measurements
+3. Include comparison vocabulary cards (longer/shorter, heavier/lighter)
+4. Add estimation activities and prediction cards
+5. Create "Measurement Detective" investigation cards''',
+                'tips_for_use': '''- Start with direct comparisons before using tools
+- Use consistent vocabulary: long, longer, longest
+- Encourage estimation before measuring
+- Record findings on simple charts
+- Connect measurements to daily activities
+- Let children create their own measurement challenges''',
+                'materials': ['Measuring tools', 'Balance scales', 'Various containers', 'Recording sheets', 'Comparison cards', 'Investigation cards'],
+                'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'small',
                 'bloom_level': 'apply',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will count objects 1-5 with one-to-one correspondence and recognize written numerals 1-5.',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will compare and measure objects using appropriate tools and vocabulary, and make reasonable estimations.',
                 'learning_styles': ['Kinesthetic Learner', 'Visual Learner'],
-                'special_needs': ['Attention Difficulties', 'Motor Delays'],
-                'themes': ['All About Me']
-            },
+                'special_needs': ['Motor Delays', 'Developmental Delays'],
+                'themes': ['My Environment', 'My School']
+            }
+        ]
+        
+        for tlr_data in kg1_num_tlrs:
+            self.create_tlr(tlr_data, kg1, num_subject)
+
+    def create_kg2_tlrs(self):
+        """Create TLRs for KG2 (5-6 year olds) - Focus on advanced readiness skills"""
+        kg2 = ClassLevel.objects.get(name="KG2")
+        
+        # Language and Literacy TLRs for KG2
+        lang_subject = Subject.objects.get(class_level=kg2, title="Language and Literacy")
+        
+        kg2_lang_tlrs = [
             {
-                'title': 'Shape Hunt Discovery Bags',
-                'brief_description': 'Fabric bags containing real objects in basic shapes for tactile shape recognition.',
-                'steps_to_make': '''1. Create 4 fabric bags in different colors
-2. Label each bag with a shape (circle, square, triangle, rectangle)
-3. Fill bags with real objects:
-   - Circle bag: buttons, coins, bottle caps, rings
-   - Square bag: blocks, crackers, small books, tiles
-   - Triangle bag: triangular blocks, cut sandwiches, musical triangles
-   - Rectangle bag: phones, cards, books, erasers''',
-                'tips_for_use': '''- Let children feel objects without looking first
-- Ask "What shape do you think this is?"
-- Take objects out and name the shape together
-- Compare objects: "How are these the same?"
-- Go on shape hunts around the classroom''',
-                'materials': ['Fabric scraps', 'Buttons', 'Building blocks', 'Shape cutouts'],
-                'time_needed': 'short',
+                'title': 'Advanced Phonics Blending and Segmenting Station',
+                'brief_description': 'Comprehensive station for blending sounds into words and segmenting words into individual sounds.',
+                'steps_to_make': '''1. Create blending slides with consonant-vowel-consonant words
+2. Design sound segmenting mats with boxes for each sound
+3. Include picture cards for 100+ three-letter words
+4. Add progressive difficulty: CVC, CVCC, CCVC words
+5. Create self-checking answer keys
+6. Include games like "Sound Race" and "Blending Bingo"
+7. Add recording sheets for tracking progress''',
+                'tips_for_use': '''- Model blending slowly first: /c/ /a/ /t/ = cat
+- Use physical movements for each sound
+- Progress from blending to segmenting systematically
+- Encourage children to use fingers to count sounds
+- Connect to spelling and writing activities
+- Use nonsense words to test true blending skills''',
+                'materials': ['Blending slides', 'Segmenting mats', 'Picture cards', 'Game materials', 'Answer keys', 'Progress sheets'],
+                'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'small',
-                'bloom_level': 'understand',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will identify and name 4 basic shapes through tactile exploration and visual recognition.',
-                'learning_styles': ['Kinesthetic Learner', 'Visual Learner'],
-                'special_needs': ['Visual Impairment', 'Sensory Processing'],
+                'bloom_level': 'apply',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will blend individual sounds to read simple words and segment words into component sounds for spelling.',
+                'learning_styles': ['Auditory Learner', 'Kinesthetic Learner'],
+                'special_needs': ['Speech Delay', 'Attention Difficulties'],
                 'themes': ['My School']
             },
             {
-                'title': 'Big and Small Sorting Baskets',
-                'brief_description': 'Collection of paired objects in different sizes to teach size comparison and sorting skills.',
-                'steps_to_make': '''1. Collect pairs of objects in two sizes:
-   - Big and small balls, spoons, cups, books, shoes, hats, boxes
-2. Create two labeled baskets: "BIG" and "SMALL" with picture symbols
-3. Include measuring tools: large and small containers, string pieces
-4. Add picture cards showing big and small comparisons''',
-                'tips_for_use': '''- Start with very obvious size differences
-- Use comparison language: "This ball is bigger than that ball"
-- Let children physically compare by holding objects
-- Encourage children to explain their sorting choices
-- Connect to children's experiences: "big like daddy, small like baby"''',
-                'materials': ['Small containers', 'Balls', 'Picture books', 'Measuring tools'],
-                'time_needed': 'short',
+                'title': 'Independent Reading and Writing Workshop',
+                'brief_description': 'Structured workshop with leveled books, writing materials, and guided activities for developing independent literacy skills.',
+                'steps_to_make': '''1. Organize books by reading levels (A-D for beginners)
+2. Create comfortable reading area with pillows and good lighting
+3. Set up writing station with:
+   - Various paper types (lined, blank, story templates)
+   - Writing tools (pencils, crayons, markers)
+   - Word walls and picture dictionaries
+   - Story starter prompts
+4. Include reading comprehension activities
+5. Add peer sharing and presentation area
+6. Create individual reading and writing portfolios''',
+                'tips_for_use': '''- Start with 10-15 minute independent sessions
+- Teach children how to choose "just right" books
+- Encourage invented spelling in early writing
+- Provide quiet space for concentration
+- Conference with individual children regularly
+- Celebrate all attempts at reading and writing''',
+                'materials': ['Leveled books', 'Writing materials', 'Word walls', 'Story templates', 'Portfolios', 'Comfortable seating'],
+                'time_needed': 'core',
+                'intended_use': 'aid',
+                'tlr_type': 'manipulative',
+                'class_size': 'medium',
+                'bloom_level': 'create',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will read simple books independently and write sentences expressing their ideas using invented and conventional spelling.',
+                'learning_styles': ['Visual Learner', 'Solitary Learner'],
+                'special_needs': ['Attention Difficulties', 'Social Anxiety'],
+                'themes': ['My School', 'All About Me']
+            }
+        ]
+        
+        for tlr_data in kg2_lang_tlrs:
+            self.create_tlr(tlr_data, kg2, lang_subject)
+
+    def create_class1_tlrs(self):
+        """Create TLRs for Class 1 (6-7 year olds) - Focus on foundational academic skills"""
+        class1 = ClassLevel.objects.get(name="Class 1")
+        
+        # English Language TLRs for Class 1
+        english_subject = Subject.objects.get(class_level=class1, title="English Language")
+        
+        class1_english_tlrs = [
+            {
+                'title': 'Guided Reading Comprehension Center',
+                'brief_description': 'Structured center with leveled readers, comprehension strategies, and discussion activities for developing reading skills.',
+                'steps_to_make': '''1. Organize books by guided reading levels (E-J)
+2. Create comprehension strategy posters:
+   - Making connections (text to self, text to world)
+   - Predicting and confirming
+   - Visualizing
+   - Questioning
+   - Summarizing
+3. Design comprehension activity cards for each book
+4. Include vocabulary development activities
+5. Create discussion prompt cards for book talks
+6. Add reading response journals and graphic organizers''',
+                'tips_for_use': '''- Group children by similar reading levels
+- Teach one strategy at a time explicitly
+- Encourage children to discuss books with partners
+- Use graphic organizers to support comprehension
+- Connect reading to children\'s experiences
+- Celebrate reading growth and achievements''',
+                'materials': ['Leveled books', 'Strategy posters', 'Activity cards', 'Response journals', 'Graphic organizers', 'Discussion cards'],
+                'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'small',
                 'bloom_level': 'analyze',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will compare objects by size using terms big/small and sort objects into size categories.',
-                'learning_styles': ['Kinesthetic Learner', 'Visual Learner'],
-                'special_needs': ['Developmental Delays', 'Attention Difficulties'],
-                'themes': ['My Home']
-            }
-        ]
-        
-        for tlr_data in tlrs:
-            self.create_tlr(tlr_data, nursery, num_subject)
-
-    def create_creative_arts_tlrs(self):
-        nursery = ClassLevel.objects.get(name="Nursery")
-        arts_subject = Subject.objects.get(class_level=nursery, title="Creative Arts")
-        
-        tlrs = [
-            {
-                'title': 'Nature Collage Creation Station',
-                'brief_description': 'Outdoor collection of natural materials for creating seasonal collages and exploring textures.',
-                'steps_to_make': '''1. Set up collection containers for nature walks
-2. Gather diverse natural materials: leaves, flowers, twigs, seeds, stones, feathers
-3. Prepare large cardboard bases for collages
-4. Create texture exploration trays
-5. Set up drying area for finished artwork''',
-                'tips_for_use': '''- Take children on nature walks to collect materials together
-- Encourage touching and describing textures
-- Ask open questions: "What does this feel like?" "What colors do you see?"
-- Allow free exploration without predetermined outcomes
-- Display finished work to celebrate creativity''',
-                'materials': ['Leaves', 'Stones', 'Twigs', 'Non-toxic glue', 'Cardboard'],
-                'time_needed': 'core',
-                'intended_use': 'aid',
-                'tlr_type': 'manipulative',
-                'class_size': 'medium',
-                'bloom_level': 'create',
-                'budget_band': 'none',
-                'learning_outcome': 'Children will explore natural textures, create original artwork, and develop fine motor skills through collage making.',
-                'learning_styles': ['Kinesthetic Learner', 'Nature Learner', 'Visual Learner'],
-                'special_needs': ['Sensory Processing', 'Motor Delays'],
-                'themes': ['Plants and Nature', 'Weather and Seasons']
-            },
-            {
-                'title': 'Emotion Expression Masks',
-                'brief_description': 'Simple masks showing different emotions to help children identify and express feelings.',
-                'steps_to_make': '''1. Cut face shapes from paper plates
-2. Draw or paste pictures showing basic emotions: happy, sad, angry, surprised, scared
-3. Attach craft sticks as handles
-4. Create a feelings mirror for children to practice expressions
-5. Include emotion picture books''',
-                'tips_for_use': '''- Start with happy and sad, gradually add others
-- Use masks during story time to show character emotions
-- Encourage children to make faces behind masks
-- Ask "How does this character feel?" during stories
-- Use for conflict resolution: "Show me how you felt"''',
-                'materials': ['Paper plates', 'Washable markers', 'Pipe cleaners', 'Mirrors'],
-                'time_needed': 'short',
-                'intended_use': 'aid',
-                'tlr_type': 'manipulative',
-                'class_size': 'medium',
-                'bloom_level': 'understand',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will identify basic emotions and express their own feelings appropriately.',
-                'learning_styles': ['Visual Learner', 'Social Learner', 'Kinesthetic Learner'],
-                'special_needs': ['Social Anxiety', 'Speech Delay', 'Autism Spectrum'],
-                'themes': ['My Feelings', 'All About Me']
-            }
-        ]
-        
-        for tlr_data in tlrs:
-            self.create_tlr(tlr_data, nursery, arts_subject)
-
-    def create_environmental_studies_tlrs(self):
-        nursery = ClassLevel.objects.get(name="Nursery")
-        env_subject = Subject.objects.get(class_level=nursery, title="Environmental Studies")
-        
-        tlrs = [
-            {
-                'title': 'Weather Observation Chart',
-                'brief_description': 'Interactive chart for daily weather observation and recording, developing scientific thinking.',
-                'steps_to_make': '''1. Create large poster board with days of the week
-2. Design weather symbol cards: sunny, cloudy, rainy, windy
-3. Add pockets or velcro strips for moveable symbols
-4. Include thermometer picture and simple temperature indicators
-5. Create weather clothing matching cards''',
-                'tips_for_use': '''- Use during morning circle time daily
-- Look outside together and discuss observations
-- Let children choose appropriate weather symbols
-- Connect weather to clothing choices
-- Keep simple weather journal with pictures''',
-                'materials': ['Cardboard', 'Colored paper', 'Washable markers', 'Color wheels'],
-                'time_needed': 'starter',
-                'intended_use': 'aid',
-                'tlr_type': 'poster',
-                'class_size': 'large',
-                'bloom_level': 'understand',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will observe and describe daily weather patterns and make connections between weather and appropriate clothing.',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will read grade-level texts with comprehension and use strategies to understand and discuss what they read.',
                 'learning_styles': ['Visual Learner', 'Social Learner'],
-                'special_needs': ['Attention Difficulties'],
-                'themes': ['Weather and Seasons', 'My Environment']
+                'special_needs': ['Attention Difficulties', 'Speech Delay'],
+                'themes': ['My School', 'My Community']
             },
             {
-                'title': 'Community Helper Role Play Kit',
-                'brief_description': 'Dress-up items and props representing different community helpers to promote social awareness.',
-                'steps_to_make': '''1. Gather simple costume pieces for each helper:
-   - Doctor: white coat, stethoscope, medical bag
-   - Firefighter: red hat, hose, badge
-   - Teacher: books, glasses, pointer
-   - Police officer: hat, badge, whistle
-   - Chef: apron, hat, wooden spoons
-2. Create matching picture cards showing each helper
-3. Add props specific to each job''',
-                'tips_for_use': '''- Introduce one helper at a time during dramatic play
-- Ask children about helpers they know in their community
-- Encourage role playing: "What does a doctor do?"
-- Connect to field trips or community visits
-- Use during discussions about safety and help''',
-                'materials': ['Fabric scraps', 'Picture books', 'Dress-up items', 'Small containers'],
+                'title': 'Grammar and Sentence Construction Workshop',
+                'brief_description': 'Interactive workshop for learning parts of speech, sentence structure, and grammar rules through hands-on activities.',
+                'steps_to_make': '''1. Create moveable word cards in different colors:
+   - Red for nouns
+   - Blue for verbs
+   - Green for adjectives
+   - Yellow for articles (a, an, the)
+2. Design sentence building mats with spaces for each part of speech
+3. Include grammar sorting activities
+4. Add punctuation cards and rules posters
+5. Create "Fix the Sentence" error correction activities
+6. Include creative writing prompts using target grammar''',
+                'tips_for_use': '''- Start with simple noun-verb sentences
+- Use color coding consistently for parts of speech
+- Encourage children to act out sentences they create
+- Practice grammar in context of meaningful writing
+- Use games to make grammar learning fun
+- Connect to children\'s oral language patterns''',
+                'materials': ['Colored word cards', 'Sentence mats', 'Sorting activities', 'Punctuation cards', 'Error correction sheets', 'Writing prompts'],
                 'time_needed': 'core',
-                'intended_use': 'aid',
-                'tlr_type': 'manipulative',
-                'class_size': 'medium',
-                'bloom_level': 'understand',
-                'budget_band': 'medium',
-                'learning_outcome': 'Children will identify community helpers and describe how they help people in the community.',
-                'learning_styles': ['Social Learner', 'Kinesthetic Learner'],
-                'special_needs': ['Social Anxiety', 'Speech Delay'],
-                'themes': ['Community Helpers', 'My Community']
-            }
-        ]
-        
-        for tlr_data in tlrs:
-            self.create_tlr(tlr_data, nursery, env_subject)
-
-    def create_physical_development_tlrs(self):
-        nursery = ClassLevel.objects.get(name="Nursery")
-        phys_subject = Subject.objects.get(class_level=nursery, title="Physical Development")
-        
-        tlrs = [
-            {
-                'title': 'Body Parts Learning Mirror',
-                'brief_description': 'Unbreakable mirror with body part labels to promote self-awareness and vocabulary development.',
-                'steps_to_make': '''1. Mount large unbreakable mirror at child height
-2. Create removable labels for body parts (head, arms, legs, hands, feet, eyes, nose, mouth)
-3. Use bright colors and simple pictures alongside words
-4. Add velcro so children can move labels
-5. Include "Simon Says" instruction cards''',
-                'tips_for_use': '''- Start with major body parts, add details gradually
-- Sing body part songs while looking in mirror
-- Play "Touch your..." games
-- Encourage children to point to parts on themselves and others
-- Use during discussions about keeping our bodies healthy''',
-                'materials': ['Mirrors', 'Colored paper', 'Washable markers', 'Picture cards'],
-                'time_needed': 'short',
-                'intended_use': 'aid',
-                'tlr_type': 'poster',
-                'class_size': 'small',
-                'bloom_level': 'remember',
-                'budget_band': 'medium',
-                'learning_outcome': 'Children will identify and name major body parts and develop body awareness.',
-                'learning_styles': ['Visual Learner', 'Kinesthetic Learner'],
-                'special_needs': ['Developmental Delays', 'Motor Delays'],
-                'themes': ['My Body', 'All About Me']
-            },
-            {
-                'title': 'Fine Motor Threading Cards',
-                'brief_description': 'Large threading cards with simple patterns to develop hand-eye coordination and concentration.',
-                'steps_to_make': '''1. Cut large shapes from cardboard (circle, square, heart, star)
-2. Punch holes around the edges, about 2cm apart
-3. Cover with clear contact paper for durability
-4. Provide thick yarn or shoelaces with taped ends
-5. Create pattern cards showing different threading designs''',
-                'tips_for_use': '''- Demonstrate threading technique first
-- Start with just a few holes, increase gradually
-- Encourage children to create their own patterns
-- Use during quiet time or as a calming activity
-- Celebrate completed projects with enthusiasm''',
-                'materials': ['Cardboard', 'Yarn', 'Safety scissors', 'Shape cutouts'],
-                'time_needed': 'short',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'small',
                 'bloom_level': 'apply',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will develop fine motor skills and hand-eye coordination through threading activities.',
-                'learning_styles': ['Kinesthetic Learner', 'Solitary Learner'],
-                'special_needs': ['Motor Delays', 'Attention Difficulties'],
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will identify parts of speech, construct grammatically correct sentences, and apply grammar rules in their writing.',
+                'learning_styles': ['Visual Learner', 'Kinesthetic Learner'],
+                'special_needs': ['Speech Delay', 'Attention Difficulties'],
                 'themes': ['My School']
             }
         ]
         
-        for tlr_data in tlrs:
-            self.create_tlr(tlr_data, nursery, phys_subject)
+        for tlr_data in class1_english_tlrs:
+            self.create_tlr(tlr_data, class1, english_subject)
 
-    def create_music_movement_tlrs(self):
-        nursery = ClassLevel.objects.get(name="Nursery")
-        music_subject = Subject.objects.get(class_level=nursery, title="Music and Movement")
+        # Mathematics TLRs for Class 1
+        math_subject = Subject.objects.get(class_level=class1, title="Mathematics")
         
-        tlrs = [
+        class1_math_tlrs = [
             {
-                'title': 'Rhythm Instrument Collection',
-                'brief_description': 'Simple homemade instruments for exploring rhythm, beat, and musical expression.',
-                'steps_to_make': '''1. Create various instruments:
-   - Shakers: plastic bottles with rice/beans
-   - Drums: empty containers with tight lids
-   - Bells: sew bells onto elastic bands
-   - Rhythm sticks: decorated wooden dowels
-   - Tambourines: paper plates with bottle caps attached
-2. Decorate each instrument with colorful designs
-3. Store in a music basket''',
-                'tips_for_use': '''- Start with one instrument at a time
-- Demonstrate how to hold and play each instrument
-- Play music and encourage children to keep the beat
-- Use instruments during singing time
-- Create simple rhythm patterns for children to copy''',
-                'materials': ['Plastic bottles', 'Bells', 'Paper plates', 'Bottle caps', 'Drums', 'Popsicle sticks'],
+                'title': 'Place Value and Number Sense Exploration',
+                'brief_description': 'Comprehensive materials for understanding place value, number relationships, and number sense up to 100.',
+                'steps_to_make': '''1. Create base-10 blocks using different materials:
+   - Units: small cubes or beans
+   - Tens: rods or bundled sticks
+   - Hundreds: flat squares or plates
+2. Design place value charts and mats
+3. Include number line activities (0-100)
+4. Create "What Number Am I?" riddle cards
+5. Add number comparison activities (>, <, =)
+6. Include estimation jars with different quantities''',
+                'tips_for_use': '''- Use concrete manipulatives before abstract numbers
+- Practice bundling and unbundling activities daily
+- Connect place value to money concepts
+- Use number line for counting patterns
+- Encourage estimation before counting
+- Relate to real-world examples: house numbers, ages''',
+                'materials': ['Base-10 blocks', 'Place value charts', 'Number lines', 'Riddle cards', 'Comparison symbols', 'Estimation jars'],
                 'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
-                'class_size': 'medium',
-                'bloom_level': 'create',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will explore rhythm and beat while developing gross motor coordination and musical expression.',
-                'learning_styles': ['Auditory Learner', 'Kinesthetic Learner'],
-                'special_needs': ['Sensory Processing', 'Speech Delay'],
-                'themes': ['Festivals and Celebrations']
-                },
+                'class_size': 'small',
+                'bloom_level': 'understand',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will understand place value concepts, compare numbers to 100, and demonstrate strong number sense.',
+                'learning_styles': ['Kinesthetic Learner', 'Visual Learner'],
+                'special_needs': ['Attention Difficulties', 'Developmental Delays'],
+                'themes': ['My Environment']
+            },
             {
-                'title': 'Movement Scarves and Dance Props',
-                'brief_description': 'Colorful scarves and props for creative movement, following music, and expressing emotions through dance.',
-                'steps_to_make': '''1. Gather lightweight scarves in different colors
-2. Create simple dance props:
-   - Ribbon wands with craft sticks
-   - Jingle bell bracelets with elastic
-   - Flowing streamers attached to rings
-3. Prepare movement instruction cards with pictures
-4. Set up open space for safe movement''',
-                'tips_for_use': '''- Play different types of music (fast, slow, gentle, exciting)
-- Demonstrate movements first, then let children explore
-- Use scarves to show emotions: "Show me happy dancing!"
-- Encourage free expression without "right" or "wrong" movements
-- Include cultural music and traditional dances''',
-                'materials': ['Scarves', 'Craft sticks', 'Bells', 'Ribbon', 'Elastic bands'],
+                'title': 'Addition and Subtraction Strategy Center',
+                'brief_description': 'Multi-strategy center for learning various approaches to addition and subtraction within 20.',
+                'steps_to_make': '''1. Create strategy station posters:
+   - Counting on/back
+   - Using doubles
+   - Making 10
+   - Fact families
+   - Number line jumps
+2. Include manipulatives for each strategy
+3. Design problem-solving task cards
+4. Add games for fact fluency practice
+5. Create assessment tools for strategy understanding
+6. Include real-world word problem scenarios''',
+                'tips_for_use': '''- Teach strategies explicitly, one at a time
+- Allow children to choose strategies that work for them
+- Use story problems to make math meaningful
+- Practice fact fluency daily in short sessions
+- Connect to money and measurement problems
+- Encourage explaining mathematical thinking''',
+                'materials': ['Strategy posters', 'Manipulatives', 'Task cards', 'Math games', 'Assessment tools', 'Word problems'],
                 'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
-                'class_size': 'large',
-                'bloom_level': 'create',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will express themselves through creative movement and develop gross motor skills while responding to different musical rhythms.',
-                'learning_styles': ['Kinesthetic Learner', 'Auditory Learner'],
-                'special_needs': ['Social Anxiety', 'Motor Delays'],
-                'themes': ['Festivals and Celebrations', 'My Feelings']
+                'class_size': 'small',
+                'bloom_level': 'apply',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will use multiple strategies to solve addition and subtraction problems within 20 and explain their mathematical thinking.',
+                'learning_styles': ['Visual Learner', 'Kinesthetic Learner'],
+                'special_needs': ['Attention Difficulties', 'Motor Delays'],
+                'themes': ['My Environment', 'My Community']
             }
         ]
         
-        for tlr_data in tlrs:
-            self.create_tlr(tlr_data, nursery, music_subject)
+        for tlr_data in class1_math_tlrs:
+            self.create_tlr(tlr_data, class1, math_subject)
 
-    def create_additional_comprehensive_tlrs(self):
-        """Create additional TLRs using the expanded materials list"""
-        nursery = ClassLevel.objects.get(name="Nursery")
+    def create_class2_tlrs(self):
+        """Create TLRs for Class 2 (7-8 year olds) - Focus on developing fluency and deeper understanding"""
+        class2 = ClassLevel.objects.get(name="Class 2")
         
-        # Cross-curricular TLRs
-        additional_tlrs = [
+        # English Language TLRs for Class 2
+        english_subject = Subject.objects.get(class_level=class2, title="English Language")
+        
+        class2_english_tlrs = [
             {
-                'title': 'Ghanaian Culture Kente Pattern Cards',
-                'brief_description': 'Interactive cards featuring traditional Kente patterns for cultural awareness and pattern recognition.',
-                'subject': 'Creative Arts',
-                'steps_to_make': '''1. Research authentic Kente patterns and their meanings
-2. Create large pattern cards using colored EVA foam sheets
-3. Cut out individual pattern pieces for children to recreate designs
-4. Include story cards explaining the cultural significance
-5. Add Kente fabric scraps for tactile exploration
-6. Laminate cards for durability''',
-                'tips_for_use': '''- Share simple stories about Kente cloth traditions
-- Let children feel real Kente fabric pieces
-- Start with simple patterns, progress to more complex
-- Encourage children to create their own patterns
-- Connect to discussions about Ghanaian heritage and pride''',
-                'materials': ['Kente offcuts', 'EVA foam sheet', 'Glitter EVA foam sheet', 'Laminating pouches', 'Manila cards'],
+                'title': 'Advanced Reading Fluency and Expression Center',
+                'brief_description': 'Center focused on developing reading fluency, expression, and advanced comprehension skills.',
+                'steps_to_make': '''1. Create fluency practice materials:
+   - Repeated reading passages at various levels
+   - Expression and intonation practice scripts
+   - Partner reading protocols
+   - Reading rate tracking charts
+2. Include comprehension deepening activities:
+   - Character analysis templates
+   - Plot mapping organizers
+   - Theme exploration cards
+   - Author\'s purpose activities
+3. Add oral presentation and performance opportunities
+4. Create listening center with recorded texts''',
+                'tips_for_use': '''- Model fluent reading daily
+- Practice repeated reading with partners
+- Focus on expression and meaning, not just speed
+- Use reader\'s theater for expression practice
+- Encourage children to self-assess fluency
+- Connect fluency to comprehension improvement''',
+                'materials': ['Reading passages', 'Expression scripts', 'Tracking charts', 'Analysis templates', 'Recording equipment', 'Performance props'],
                 'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'medium',
-                'bloom_level': 'understand',
+                'bloom_level': 'analyze',
                 'budget_band': 'medium',
-                'learning_outcome': 'Children will recognize traditional Kente patterns and develop cultural pride while practicing pattern recognition skills.',
-                'learning_styles': ['Visual Learner', 'Kinesthetic Learner'],
-                'special_needs': ['Attention Difficulties'],
+                'learning_outcome': 'Children will read grade-level texts fluently with expression and demonstrate deep comprehension through analysis and discussion.',
+                'learning_styles': ['Auditory Learner', 'Visual Learner', 'Social Learner'],
+                'special_needs': ['Speech Delay', 'Social Anxiety'],
                 'themes': ['My Community', 'Festivals and Celebrations']
             },
             {
-                'title': 'Touch and Feel Letter Learning Bags',
-                'brief_description': 'Sensory bags containing textured materials shaped like letters for tactile letter recognition.',
-                'subject': 'Language and Literacy',
-                'steps_to_make': '''1. Create letter shapes using different textured materials:
-   - Sandpaper letters for rough texture
-   - Cotton wool letters for soft texture
-   - Foil paper letters for smooth texture
-   - Beans glued in letter shapes for bumpy texture
-2. Store each letter in individual Ziploc bags
-3. Include corresponding picture cards
-4. Add instruction cards for activities''',
-                'tips_for_use': '''- Let children trace letters with their finger while saying the sound
-- Play "mystery letter" games with eyes closed
-- Connect letters to children\'s names and familiar words
-- Use during quiet time for individual exploration
-- Encourage children to describe how each letter feels''',
-                'materials': ['Ziploc bags', 'Cotton wool', 'Foil paper', 'Beans', 'Double sided tape', 'Manila cards'],
-                'time_needed': 'short',
+                'title': 'Creative Writing and Publishing Workshop',
+                'brief_description': 'Complete writing workshop with planning tools, revision strategies, and publishing opportunities.',
+                'steps_to_make': '''1. Set up writing process stations:
+   - Planning: graphic organizers, story maps, idea webs
+   - Drafting: various paper types, writing tools
+   - Revising: editing checklists, peer review forms
+   - Publishing: book-making materials, illustration supplies
+2. Create genre-specific writing guides
+3. Include mentor texts for each writing type
+4. Add writing conference forms and rubrics
+5. Set up author\'s chair and celebration area
+6. Create class anthology and individual portfolios''',
+                'tips_for_use': '''- Teach the writing process explicitly
+- Conference with individual writers regularly
+- Encourage risk-taking and creativity
+- Celebrate all stages of writing, not just final products
+- Use mentor texts to inspire and instruct
+- Create authentic audiences for children\'s writing''',
+                'materials': ['Graphic organizers', 'Writing tools', 'Editing materials', 'Book-making supplies', 'Mentor texts', 'Portfolio folders'],
+                'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
-                'class_size': 'small',
-                'bloom_level': 'remember',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will recognize letters through multi-sensory exploration and begin to associate letters with their sounds.',
-                'learning_styles': ['Kinesthetic Learner', 'Visual Learner'],
-                'special_needs': ['Visual Impairment', 'Sensory Processing', 'Attention Difficulties'],
-                'themes': ['All About Me']
-            },
+                'class_size': 'medium',
+                'bloom_level': 'create',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will write in various genres using the writing process and publish their work for authentic audiences.',
+                'learning_styles': ['Visual Learner', 'Solitary Learner', 'Social Learner'],
+                'special_needs': ['Attention Difficulties', 'Motor Delays'],
+                'themes': ['All About Me', 'My Community']
+            }
+        ]
+        
+        for tlr_data in class2_english_tlrs:
+            self.create_tlr(tlr_data, class2, english_subject)
+
+    def create_class3_tlrs(self):
+        """Create TLRs for Class 3 (8-9 year olds) - Focus on advanced skills and independence"""
+        class3 = ClassLevel.objects.get(name="Class 3")
+        
+        # English Language TLRs for Class 3
+        english_subject = Subject.objects.get(class_level=class3, title="English Language")
+        
+        class3_english_tlrs = [
             {
-                'title': 'Water Transfer and Measurement Station',
-                'brief_description': 'Hands-on water play station for developing pre-math concepts and fine motor skills.',
-                'subject': 'Numeracy',
-                'steps_to_make': '''1. Set up water table or large plastic container
-2. Provide various sized containers: small cups, large bowls, squeeze bottles
-3. Add measuring tools: plastic spoons, small pitchers, funnels
-4. Include floating and sinking objects for experimentation
-5. Create waterproof instruction cards with pictures
-6. Provide towels and aprons for easy cleanup''',
-                'tips_for_use': '''- Demonstrate careful pouring techniques
-- Use language: "full", "empty", "more", "less", "same"
-- Count while pouring: "1 cup, 2 cups, 3 cups"
-- Ask prediction questions: "Which holds more water?"
-- Allow free exploration and discovery''',
-                'materials': ['Small plastic containers', 'Plastic spoons', 'Water', 'Transparent sheets', 'Sponge pieces'],
+                'title': 'Literature Circle Discussion and Analysis Center',
+                'brief_description': 'Sophisticated center for book discussions, literary analysis, and critical thinking about texts.',
+                'steps_to_make': '''1. Create role cards for literature circles:
+   - Discussion Director: prepares questions
+   - Vocabulary Enricher: finds interesting words
+   - Illustrator: creates visual responses
+   - Connector: makes text-to-life connections
+   - Summarizer: retells important parts
+2. Design analysis templates for different genres
+3. Include critical thinking question prompts
+4. Add multimedia response options
+5. Create peer evaluation forms
+6. Set up presentation and sharing protocols''',
+                'tips_for_use': '''- Start with shorter texts and simple roles
+- Model each role before independent practice
+- Encourage deep thinking and analysis
+- Rotate roles so children experience all perspectives
+- Connect discussions to writing and other subjects
+- Celebrate insights and different interpretations''',
+                'materials': ['Role cards', 'Analysis templates', 'Question prompts', 'Response materials', 'Evaluation forms', 'Presentation tools'],
                 'time_needed': 'core',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'small',
-                'bloom_level': 'apply',
-                'budget_band': 'none',
-                'learning_outcome': 'Children will explore measurement concepts, develop hand-eye coordination, and understand volume relationships.',
-                'learning_styles': ['Kinesthetic Learner', 'Nature Learner'],
-                'special_needs': ['Motor Delays', 'Attention Difficulties'],
-                'themes': ['My Environment']
+                'bloom_level': 'evaluate',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will engage in sophisticated discussions about literature, analyze texts critically, and express well-reasoned opinions.',
+                'learning_styles': ['Social Learner', 'Visual Learner', 'Auditory Learner'],
+                'special_needs': ['Social Anxiety', 'Speech Delay'],
+                'themes': ['My Community', 'Our Values']
             },
             {
-                'title': 'Family Photo Memory Matching Game',
-                'brief_description': 'Personalized matching game using children\'s family photos to promote social-emotional development.',
-                'subject': 'Environmental Studies',
-                'steps_to_make': '''1. Request family photos from parents (2 copies of each)
-2. Mount photos on sturdy cardboard backing
-3. Cover with clear contact paper for protection
-4. Create family vocabulary cards (mama, papa, baby, etc.)
-5. Add simple family tree templates
-6. Store in decorated container''',
-                'tips_for_use': '''- Start with each child\'s own family photos
-- Encourage children to talk about their families
-- Play simple matching games with 4-6 photo pairs
-- Use during discussions about different family structures
-- Respect and celebrate all types of families''',
-                'materials': ['Printed images', 'Cardboard boxes', 'Clear contact paper', 'Manila cards', 'Markers'],
-                'time_needed': 'short',
+                'title': 'Advanced Research and Presentation Project Center',
+                'brief_description': 'Complete research center with information gathering tools, organization systems, and presentation resources.',
+                'steps_to_make': '''1. Create research process guides:
+   - Question formulation templates
+   - Source evaluation checklists
+   - Note-taking organizers
+   - Citation format examples
+2. Include information gathering tools:
+   - Interview question templates
+   - Survey forms
+   - Observation sheets
+   - Digital research guidelines
+3. Add presentation format options:
+   - Poster templates
+   - Slideshow guidelines
+   - Demonstration planning sheets
+   - Video creation tools
+4. Include assessment rubrics and self-evaluation forms''',
+                'tips_for_use': '''- Start with topics of high interest to children
+- Teach research skills systematically
+- Provide multiple sources and formats
+- Encourage collaboration and peer learning
+- Focus on process as much as final product
+- Connect research to real-world issues and problems''',
+                'materials': ['Research guides', 'Organization tools', 'Source materials', 'Presentation supplies', 'Technology tools', 'Assessment forms'],
+                'time_needed': 'core',
                 'intended_use': 'aid',
-                'tlr_type': 'game',
+                'tlr_type': 'manipulative',
+                'class_size': 'medium',
+                'bloom_level': 'create',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will conduct independent research, organize information effectively, and present findings to authentic audiences.',
+                'learning_styles': ['Visual Learner', 'Kinesthetic Learner', 'Social Learner'],
+                'special_needs': ['Attention Difficulties', 'Social Anxiety'],
+                'themes': ['My Community', 'Our Values', 'My Nation']
+            }
+        ]
+        
+        for tlr_data in class3_english_tlrs:
+            self.create_tlr(tlr_data, class3, english_subject)
+
+        # Mathematics TLRs for Class 3
+        math_subject = Subject.objects.get(class_level=class3, title="Mathematics")
+        
+        class3_math_tlrs = [
+            {
+                'title': 'Multi-Step Problem Solving and Strategy Center',
+                'brief_description': 'Advanced center for solving complex word problems using multiple strategies and mathematical reasoning.',
+                'steps_to_make': '''1. Create problem-solving strategy posters:
+   - Understand the problem
+   - Devise a plan
+   - Carry out the plan
+   - Look back and check
+2. Include various problem types:
+   - Multi-step word problems
+   - Open-ended investigations
+   - Real-world applications
+   - Logic and reasoning puzzles
+3. Add strategy tools and manipulatives
+4. Create reflection and explanation templates
+5. Include peer collaboration protocols
+6. Add assessment rubrics for problem-solving process''',
+                'tips_for_use': '''- Teach problem-solving strategies explicitly
+- Encourage multiple solution methods
+- Focus on mathematical reasoning and explanation
+- Use real-world contexts whenever possible
+- Promote collaboration and mathematical discourse
+- Celebrate creative thinking and persistence''',
+                'materials': ['Strategy posters', 'Problem sets', 'Manipulatives', 'Reflection templates', 'Collaboration tools', 'Assessment rubrics'],
+                'time_needed': 'core',
+                'intended_use': 'aid',
+                'tlr_type': 'manipulative',
+                'class_size': 'small',
+                'bloom_level': 'evaluate',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will solve multi-step problems using various strategies, explain their mathematical reasoning, and evaluate solution methods.',
+                'learning_styles': ['Visual Learner', 'Social Learner', 'Kinesthetic Learner'],
+                'special_needs': ['Attention Difficulties', 'Developmental Delays'],
+                'themes': ['My Community', 'My Environment']
+            },
+            {
+                'title': 'Fraction and Decimal Exploration Laboratory',
+                'brief_description': 'Hands-on laboratory for understanding fractions, decimals, and their real-world applications.',
+                'steps_to_make': '''1. Create fraction manipulation materials:
+   - Fraction circles, bars, and squares
+   - Pizza and chocolate bar fraction models
+   - Fraction number lines
+   - Equivalent fraction matching games
+2. Include decimal exploration tools:
+   - Base-10 blocks for decimal representation
+   - Decimal place value charts
+   - Money models for decimal understanding
+   - Measurement tools showing decimal increments
+3. Add real-world application activities:
+   - Cooking measurement conversions
+   - Sports statistics analysis
+   - Shopping and money problems
+4. Create assessment and progress tracking tools''',
+                'tips_for_use': '''- Start with concrete fraction models before symbols
+- Connect fractions to familiar experiences (sharing food)
+- Use multiple representations for same concept
+- Relate decimals to money and measurement
+- Encourage estimation and reasoning
+- Make connections between fractions and decimals explicit''',
+                'materials': ['Fraction models', 'Decimal tools', 'Place value charts', 'Real objects', 'Measurement tools', 'Assessment sheets'],
+                'time_needed': 'core',
+                'intended_use': 'aid',
+                'tlr_type': 'manipulative',
                 'class_size': 'small',
                 'bloom_level': 'understand',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will develop memory skills, practice turn-taking, and express pride in their family relationships.',
-                'learning_styles': ['Visual Learner', 'Social Learner'],
-                'special_needs': ['Social Anxiety', 'Speech Delay'],
-                'themes': ['My Family', 'All About Me']
-            },
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will understand fraction and decimal concepts, make connections between different representations, and apply concepts to real situations.',
+                'learning_styles': ['Kinesthetic Learner', 'Visual Learner'],
+                'special_needs': ['Attention Difficulties', 'Motor Delays'],
+                'themes': ['Food and Nutrition', 'My Community']
+            }
+        ]
+        
+        for tlr_data in class3_math_tlrs:
+            self.create_tlr(tlr_data, class3, math_subject)
+
+        # Science TLRs for Class 3
+        science_subject = Subject.objects.get(class_level=class3, title="Science")
+        
+        class3_science_tlrs = [
             {
-                'title': 'Balance and Coordination Obstacle Course',
-                'brief_description': 'Indoor obstacle course using safe materials to develop gross motor skills and body awareness.',
-                'subject': 'Physical Development',
-                'steps_to_make': '''1. Design course with different stations:
-   - Masking tape lines for walking balance
-   - Hula hoops for stepping through
-   - Bean bags for tossing into containers
-   - Tunnel made from large cardboard box
-   - Balance beam from wide wooden plank
-2. Create instruction picture cards for each station
-3. Ensure all materials are safe and age-appropriate''',
-                'tips_for_use': '''- Demonstrate each station before children begin
-- Encourage effort rather than speed or perfection
-- Allow children to repeat favorite stations
-- Modify difficulty based on individual abilities
-- Use encouraging language and celebrate attempts''',
-                'materials': ['Masking tape', 'Hula hoops', 'Bean bags', 'Cardboard boxes', 'Picture cards'],
+                'title': 'Scientific Investigation and Experiment Station',
+                'brief_description': 'Complete laboratory setup for conducting scientific investigations, making observations, and recording findings.',
+                'steps_to_make': '''1. Set up investigation tools:
+   - Magnifying glasses and microscopes
+   - Measuring tools (rulers, scales, thermometers)
+   - Collection containers and observation trays
+   - Safety equipment (goggles, gloves)
+2. Create investigation protocol cards:
+   - Question formation guides
+   - Hypothesis templates
+   - Observation recording sheets
+   - Conclusion drawing frameworks
+3. Include experiment activity cards for:
+   - Plant growth investigations
+   - Simple chemistry reactions
+   - Physics explorations (magnets, forces)
+   - Weather and climate studies
+4. Add scientific vocabulary development materials''',
+                'tips_for_use': '''- Model scientific thinking and questioning
+- Encourage predictions before investigations
+- Emphasize careful observation and recording
+- Discuss findings and draw evidence-based conclusions
+- Connect investigations to real-world phenomena
+- Celebrate curiosity and scientific thinking''',
+                'materials': ['Scientific tools', 'Investigation cards', 'Recording sheets', 'Safety equipment', 'Experiment supplies', 'Vocabulary materials'],
                 'time_needed': 'core',
-                'intended_use': 'aid',
-                'tlr_type': 'game',
-                'class_size': 'medium',
-                'bloom_level': 'apply',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will develop gross motor skills, body coordination, and confidence in physical movement.',
-                'learning_styles': ['Kinesthetic Learner'],
-                'special_needs': ['Motor Delays', 'Attention Difficulties'],
-                'themes': ['My Body']
-            },
-            {
-                'title': 'Sound Discovery Bottles',
-                'brief_description': 'Clear bottles filled with different materials to create various sounds for auditory discrimination.',
-                'subject': 'Music and Movement',
-                'steps_to_make': '''1. Use clear plastic bottles of the same size
-2. Fill each bottle with different materials:
-   - Rice for soft shaking sound
-   - Beans for medium rattling
-   - Bottle caps for loud clanking
-   - Bells for jingling
-   - Beads for rolling sound
-3. Secure lids tightly with glue
-4. Create matching sound cards with pictures''',
-                'tips_for_use': '''- Let children explore sounds freely first
-- Play "guess the sound" games with eyes closed
-- Use bottles to accompany songs and rhymes
-- Encourage children to describe sounds: loud, soft, fast, slow
-- Create simple rhythm patterns with different bottles''',
-                'materials': ['Plastic bottles', 'Rice', 'Beans', 'Bottle caps', 'Bells', 'Beads', 'Paper glue'],
-                'time_needed': 'short',
                 'intended_use': 'aid',
                 'tlr_type': 'manipulative',
                 'class_size': 'small',
                 'bloom_level': 'analyze',
-                'budget_band': 'low',
-                'learning_outcome': 'Children will develop auditory discrimination skills and explore cause-and-effect relationships through sound.',
-                'learning_styles': ['Auditory Learner', 'Kinesthetic Learner'],
-                'special_needs': ['Hearing Impairment', 'Sensory Processing'],
-                'themes': ['My Environment']
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will conduct scientific investigations, make careful observations, record data, and draw evidence-based conclusions.',
+                'learning_styles': ['Kinesthetic Learner', 'Visual Learner', 'Nature Learner'],
+                'special_needs': ['Attention Difficulties', 'Sensory Processing'],
+                'themes': ['Plants and Nature', 'My Environment', 'Weather and Seasons']
             }
         ]
         
-        # Create these additional TLRs
-        for tlr_data in additional_tlrs:
-            subject = Subject.objects.get(class_level=nursery, title=tlr_data['subject'])
-            self.create_tlr(tlr_data, nursery, subject)
+        for tlr_data in class3_science_tlrs:
+            self.create_tlr(tlr_data, class3, science_subject)
+
+    def create_cross_curricular_kg_primary_tlrs(self):
+        """Create cross-curricular TLRs that span multiple subjects and age groups"""
+        
+        # Get all class levels
+        kg1 = ClassLevel.objects.get(name="KG1")
+        kg2 = ClassLevel.objects.get(name="KG2")
+        class1 = ClassLevel.objects.get(name="Class 1")
+        class2 = ClassLevel.objects.get(name="Class 2")
+        class3 = ClassLevel.objects.get(name="Class 3")
+        
+        # Cross-curricular TLRs that can be adapted for different levels
+        cross_curricular_tlrs = [
+            {
+                'title': 'Ghanaian Cultural Heritage Interactive Museum',
+                'brief_description': 'Classroom museum featuring Ghanaian traditions, artifacts, and cultural practices for all age groups.',
+                'class_level': kg1,
+                'subject': 'Our World Our People',
+                'steps_to_make': '''1. Create museum sections:
+   - Traditional clothing display with dress-up opportunities
+   - Musical instruments from different regions
+   - Traditional games and toys
+   - Food and cooking utensils
+   - Art and craft examples
+   - Language and storytelling corner
+2. Include interactive elements:
+   - Audio recordings of traditional music
+   - Hands-on craft activities
+   - Role-play scenarios
+   - Storytelling props and costumes
+3. Add guided tour materials and information cards
+4. Create visitor response and reflection activities''',
+                'tips_for_use': '''- Invite community elders to share stories and knowledge
+- Encourage children to bring family artifacts
+- Connect to current events and celebrations
+- Use museum for dramatic play and role-playing
+- Adapt complexity for different age groups
+- Create connections to other subject areas''',
+                'materials': ['Cultural artifacts', 'Display materials', 'Audio equipment', 'Craft supplies', 'Costumes', 'Information cards'],
+                'time_needed': 'core',
+                'intended_use': 'aid',
+                'tlr_type': 'manipulative',
+                'class_size': 'large',
+                'bloom_level': 'understand',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will develop appreciation for Ghanaian culture, understand cultural diversity, and make connections to their own heritage.',
+                'learning_styles': ['Visual Learner', 'Kinesthetic Learner', 'Social Learner'],
+                'special_needs': ['Social Anxiety', 'Cultural Integration'],
+                'themes': ['My Community', 'My Nation', 'Festivals and Celebrations']
+            },
+            {
+                'title': 'Environmental Conservation Action Center',
+                'brief_description': 'Interactive center focused on environmental awareness, conservation practices, and community action.',
+                'class_level': class2,
+                'subject': 'Science',
+                'steps_to_make': '''1. Set up conservation investigation stations:
+   - Water conservation experiments
+   - Recycling sorting and processing
+   - Energy usage monitoring
+   - Waste reduction challenges
+2. Create action planning materials:
+   - Environmental problem identification sheets
+   - Solution brainstorming templates
+   - Action plan organizers
+   - Community presentation tools
+3. Include monitoring and tracking systems:
+   - Conservation behavior charts
+   - Environmental impact measurements
+   - Progress documentation materials
+4. Add real-world connection opportunities''',
+                'tips_for_use': '''- Start with school environment before expanding to community
+- Encourage real action, not just discussion
+- Connect to family and community practices
+- Use data collection and analysis
+- Celebrate environmental achievements
+- Invite environmental experts to share knowledge''',
+                'materials': ['Investigation tools', 'Monitoring equipment', 'Planning templates', 'Presentation materials', 'Action tracking sheets', 'Community resources'],
+                'time_needed': 'core',
+                'intended_use': 'aid',
+                'tlr_type': 'manipulative',
+                'class_size': 'medium',
+                'bloom_level': 'create',
+                'budget_band': 'medium',
+                'learning_outcome': 'Children will understand environmental issues, develop conservation practices, and take action to protect their environment.',
+                'learning_styles': ['Kinesthetic Learner', 'Nature Learner', 'Social Learner'],
+                'special_needs': ['Attention Difficulties'],
+                'themes': ['My Environment', 'Plants and Nature', 'My Community']
+            }
+        ]
+        
+        for tlr_data in cross_curricular_tlrs:
+            class_level = tlr_data['class_level']
+            subject = Subject.objects.get(class_level=class_level, title=tlr_data['subject'])
+            self.create_tlr(tlr_data, class_level, subject)
 
     def create_tlr(self, tlr_data, class_level, subject):
         """Helper method to create TLR objects with all relationships"""

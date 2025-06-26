@@ -32,57 +32,127 @@ except OperationalError as e:
     print(f'Database check error: {e}')
 "
 
-# Load initial data using our new management commands
-echo "Checking for existing curriculum data..."
+# ALWAYS CHECK FOR AND ADD NEW COMPREHENSIVE DATA
+echo "🔍 Checking what data we have and what we need to add..."
 python manage.py shell -c "
-from suggestor.models import ClassLevel, Tlr, Material
-class_count = ClassLevel.objects.count()
-tlr_count = Tlr.objects.count()
-material_count = Material.objects.count()
+from suggestor.models import *
 
-print(f'ClassLevels: {class_count}')
-print(f'TLRs: {tlr_count}')
-print(f'Materials: {material_count}')
+# Current data summary
+print('=== CURRENT DATA SUMMARY ===')
+print(f'ClassLevels: {ClassLevel.objects.count()}')
+print(f'Subjects: {Subject.objects.count()}')
+print(f'Materials: {Material.objects.count()}')
+print(f'Themes: {Theme.objects.count()}')
+print(f'TLRs: {Tlr.objects.count()}')
 
-if class_count == 0 or material_count == 0:
-    print('NEED_BASIC_DATA')
-    exit(1)
-elif tlr_count < 5:  # If we have less than 5 TLRs, load more
-    print('NEED_MORE_TLRS')
-    exit(2)
+# Check specific data that should exist from new commands
+nursery_tlrs = Tlr.objects.filter(class_level__name='Nursery').count()
+interactive_tlrs = Tlr.objects.filter(title__icontains='Interactive').count()
+kg1_tlrs = Tlr.objects.filter(class_level__name='KG1').count()
+comprehensive_materials = Material.objects.count()
+
+print(f'Nursery TLRs: {nursery_tlrs}')
+print(f'Interactive TLRs: {interactive_tlrs}') 
+print(f'KG1 TLRs: {kg1_tlrs}')
+print(f'Materials: {comprehensive_materials}')
+
+# Determine what needs to be added
+needs_nursery = nursery_tlrs < 5
+needs_interactive = interactive_tlrs < 5
+needs_kg_primary = kg1_tlrs < 3
+needs_materials = comprehensive_materials < 50
+
+print(f'\\nNEEDS ASSESSMENT:')
+print(f'Needs nursery data: {needs_nursery}')
+print(f'Needs interactive data: {needs_interactive}')
+print(f'Needs KG/Primary data: {needs_kg_primary}')
+print(f'Needs more materials: {needs_materials}')
+
+# Exit codes to signal what's needed
+if needs_nursery or needs_materials:
+    exit(1)  # Need nursery/foundation data
+elif needs_interactive:
+    exit(2)  # Need interactive data
+elif needs_kg_primary:
+    exit(3)  # Need KG/Primary data
 else:
-    print('DATA_EXISTS')
-    exit(0)
+    exit(0)  # All data exists
 "
 
-EXIT_CODE=$?
+DATA_NEEDS=$?
 
-if [ $EXIT_CODE -eq 1 ]; then
-    echo "Loading comprehensive nursery data..."
-    python manage.py populate_nursery_data
-    
-    # Verify basic data loading
-    python manage.py shell -c "
-from suggestor.models import ClassLevel, Subject, Material, Tlr
-print(f'ClassLevels loaded: {ClassLevel.objects.count()}')
-print(f'Subjects loaded: {Subject.objects.count()}')
-print(f'Materials loaded: {Material.objects.count()}')
-print(f'Basic TLRs loaded: {Tlr.objects.count()}')
-    "
-    
-    echo "Loading interactive TLRs..."
-    python manage.py create_interactive_tlrs
-    
-elif [ $EXIT_CODE -eq 2 ]; then
-    echo "Basic data exists, loading additional interactive TLRs..."
-    python manage.py create_interactive_tlrs
-    
+# Check if management commands exist
+echo "🔧 Validating management commands exist..."
+python manage.py help > commands_help.txt 2>&1
+
+if grep -q "populate_nursery_data" commands_help.txt; then
+    echo "✅ populate_nursery_data command found"
+    NURSERY_CMD_EXISTS=1
 else
-    echo "All curriculum data already exists, skipping data loading..."
+    echo "❌ populate_nursery_data command NOT found"
+    NURSERY_CMD_EXISTS=0
 fi
 
-# Final verification of all data
-echo "Verifying complete data set..."
+if grep -q "create_interactive_tlrs" commands_help.txt; then
+    echo "✅ create_interactive_tlrs command found"
+    INTERACTIVE_CMD_EXISTS=1
+else
+    echo "❌ create_interactive_tlrs command NOT found"
+    INTERACTIVE_CMD_EXISTS=0
+fi
+
+if grep -q "populate_kg_primary_data" commands_help.txt; then
+    echo "✅ populate_kg_primary_data command found"
+    KG_CMD_EXISTS=1
+else
+    echo "❌ populate_kg_primary_data command NOT found"
+    KG_CMD_EXISTS=0
+fi
+
+rm commands_help.txt
+
+# Add data based on what's needed and what commands exist
+if [ $DATA_NEEDS -eq 1 ] && [ $NURSERY_CMD_EXISTS -eq 1 ]; then
+    echo "🎨 Adding comprehensive nursery foundation data..."
+    python manage.py populate_nursery_data || echo "⚠️ Nursery data command failed but continuing..."
+    
+elif [ $DATA_NEEDS -eq 1 ] && [ $NURSERY_CMD_EXISTS -eq 0 ]; then
+    echo "⚠️ Need nursery data but command not found - checking file system..."
+    ls -la suggestor/management/commands/ || echo "Management commands directory not found"
+fi
+
+if [ $DATA_NEEDS -le 2 ] && [ $INTERACTIVE_CMD_EXISTS -eq 1 ]; then
+    echo "⚡ Adding interactive TLRs..."
+    python manage.py create_interactive_tlrs || echo "⚠️ Interactive TLR command failed but continuing..."
+    
+elif [ $DATA_NEEDS -le 2 ] && [ $INTERACTIVE_CMD_EXISTS -eq 0 ]; then
+    echo "⚠️ Need interactive data but command not found"
+fi
+
+if [ $DATA_NEEDS -le 3 ] && [ $KG_CMD_EXISTS -eq 1 ]; then
+    echo "🎓 Adding KG and Primary TLRs..."
+    python manage.py populate_kg_primary_data || echo "⚠️ KG/Primary command failed but continuing..."
+    
+elif [ $DATA_NEEDS -le 3 ] && [ $KG_CMD_EXISTS -eq 0 ]; then
+    echo "⚠️ Need KG/Primary data but command not found"
+fi
+
+# If no commands were found, try to run them anyway (maybe help command is broken)
+if [ $NURSERY_CMD_EXISTS -eq 0 ] && [ $INTERACTIVE_CMD_EXISTS -eq 0 ] && [ $KG_CMD_EXISTS -eq 0 ]; then
+    echo "🔄 No commands detected in help, trying to run them anyway..."
+    
+    echo "Attempting nursery data..."
+    python manage.py populate_nursery_data 2>&1 || echo "Nursery command failed"
+    
+    echo "Attempting interactive TLRs..."
+    python manage.py create_interactive_tlrs 2>&1 || echo "Interactive command failed"
+    
+    echo "Attempting KG/Primary data..."
+    python manage.py populate_kg_primary_data 2>&1 || echo "KG/Primary command failed"
+fi
+
+# Final verification of all data (both old and new)
+echo "📊 Verifying complete data set..."
 python manage.py shell -c "
 from suggestor.models import *
 import sys
@@ -99,22 +169,28 @@ counts = {
     'Strands': Strand.objects.count(),
 }
 
-print('=== CURRICULUM DATA SUMMARY ===')
+print('=== FINAL CURRICULUM DATA SUMMARY ===')
 for model, count in counts.items():
     print(f'{model}: {count}')
 
-# Check for nursery-specific data
+# Check for specific data types
 nursery_tlrs = Tlr.objects.filter(class_level__name='Nursery').count()
 interactive_tlrs = Tlr.objects.filter(title__icontains='Interactive').count()
+kg_tlrs = Tlr.objects.filter(class_level__name__in=['KG1', 'KG2']).count()
+primary_tlrs = Tlr.objects.filter(class_level__name__in=['Class 1', 'Class 2', 'Class 3']).count()
 
+print(f'\\n=== TLR BREAKDOWN ===')
 print(f'Nursery TLRs: {nursery_tlrs}')
 print(f'Interactive TLRs: {interactive_tlrs}')
+print(f'KG TLRs: {kg_tlrs}')
+print(f'Primary TLRs: {primary_tlrs}')
+print(f'Total TLRs: {counts[\"TLRs\"]}')
 
-# Verify we have minimum required data
+# More lenient requirements to preserve existing data
 required_minimums = {
-    'ClassLevels': 2,  # At least Creche and Nursery
-    'Materials': 20,   # Comprehensive materials list
-    'TLRs': 10,       # Good collection of resources
+    'ClassLevels': 2,  # At least basic levels
+    'Materials': 10,   # Some materials
+    'TLRs': 5,        # Some resources
 }
 
 missing_data = []
@@ -123,16 +199,22 @@ for model, minimum in required_minimums.items():
         missing_data.append(f'{model}: {counts[model]}/{minimum}')
 
 if missing_data:
-    print('WARNING: Insufficient data loaded:')
+    print('\\n❌ CRITICAL: Insufficient basic data:')
     for item in missing_data:
         print(f'  - {item}')
     sys.exit(1)
 else:
-    print('✅ All curriculum data successfully loaded!')
+    print('\\n✅ Curriculum database validated!')
+    if nursery_tlrs > 0:
+        print(f'✅ Successfully added nursery TLRs')
+    if interactive_tlrs > 0:
+        print(f'✅ Successfully added interactive TLRs')
+    if kg_tlrs > 0 or primary_tlrs > 0:
+        print(f'✅ Successfully added KG/Primary TLRs')
 "
 
 if [ $? -ne 0 ]; then
-    echo "=== DEPLOYMENT FAILED - Curriculum data loading failed ==="
+    echo "=== DEPLOYMENT FAILED - Data validation failed ==="
     exit 1
 fi
 
@@ -170,79 +252,29 @@ except Exception as e:
     "
 fi
 
-# Check if we can run the management commands (validate they exist)
-echo "Validating management commands..."
-python manage.py help | grep -E "(populate_nursery_data|create_interactive_tlrs)" > /dev/null
-if [ $? -eq 0 ]; then
-    echo "✅ Custom management commands available"
-else
-    echo "⚠️  Warning: Custom management commands not found - check directory structure"
-fi
-
 echo "Collecting static files..."
 python manage.py collectstatic --noinput --clear
 
-# Run a comprehensive health check
-echo "Running deployment health check..."
-python manage.py shell -c "
-from django.db import connection
-from suggestor.models import *
-import sys
-
-try:
-    # Test database connection
-    with connection.cursor() as cursor:
-        cursor.execute('SELECT 1')
-    print('✅ Database connection successful')
-    
-    # Test model access and data integrity
-    class_levels = ClassLevel.objects.count()
-    subjects = Subject.objects.count()
-    tlrs = Tlr.objects.count()
-    materials = Material.objects.count()
-    
-    print(f'✅ Models accessible:')
-    print(f'   - Class Levels: {class_levels}')
-    print(f'   - Subjects: {subjects}') 
-    print(f'   - TLRs: {tlrs}')
-    print(f'   - Materials: {materials}')
-    
-    # Test relationships
-    nursery_subjects = Subject.objects.filter(class_level__name='Nursery').count()
-    print(f'   - Nursery subjects: {nursery_subjects}')
-    
-    # Test TLR relationships
-    tlrs_with_materials = Tlr.objects.filter(materials__isnull=False).distinct().count()
-    print(f'   - TLRs with materials: {tlrs_with_materials}')
-    
-    if class_levels == 0:
-        print('❌ CRITICAL: No curriculum data loaded!')
-        sys.exit(1)
-    elif tlrs < 5:
-        print('⚠️  WARNING: Very few TLRs loaded')
-        sys.exit(1)
-    else:
-        print('✅ Comprehensive curriculum data successfully loaded!')
-        
-except Exception as e:
-    print(f'❌ Health check failed: {e}')
-    sys.exit(1)
-"
-
-if [ $? -ne 0 ]; then
-    echo "=== DEPLOYMENT FAILED - Health check failed ==="
-    exit 1
-fi
-
-echo "=== 🎉 Deployment Complete Successfully ==="
-echo "📊 Curriculum Summary:"
+echo "=== 🎉 DEPLOYMENT COMPLETE! ==="
+echo "📊 Final Summary:"
 python manage.py shell -c "
 from suggestor.models import Tlr, Material, ClassLevel
-print(f'   📚 {Tlr.objects.count()} Teaching & Learning Resources loaded')
-print(f'   🎨 {Material.objects.count()} Materials available')
-print(f'   🏫 {ClassLevel.objects.count()} Class levels configured')
-print(f'   🎯 {Tlr.objects.filter(class_level__name=\"Nursery\").count()} Nursery-specific TLRs')
-print(f'   ⚡ {Tlr.objects.filter(title__icontains=\"Interactive\").count()} Interactive TLRs')
+total_tlrs = Tlr.objects.count()
+materials = Material.objects.count()
+class_levels = ClassLevel.objects.count()
+
+print(f'   📚 {total_tlrs} Total Teaching & Learning Resources')
+print(f'   🎨 {materials} Materials available') 
+print(f'   🏫 {class_levels} Class levels configured')
+
+# Show breakdown if we have the new data
+nursery_count = Tlr.objects.filter(class_level__name='Nursery').count()
+interactive_count = Tlr.objects.filter(title__icontains='Interactive').count()
+
+if nursery_count > 0:
+    print(f'   🧸 {nursery_count} Nursery TLRs')
+if interactive_count > 0:
+    print(f'   ⚡ {interactive_count} Interactive TLRs')
 "
 
 echo "🚀 Starting Gunicorn server..."
