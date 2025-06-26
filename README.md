@@ -128,14 +128,7 @@ A KG2 teacher needs a low-budget activity to reinforce "counting to 10" for a mi
 ## 📬 Contact & Support
 
 - Submit feedback or questions on the [Contact Page](https://tlr.teddghana.com/contact)
-- Or email: `support@nileedge.com`, `teddghana@gmail.com`
-
----
-
-## 🔐 Admin Credentials (Default)
-
-- Username: `chantelle`
-- Password: `2241`
+- Or email: `chantelatta@gmail.com`, `teddghana@gmail.com`
 
 ---
 
@@ -144,11 +137,3 @@ A KG2 teacher needs a low-budget activity to reinforce "counting to 10" for a mi
 - This app supports PDF generation via `reportlab` and static HTML print views.
 - Designed for early-grade resource creators, curriculum coordinators, and educational NGOs.
 - Works with PostgreSQL (production) and SQLite (development).
-
----
-
-## 📄 License
-
-This project is licensed for educational and non-commercial use under TEDD Ghana. Contact the team for reuse or adaptation requests.
-
----
