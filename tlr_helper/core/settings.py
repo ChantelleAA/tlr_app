@@ -34,6 +34,11 @@ ALLOWED_HOSTS = [
     'tlr.teddghana.com',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://tlr.teddghana.com',
+]
+
+
 # Application definition
 
 INSTALLED_APPS = [
