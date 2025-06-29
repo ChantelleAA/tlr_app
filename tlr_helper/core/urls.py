@@ -52,7 +52,7 @@ urlpatterns = [
     path("signup/", v.signup_view, name="signup"),
     path("tlr/<slug:slug>/", v.tlr_detail_page, name="tlr_detail"),
     path('chained/', include('smart_selects.urls')),
-
+    path('api/activity/', v.activity_api, name='activity_api'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

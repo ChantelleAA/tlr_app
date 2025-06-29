@@ -5,8 +5,9 @@ from .models import (
     Tlr, ClassLevel, Strand, SubStrand, Material, Theme,
     KeyLearningArea, CoreCompetency, ResourceType, GoalTag,
     Subject, ContentStandard, Indicator, TlrImage, TlrVideo,
-    SpecialNeed, LearningStyle
+    SpecialNeed, LearningStyle, UserActivity
 )
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
 
 class TlrImageInline(admin.TabularInline):
     model = TlrImage
@@ -392,6 +393,152 @@ class GoalTagAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
     ordering = ('title',)
+
+# Admin Log Entries
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = (
+        'action_time', 'user', 'content_type', 'object_repr', 
+        'action_flag_display', 'change_message'
+    )
+    list_filter = (
+        'action_time', 'user', 'content_type', 'action_flag'
+    )
+    search_fields = ('object_repr', 'change_message', 'user__username')
+    readonly_fields = (
+        'action_time', 'user', 'content_type', 'object_id', 
+        'object_repr', 'action_flag', 'change_message'
+    )
+    date_hierarchy = 'action_time'
+    ordering = ['-action_time']
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def action_flag_display(self, obj):
+        flags = {
+            ADDITION: "✅ Added",
+            CHANGE: "✏️ Changed", 
+            DELETION: "❌ Deleted"
+        }
+        return flags.get(obj.action_flag, obj.action_flag)
+    action_flag_display.short_description = 'Action'
+
+# User Activity Admin - ONLY ONE REGISTRATION!
+@admin.register(UserActivity)
+class UserActivityAdmin(admin.ModelAdmin):
+    list_display = (
+        'timestamp', 'user', 'action_icon', 'details', 'page_visited', 
+        'device_info', 'response_time_display', 'ip_address'
+    )
+    list_filter = (
+        'action', 'timestamp', 'user', 'browser', 'device_type',
+        ('timestamp', admin.DateFieldListFilter),
+    )
+    search_fields = (
+        'user__username', 'search_query', 'page_url', 'element_clicked',
+        'ip_address', 'error_message'
+    )
+    readonly_fields = (
+        'user', 'action', 'timestamp', 'session_id', 'ip_address', 'user_agent',
+        'page_url', 'referrer', 'request_method', 'tlr', 'search_query',
+        'search_results_count', 'filters_applied', 'route_selected',
+        'element_clicked', 'form_data', 'time_on_page', 'scroll_depth',
+        'browser', 'device_type', 'screen_resolution', 'error_message',
+        'error_code', 'response_time', 'response_size'
+    )
+    date_hierarchy = 'timestamp'
+    ordering = ['-timestamp']
+    list_per_page = 50
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('user', 'action', 'timestamp', 'session_id')
+        }),
+        ('Request Details', {
+            'fields': ('page_url', 'referrer', 'request_method', 'ip_address', 'response_time', 'response_size'),
+            'classes': ('collapse',)
+        }),
+        ('Content & Interaction', {
+            'fields': ('tlr', 'search_query', 'search_results_count', 'filters_applied', 
+                      'route_selected', 'element_clicked', 'form_data'),
+            'classes': ('collapse',)
+        }),
+        ('User Behavior', {
+            'fields': ('time_on_page', 'scroll_depth', 'screen_resolution'),
+            'classes': ('collapse',)
+        }),
+        ('Browser & Device', {
+            'fields': ('user_agent', 'browser', 'device_type'),
+            'classes': ('collapse',)
+        }),
+        ('Errors', {
+            'fields': ('error_message', 'error_code'),
+            'classes': ('collapse',)
+        })
+    )
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    
+    def action_icon(self, obj):
+        return obj.get_action_display()
+    action_icon.short_description = 'Action'
+    
+    def details(self, obj):
+        if obj.tlr:
+            return f"TLR: {obj.tlr.title[:50]}..."
+        elif obj.search_query:
+            count = f" ({obj.search_results_count} results)" if obj.search_results_count is not None else ""
+            return f"Search: '{obj.search_query[:30]}...'{count}"
+        elif obj.element_clicked:
+            return f"Clicked: {obj.element_clicked[:30]}..."
+        elif obj.error_message:
+            return f"Error: {obj.error_message[:30]}..."
+        elif obj.route_selected:
+            return f"Route: {obj.route_selected}"
+        else:
+            return "-"
+    details.short_description = 'Details'
+    
+    def page_visited(self, obj):
+        if obj.page_url:
+            # Extract just the path for cleaner display
+            from urllib.parse import urlparse
+            path = urlparse(obj.page_url).path
+            return path if path != '/' else 'Home'
+        return '-'
+    page_visited.short_description = 'Page'
+    
+    def device_info(self, obj):
+        info_parts = []
+        if obj.browser:
+            info_parts.append(obj.browser)
+        if obj.device_type:
+            info_parts.append(obj.device_type.title())
+        return " | ".join(info_parts) if info_parts else '-'
+    device_info.short_description = 'Browser/Device'
+    
+    def response_time_display(self, obj):
+        if obj.response_time is not None:
+            if obj.response_time < 1:
+                return f"{obj.response_time*1000:.0f}ms"
+            else:
+                return f"{obj.response_time:.1f}s"
+        return '-'
+    response_time_display.short_description = 'Response Time'
 
 # Configure admin site headers
 admin.site.site_header = "TLR Management System"

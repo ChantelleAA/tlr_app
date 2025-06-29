@@ -357,3 +357,115 @@ def populate_initial_data(sender, **kwargs):
     for name, desc in styles:
         LearningStyle.objects.get_or_create(name=name, defaults={"description": desc})
 
+class UserActivity(models.Model):
+    ACTION_CHOICES = [
+        ('login', '🔑 Login'),
+        ('logout', '🔒 Logout'),
+        ('page_view', '👁️ Page View'),
+        ('view_tlr', '📖 Viewed TLR'),
+        ('download_tlr', '⬇️ Downloaded TLR'),
+        ('search', '🔍 Performed Search'),
+        ('filter_applied', '🎛️ Applied Filters'),
+        ('route_selected', '🛤️ Selected Search Route'),
+        ('form_submitted', '📝 Submitted Form'),
+        ('button_click', '🖱️ Button Click'),
+        ('link_click', '🔗 Link Click'),
+        ('error_encountered', '❌ Error Encountered'),
+        ('session_start', '🚀 Session Started'),
+        ('session_end', '🏁 Session Ended'),
+    ]
+    
+    # Basic info
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    session_id = models.CharField(max_length=40, blank=True)
+    
+    # Request details
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(blank=True)
+    page_url = models.URLField(blank=True)
+    referrer = models.URLField(blank=True)
+    request_method = models.CharField(max_length=10, blank=True)
+    
+    # Content details
+    tlr = models.ForeignKey(Tlr, on_delete=models.CASCADE, null=True, blank=True)
+    search_query = models.TextField(blank=True)
+    search_results_count = models.IntegerField(null=True, blank=True)
+    filters_applied = models.JSONField(default=dict, blank=True)
+    route_selected = models.CharField(max_length=50, blank=True)
+    
+    # Interaction details
+    element_clicked = models.CharField(max_length=200, blank=True)  # Button/link text or ID
+    form_data = models.JSONField(default=dict, blank=True)  # Form fields submitted
+    time_on_page = models.DurationField(null=True, blank=True)  # How long on previous page
+    scroll_depth = models.FloatField(null=True, blank=True)  # How far they scrolled (0-100%)
+    
+    # Browser/device info
+    browser = models.CharField(max_length=50, blank=True)
+    device_type = models.CharField(max_length=20, blank=True)  # mobile, tablet, desktop
+    screen_resolution = models.CharField(max_length=20, blank=True)
+    
+    # Error details
+    error_message = models.TextField(blank=True)
+    error_code = models.CharField(max_length=10, blank=True)
+    
+    # Response details
+    response_time = models.FloatField(null=True, blank=True)  # How long the request took
+    response_size = models.IntegerField(null=True, blank=True)  # Response size in bytes
+    
+    class Meta:
+        ordering = ['-timestamp']
+        verbose_name = 'User Activity'
+        verbose_name_plural = 'User Activities'
+        indexes = [
+            models.Index(fields=['user', 'timestamp']),
+            models.Index(fields=['action', 'timestamp']),
+            models.Index(fields=['session_id']),
+        ]
+    
+    def __str__(self):
+        action_display = self.get_action_display()
+        time_str = self.timestamp.strftime('%m/%d %H:%M')
+        if self.tlr:
+            return f"{self.user.username} - {action_display} '{self.tlr.title}' at {time_str}"
+        elif self.search_query:
+            return f"{self.user.username} - {action_display} '{self.search_query}' at {time_str}"
+        else:
+            return f"{self.user.username} - {action_display} at {time_str}"
+    
+    def get_browser_info(self):
+        """Parse user agent to get browser and device info"""
+        if not self.user_agent:
+            return
+        
+        ua = self.user_agent.lower()
+        
+        # Browser detection
+        if 'chrome' in ua and 'edg' not in ua:
+            self.browser = 'Chrome'
+        elif 'firefox' in ua:
+            self.browser = 'Firefox'
+        elif 'safari' in ua and 'chrome' not in ua:
+            self.browser = 'Safari'
+        elif 'edg' in ua:
+            self.browser = 'Edge'
+        else:
+            self.browser = 'Other'
+        
+        # Device detection
+        if 'mobile' in ua:
+            self.device_type = 'mobile'
+        elif 'tablet' in ua or 'ipad' in ua:
+            self.device_type = 'tablet'
+        else:
+            self.device_type = 'desktop'
+    
+    def save(self, *args, **kwargs):
+        if not self.session_id and hasattr(self, '_session_key'):
+            self.session_id = self._session_key
+        
+        self.get_browser_info()
+        super().save(*args, **kwargs)
+
+

@@ -21,6 +21,38 @@ from django.db.models import F, Q, Model
 from .forms import EnhancedRouteSelectForm
 import openai
 import os
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+
+@login_required
+@csrf_exempt
+def activity_api(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # For now, just return success - we'll enhance this later
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'error', 'message': 'Method not allowed'})
+
+def get_client_ip(request):
+    """Get the client's IP address"""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 PINTEREST_BOARDS = [
     {
@@ -70,7 +102,16 @@ def normalize(text):
 @login_required
 def download_view(request, pk):
     tlr = get_object_or_404(Tlr, pk=pk)
-    
+
+    from .models import UserActivity
+    UserActivity.objects.create(
+        user=request.user,
+        action='download_tlr',
+        tlr=tlr,
+        ip_address=get_client_ip(request),
+        page_url=request.build_absolute_uri()
+    )
+
     from django.db.models import F
     Tlr.objects.filter(pk=pk).update(download_count=F('download_count') + 1)
     
@@ -397,6 +438,16 @@ def tlr_detail_page(request, slug):
     # Optional: Track views
     # tlr.view_count = F('view_count') + 1
     # tlr.save(update_fields=['view_count'])
+    from .models import UserActivity
+    UserActivity.objects.create(
+        user=request.user,
+        action='view_tlr',
+        tlr=tlr,
+        ip_address=get_client_ip(request),
+        page_url=request.build_absolute_uri()
+    )
+    # Increment view count
+    Tlr.objects.filter(pk=tlr.pk).update(view_count=F('view_count') + 1)
     
     return render(request, "tlr_detail.html", {"tlr": tlr})
 
@@ -624,3 +675,101 @@ def deserialize_from_session(data):
     """Convert session data back to Django objects."""
     # This would require knowing the model types, so the specific approach above is better
     pass
+
+@method_decorator(login_required, name='dispatch')
+class ActivityAPIView(View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+            action = data.get('action')
+            
+            # Map client-side actions to our activity model actions
+            action_mapping = {
+                'page_view': 'page_view',
+                'button_click': 'button_click',
+                'form_submitted': 'form_submitted',
+                'search_input': 'search',
+                'session_end': 'session_end',
+                'ajax_request': 'search',
+                'ajax_error': 'error_encountered'
+            }
+            
+            mapped_action = action_mapping.get(action, 'page_view')
+            
+            # Only save if it's a valid action
+            if mapped_action:
+                from .models import UserActivity
+                from datetime import timedelta
+                
+                activity_data = {
+                    'user': request.user,
+                    'action': mapped_action,
+                    'session_id': request.session.session_key,
+                    'ip_address': self.get_client_ip(request),
+                    'page_url': data.get('url', request.build_absolute_uri()),
+                    'request_method': 'POST',
+                }
+                
+                # Add specific data based on action
+                if action == 'button_click':
+                    activity_data['element_clicked'] = data.get('element', '')
+                    activity_data['scroll_depth'] = data.get('scroll_depth')
+                
+                elif action == 'search_input':
+                    activity_data['search_query'] = data.get('query', '')
+                
+                elif action == 'session_end':
+                    time_on_page = data.get('time_on_page')
+                    if time_on_page:
+                        activity_data['time_on_page'] = timedelta(seconds=time_on_page)
+                    activity_data['scroll_depth'] = data.get('max_scroll_depth')
+                
+                elif action == 'ajax_request':
+                    activity_data['response_time'] = data.get('response_time', 0) / 1000  # Convert to seconds
+                    activity_data['search_query'] = self.extract_search_from_url(data.get('url', ''))
+                
+                elif action == 'ajax_error':
+                    activity_data['error_message'] = data.get('error', '')
+                
+                elif action == 'page_view':
+                    activity_data['screen_resolution'] = data.get('screen_resolution', '')
+                
+                # Save the activity
+                activity = UserActivity(**activity_data)
+                activity._session_key = request.session.session_key
+                activity.save()
+            
+            return JsonResponse({'status': 'success'})
+            
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+    
+    def extract_search_from_url(self, url):
+        """Extract search query from URL parameters"""
+        try:
+            from urllib.parse import urlparse, parse_qs
+            parsed = urlparse(url)
+            params = parse_qs(parsed.query)
+            return params.get('q', [''])[0] or params.get('keywords', [''])[0]
+        except:
+            return ''
+
+# Simple function-based view alternative
+@login_required
+@require_POST
+def activity_api(request):
+    try:
+        data = json.loads(request.body)
+        # Process and save activity data here
+        # (You can use the same logic as in the class-based view above)
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
