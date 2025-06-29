@@ -51,6 +51,8 @@ urlpatterns = [
     path("print/<int:pk>/", v.print_view, name="print_tlr"),
     path("signup/", v.signup_view, name="signup"),
     path("tlr/<slug:slug>/", v.tlr_detail_page, name="tlr_detail"),
+    path('chained/', include('smart_selects.urls')),
+
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

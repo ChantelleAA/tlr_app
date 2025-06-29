@@ -238,12 +238,26 @@ class Tlr(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        if self.indicator:
-            self.standard = self.indicator.standard
-            self.substrand = self.standard.substrand
-            self.strand = self.substrand.strand
-            self.subject = self.strand.subject
-            self.class_level = self.strand.class_level
+        
+        # Handle empty string foreign keys - convert to None
+        foreign_key_fields = ['class_level', 'subject', 'strand', 'substrand', 'standard', 'indicator']
+        for field_name in foreign_key_fields:
+            field_value = getattr(self, field_name, None)
+            if field_value == '':
+                setattr(self, field_name, None)
+        
+        # Only auto-populate if indicator is actually set (not None or empty)
+        if self.indicator and self.indicator != '':
+            try:
+                self.standard = self.indicator.standard
+                self.substrand = self.standard.substrand
+                self.strand = self.substrand.strand
+                self.subject = self.strand.subject
+                self.class_level = self.strand.class_level
+            except AttributeError:
+                # Handle case where relationships might not be properly set
+                pass
+        
         super().save(*args, **kwargs)
 
     def __str__(self):
