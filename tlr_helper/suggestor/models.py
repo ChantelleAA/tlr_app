@@ -225,6 +225,7 @@ class Tlr(models.Model):
     bloom_level = models.CharField(max_length=20, choices=BLOOM_LEVELS, blank=True, null=True)
     budget_band = models.CharField(max_length=20, choices=BUDGET_BANDS, blank=True, null=True)
     learning_outcome = models.TextField(blank=True)
+    view_count = models.PositiveIntegerField(default=0)
     # image = models.ImageField(upload_to="tlr_images/", null=True, blank=True)
     # video_url = models.URLField(null=True, blank=True)
 
